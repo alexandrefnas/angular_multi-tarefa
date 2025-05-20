@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/angular_Multi-Tarefa',
+  basePath: '/angular_multi-tarefa',
   supportedLocales: {
   "en-US": ""
 },

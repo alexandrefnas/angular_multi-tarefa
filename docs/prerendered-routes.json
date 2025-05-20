@@ -1,7 +1,7 @@
 {
   "routes": {
-    "/angular_Multi-Tarefa": {},
-    "/angular_Multi-Tarefa/cadastro": {},
-    "/angular_Multi-Tarefa/teste": {}
+    "/angular_multi-tarefa": {},
+    "/angular_multi-tarefa/cadastro": {},
+    "/angular_multi-tarefa/teste": {}
   }
 }

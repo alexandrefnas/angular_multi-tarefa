@@ -2,29 +2,29 @@
 export default {
   bootstrap: () => import('./main.server.mjs').then(m => m.default),
   inlineCriticalCss: true,
-  baseHref: '/angular_Multi-Tarefa/',
+  baseHref: '/angular_multi-tarefa/',
   locale: undefined,
   routes: [
   {
     "renderMode": 2,
-    "route": "/angular_Multi-Tarefa"
+    "route": "/angular_multi-tarefa"
   },
   {
     "renderMode": 2,
-    "route": "/angular_Multi-Tarefa/cadastro"
+    "route": "/angular_multi-tarefa/cadastro"
   },
   {
     "renderMode": 2,
-    "route": "/angular_Multi-Tarefa/teste"
+    "route": "/angular_multi-tarefa/teste"
   }
 ],
   entryPointToBrowserMapping: undefined,
   assets: {
-    'index.csr.html': {size: 23633, hash: '87e18347c565567a11f24bff8804fd83a22795ae0a35cb13071487d67e03f998', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 17164, hash: '696c1ad1374f7e9ea32c282b2b92422d1c5ce3616115c2834ff31070040af01a', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'cadastro/index.html': {size: 88595, hash: 'c70824d588cb0c5d62a5d8c852dd2e83e2b5d31212d258e17f7d34d6e82f7b12', text: () => import('./assets-chunks/cadastro_index_html.mjs').then(m => m.default)},
-    'index.html': {size: 27691, hash: '16b1d6903fb9140365285f89f910adae481c6b8e73e23ce2e61d5ef6ed737bc2', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
-    'teste/index.html': {size: 40836, hash: '464e39518c246263c2724796ce0c72a9de9ce5900227fbccec62faeee4b9f067', text: () => import('./assets-chunks/teste_index_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 23633, hash: '897a7a4eda99b9d622d8d03e165f3638e4660dd026b32b26714e7859bd04f8a3', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 17164, hash: '7c10258198febf43e846bf5dd9b00e0002048c8ee69a855724fef463827a7ec3', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'index.html': {size: 27691, hash: '8603459ee0d700b4fcfd63db85d03aa97accd4366d90c2b04104acd0efc6ec32', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
+    'cadastro/index.html': {size: 88595, hash: '66797dd0168673fbd8d1734bd64be64013c1b876c49fa80563ce5c2dff4ca013', text: () => import('./assets-chunks/cadastro_index_html.mjs').then(m => m.default)},
+    'teste/index.html': {size: 40823, hash: '4d6381e9b7bb65d271d1727a8080bf17edcf37d30acc14d5b6c28a25b703fa4d', text: () => import('./assets-chunks/teste_index_html.mjs').then(m => m.default)},
     'styles-XOFGGUS3.css': {size: 7045, hash: 'uRjKrpq2HLY', text: () => import('./assets-chunks/styles-XOFGGUS3_css.mjs').then(m => m.default)}
   },
 };
