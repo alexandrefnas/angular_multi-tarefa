@@ -1,0 +1,26 @@
+<div class="form-field" [class.focused]="isFocused || value">
+  <label class="form-label">{{ label }}</label>
+
+  <input
+    #dateInput
+    class="form-input"
+    matInput
+    [matDatepicker]="picker"
+    [value]="value"
+    (dateChange)="onDateChange($event)"
+    (focus)="isFocused = true"
+    (blur)="isFocused = false"
+    readonly
+    (click)="picker.open()"
+  />
+
+  <!-- Ícone opcional para abrir o calendário -->
+  <button type="button" (click)="picker.open()" class="calendar-button">📅</button>
+
+  <mat-datepicker #picker></mat-datepicker>
+
+  <div class="form-error" *ngIf="hasError() && !isFocused">
+    {{ errorMessage }}
+  </div>
+</div>
+

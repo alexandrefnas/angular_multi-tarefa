@@ -1,0 +1,28 @@
+.container__button {
+  position: relative;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.container__button > button {
+  width: 100px;
+  height: 35px;
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
+}
+
+.container__button > button:hover {
+  font-weight: bold;
+  transform: scale(1.05);
+  /* background-color: #1000; */
+  /* border: 2px; */
+}
+
+.container__button > button:active {
+  border: 1px solid #ccc;
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #999;
+  transform: translateY(2px);
+}

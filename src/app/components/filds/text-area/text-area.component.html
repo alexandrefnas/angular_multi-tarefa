@@ -1,0 +1,12 @@
+<div class="container__text-area">
+  <mat-form-field class="custom-text-area">
+    <mat-label>{{ label }}</mat-label>
+    <textarea matInput [formControl]="inputControl"></textarea>
+    <mat-error *ngIf="inputControl.hasError('minlength')">
+      O campo deve ter no mínimo {{min}} caracteres.
+    </mat-error>
+    <mat-error *ngIf="inputControl.hasError('maxlength')">
+      O campo deve ter no máximo {{max}} caracteres.
+    </mat-error>
+  </mat-form-field>
+</div>

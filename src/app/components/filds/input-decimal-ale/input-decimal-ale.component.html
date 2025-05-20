@@ -1,0 +1,16 @@
+<div class="form-field" [class.focused]="isFocused || value">
+  <label class="form-label">{{ label }}</label>
+  <input
+    class="form-input"
+    type="text"
+    [placeholder]="placeholder"
+    [value]="formattedValue"
+    (input)="onInput($event)"
+    (keydown)="onKeyDown($event)"
+    (focus)="isFocused = true"
+    (blur)="isFocused = false"
+  />
+  <div class="form-error" *ngIf="hasError() && !isFocused">
+    {{ errorMessage }}
+  </div>
+</div>

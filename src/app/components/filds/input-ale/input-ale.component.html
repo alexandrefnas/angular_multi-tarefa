@@ -1,0 +1,18 @@
+<div class="form-field" [class.focused]="isFocused || value">
+  <label class="form-label">{{ label }}</label>
+  <input
+    class="form-input"
+    [type]="numerico ? 'text' : type"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInput($event)"
+    (keydown)="onKeyDown($event)"
+    (focus)="isFocused = true"
+    (blur)="isFocused = false"
+    [attr.inputmode]="numerico ? 'decimal' : null"
+    [attr.pattern]="numerico ? '[0-9]*' : null"
+  />
+  <div class="form-error" *ngIf="hasError() && !isFocused">
+    {{ errorMessage }}
+  </div>
+</div>
