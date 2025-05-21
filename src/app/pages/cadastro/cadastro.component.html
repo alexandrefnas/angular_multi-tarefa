@@ -1,26 +1,11 @@
 <div class="container__cadastro">
-  <div class="container__cadastro-form">
-    <div class="title_container">
-      <h3>Cadastro de Tarefas</h3>
-    </div>
-    <!-- <form [formGroup]="cadastro"> -->
-      <div class="form__container">
-        <div class="form__container-data">
-          <ale-text-data></ale-text-data>
-        </div>
-        <div class="form__container-input">
-          <ale-text-input></ale-text-input>
-        </div>
-        <div class="form__container-select">
-          <ale-text-select></ale-text-select>
-        </div>
-      </div>
-      <div class="form__container-teste">
-        <div class="form__container-textarea">
-          <ale-text-area></ale-text-area>
-        </div>
-      </div>
-    <!-- </form> -->
-  </div>
+  <ale-table
+    [colunas]="colunasProdutos"
+    [dados]="dadosProdutos"
+    [formatoColunas]="formatoProdutos"
+    [mostrarAcoes]="true"
+    (editar)="editarProduto($event)"
+    (excluir)="excluirProduto($event)"
+  ></ale-table>
 </div>
 <!-- [label]="'Teste'" [min]="10" [max]="256" -->

@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let coluna of colunas">{{ coluna | titlecase }}</th>
+      <th *ngIf="mostrarAcoes">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of dados">
+      <td *ngFor="let coluna of colunas">
+        {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
+      </td>
+      <td *ngIf="mostrarAcoes">
+        <!-- <ale-button
+          class="button"
+          label="Editar"
+          (click)="onEditar(item)"
+        ></ale-button>
+        <ale-button
+          class="buttons"
+          label="Excluir"
+          (click)="onExcluir(item)"
+        ></ale-button> -->
+        <button (click)="onEditar(item)">Editar</button>
+        <button (click)="onExcluir(item)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

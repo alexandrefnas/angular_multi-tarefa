@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+  display: block;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+th {
+  background-color: #f3f3f3;
+  font-weight: 600;
+  color: #222;
+}
+
+tr:hover {
+  background-color: #f0f8ff; /* leve azul no hover */
+}
+
+.buttons {
+  margin-right: 4px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background-color: #e7e7e7;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+}
+
+button:hover {
+  background-color: #d0e0f0;
+  border-color: #aaa;
+}
