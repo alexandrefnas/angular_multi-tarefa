@@ -1,11 +1,14 @@
-<div class="container__cadastro">
-  <ale-table
-    [colunas]="colunasProdutos"
-    [dados]="dadosProdutos"
-    [formatoColunas]="formatoProdutos"
-    [mostrarAcoes]="true"
-    (editar)="editarProduto($event)"
-    (excluir)="excluirProduto($event)"
-  ></ale-table>
+<div class="container">
+  <div class="container__cadastro">
+    <ale-table
+      [colunas]="colunasProdutos"
+      [dados]="dadosProdutos"
+      [tamanhosColunas]="tamanhosColunas"
+      [formatoColunas]="formatoProdutos"
+      [mostrarAcoes]="true"
+      (editar)="editarProduto($event)"
+      (excluir)="excluirProduto($event)"
+    ></ale-table>
+  </div>
 </div>
 <!-- [label]="'Teste'" [min]="10" [max]="256" -->

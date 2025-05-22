@@ -1,29 +1,45 @@
 <table class="table">
   <thead>
     <tr>
-      <th *ngFor="let coluna of colunas">{{ coluna | titlecase }}</th>
+      <th *ngFor="let coluna of colunas">
+        <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
+          {{ coluna | titlecase }}
+        </div>
+      </th>
       <th *ngIf="mostrarAcoes">Ações</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of dados">
       <td *ngFor="let coluna of colunas">
-        {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
+        <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
+          {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
+        </div>
       </td>
       <td *ngIf="mostrarAcoes">
-        <!-- <ale-button
-          class="button"
-          label="Editar"
-          (click)="onEditar(item)"
-        ></ale-button>
-        <ale-button
-          class="buttons"
-          label="Excluir"
-          (click)="onExcluir(item)"
-        ></ale-button> -->
-        <button (click)="onEditar(item)">Editar</button>
-        <button (click)="onExcluir(item)">Excluir</button>
+        <div
+          class="container__mostrar-acoes"
+          [ngStyle]="{ width: tamanhosColunas['mostrarAcoes'] || 'auto' }"
+        >
+          <div class="mostrar-acoes__button">
+            <ale-button
+              class="button"
+              label="Editar"
+              (click)="onEditar(item)"
+            ></ale-button>
+          </div>
+          <div class="mostrar-acoes__button">
+            <ale-button
+              class="button-cancelar"
+              label="Excluir"
+              (click)="onExcluir(item)"
+            ></ale-button>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- <button (click)="onEditar(item)">Editar</button>
+<button (click)="onExcluir(item)">Excluir</button> -->

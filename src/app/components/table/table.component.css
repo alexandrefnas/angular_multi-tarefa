@@ -1,7 +1,7 @@
-:host {
+/* :host {
   display: block;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+} */
 
 table {
   width: 100%;
@@ -31,7 +31,16 @@ tr:hover {
   background-color: #f0f8ff; /* leve azul no hover */
 }
 
-.buttons {
+
+.container__mostrar-acoes{
+display: flex;
+flex-direction: row;
+}
+
+.mostrar-acoes__button{
+width: 60px;
+}
+/* .buttons {
   margin-right: 4px;
   padding: 4px 8px;
   border: 1px solid #ccc;
@@ -40,9 +49,9 @@ tr:hover {
   cursor: pointer;
   font-size: 13px;
   color: #333;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: #d0e0f0;
   border-color: #aaa;
-}
+} */

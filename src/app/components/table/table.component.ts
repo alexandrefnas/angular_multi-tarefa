@@ -1,17 +1,17 @@
-import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { NgFor, NgIf, NgStyle, TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 
-
 @Component({
   selector: 'ale-table',
-  imports: [  NgIf, NgFor, TitleCasePipe, ButtonComponent],
+  imports: [NgIf, NgFor, NgStyle, TitleCasePipe, ButtonComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
 export class TableComponent {
   @Input() colunas: string[] = [];
   @Input() dados: any[] = [];
+  @Input() tamanhosColunas: { [coluna: string]: string } = {};
   @Input() formatoColunas: { [key: string]: 'texto' | 'moeda' | 'data' } = {};
   @Input() mostrarAcoes: boolean = false;
 

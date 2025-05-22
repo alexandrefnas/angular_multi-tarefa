@@ -1,17 +1,37 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:host(.button-cancelar) .container__button > button {
+  background-color: #f8d7da; /* Exemplo: vermelho claro */
+  color: #721c24; /*Texto vermelho escuro */
+  border-color: #f5c6cb;
+}
+
 .container__button {
   position: relative;
-  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin: 20px 0; */
   width: 100%;
 }
 
 .container__button > button {
-  width: 100px;
-  height: 35px;
-  border-radius: 15px;
-  align-items: center;
-  justify-content: center;
+  width: 90%;
+
+
+  /* width: 100px; */
+  height: 20px;
+  border-radius: 5px;
   border: 1px solid #ccc;
   box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
+
+  /* padding: 0; Remove padding padrão */
+  line-height: 1; /* Evita espaçamentos extras */
+  font-size: 11px;
+  padding-bottom: 2px;
 }
 
 .container__button > button:hover {

@@ -66,6 +66,10 @@
   width: 20%;
 }
 
+.form__button{
+  width: 100px;
+}
+
 #servico {
   width: 20%;
 }
@@ -86,3 +90,4 @@
 #valor {
   width: 25%;
 }
+

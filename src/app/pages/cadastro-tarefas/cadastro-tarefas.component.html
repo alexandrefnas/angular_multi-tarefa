@@ -101,10 +101,17 @@
       </div>
 
       <div class="form__container-linha4">
-        <ale-button label="Salvar" type="submit"></ale-button>
-        <ale-button label="Cancelar" (click)="cancelar()"></ale-button>
+        <div class="form__button">
+          <ale-button label="Salvar" type="submit"></ale-button>
+        </div>
+        <div class="form__button">
+          <ale-button
+            class="button-cancelar"
+            label="Cancelar"
+            (click)="cancelar()"
+          ></ale-button>
+        </div>
       </div>
     </form>
   </div>
 </div>
-
