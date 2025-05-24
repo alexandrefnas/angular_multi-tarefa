@@ -31,7 +31,7 @@
   /* padding: 0; Remove padding padrão */
   line-height: 1; /* Evita espaçamentos extras */
   font-size: 11px;
-  padding-bottom: 2px;
+  /* padding-bottom: 2px; */
 }
 
 .container__button > button:hover {

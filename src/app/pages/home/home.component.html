@@ -1,4 +1,18 @@
 <div class="container__home">
+<div>
+    <ale-button
+      class="button-cancelar"
+      label="Teste"
+      (click)="showModal = true"
+    ></ale-button>
+    <ale-modal-cadastro-tarefas
+      *ngIf="showModal"
+      [title]="'Confirmação'"
+      message="'Deseja continuar?'"
+      (onClose)="handleModalClose($event)"
+    >
+    </ale-modal-cadastro-tarefas>
+  </div>
   <div class="home__content">
     <h1>Cheguei Brasil!</h1>
     <p>Bem-vindo ao meu site!</p>

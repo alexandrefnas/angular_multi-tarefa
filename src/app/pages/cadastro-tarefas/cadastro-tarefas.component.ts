@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 import { SelectAleComponent } from '../../components/filds/select-ale/select-ale.component';
@@ -28,6 +28,7 @@ export class CadastroTarefasComponent {
   cadastroTarefas: FormGroup;
 
   valorNumerico: number = 0;
+  @Output() onClose = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder) {
     this.cadastroTarefas = this.fb.group({
@@ -53,6 +54,7 @@ export class CadastroTarefasComponent {
 
     const dados = this.cadastroTarefas.value;
     console.log('Salvando dados:', dados);
+    this.onClose.emit(true);
   }
 
   lista1 = [
@@ -94,6 +96,7 @@ export class CadastroTarefasComponent {
     });
 
     this.valorNumerico = 0;
+    this.onClose.emit(false);
   }
 }
 
