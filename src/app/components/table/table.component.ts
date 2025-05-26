@@ -14,6 +14,7 @@ export class TableComponent {
   @Input() tamanhosColunas: { [coluna: string]: string } = {};
   @Input() formatoColunas: { [key: string]: 'texto' | 'moeda' | 'data' } = {};
   @Input() mostrarAcoes: boolean = false;
+  @Input() colunasLabels!: { [key: string]: string };
 
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();

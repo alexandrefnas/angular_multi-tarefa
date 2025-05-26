@@ -1,23 +1,11 @@
-<!-- <div class="container__modal-tarefas"> -->
-  <div class="modal-backdrop" (click)="onBackdropClick()"></div>
-
-  <!-- <div class="modal-content">
-<ale-cadastro-tarefas></ale-cadastro-tarefas> -->
-    <!-- <h2>{{ title }}</h2>
-    <p>{{ message }}</p>
-    <div class="buttons">
-      <button (click)="confirm()">Confirmar</button>
-      <button (click)="cancel()">Cancelar</button> -->
-    <!-- </div> -->
-  <!-- </div> -->
-
+<div class="modal-backdrop" (click)="onBackdropClick()"></div>
 <div class="container__cadastro-tarefas">
   <div class="container__cadastro-form">
     <div class="title_container">
       <div class="title1">
         <h3>Cadastro de Tarefas</h3>
       </div>
-      <div class="title2"><a href="#" (click)="cancel()">X</a></div>
+      <div class="title2"><a (click)="cancel()">X</a></div>
     </div>
     <form [formGroup]="cadastroTarefas" (ngSubmit)="salvar()">
       <div class="form__container-linha1">

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,21 +10,34 @@ import { InputDecimalAleComponent } from '../../components/filds/input-decimal-a
 import { ButtonComponent } from '../../components/button/button.component';
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'ale-modal-cadastro-tarefas',
-  imports: [ReactiveFormsModule, SelectAleComponent, InputDecimalAleComponent, ButtonComponent, DataAleComponent, InputAleComponent],
+  imports: [
+    ReactiveFormsModule,
+    SelectAleComponent,
+    InputDecimalAleComponent,
+    ButtonComponent,
+    DataAleComponent,
+    InputAleComponent,
+    RouterModule,
+  ],
   templateUrl: './modal-cadastro-tarefas.component.html',
   styleUrl: './modal-cadastro-tarefas.component.css',
 })
 export class ModalCadastroTarefasComponent {
   cadastroTarefas: FormGroup;
   valorNumerico: number = 0;
+
   @Input() title: string = 'Título';
   @Input() message: string = 'Mensagem da modal';
   @Input() closeOnBackdrop: boolean = true;
-
+  @Input() linkUrl: string = '/';
   @Output() onClose = new EventEmitter<boolean>();
+
+  private dbService = inject(NgxIndexedDBService);
 
   constructor(private fb: FormBuilder) {
     this.cadastroTarefas = this.fb.group({
@@ -46,10 +59,6 @@ export class ModalCadastroTarefasComponent {
   //   this.onClose.emit(true);
   // }
 
-  cancel() {
-    this.onClose.emit(false);
-  }
-
   salvar() {
     if (!this.cadastroTarefas.valid) {
       console.log('Formulário inválido. Preencha os campos obrigatórios.');
@@ -57,8 +66,21 @@ export class ModalCadastroTarefasComponent {
     }
 
     const dados = this.cadastroTarefas.value;
-    console.log('Salvando dados:', dados);
+    this.dbService.add('tarefas', dados).subscribe({
+      next: (key) => {
+        console.log('Tarefa salva com ID:', key);
+        this.cancelar();
+      },
+      error: (error) => {
+        console.error('Erro ao salvar tarefa:', error);
+      },
+    });
+    // console.log('Salvando dados:', dados);
     // this.cancel();
+  }
+
+  cancel() {
+    this.onClose.emit(false);
   }
 
   cancelar(): void {
@@ -94,18 +116,18 @@ export class ModalCadastroTarefasComponent {
 
   lista1 = [
     { value: ' ', label: ' ' },
-    { value: 'alta', label: 'Alta' },
-    { value: 'moderado', label: 'Moderado' },
-    { value: 'baixa', label: 'Baixa' },
+    { value: 'Alta', label: 'Alta' },
+    { value: 'Moderado', label: 'Moderado' },
+    { value: 'Baixa', label: 'Baixa' },
   ];
 
   lista2 = [
     { value: '', label: '' },
-    { value: 'feito', label: 'Feito' },
+    { value: 'Feito', label: 'Feito' },
   ];
 
   lista3 = [
     { value: '', label: '' },
-    { value: 'pago', label: 'Pago' },
+    { value: 'Pago', label: 'Pago' },
   ];
 }

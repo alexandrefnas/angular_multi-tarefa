@@ -3,7 +3,7 @@
     <tr>
       <th *ngFor="let coluna of colunas">
         <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
-          {{ coluna | titlecase }}
+          {{ colunasLabels[coluna] | titlecase }}
         </div>
       </th>
       <th *ngIf="mostrarAcoes">Ações</th>
@@ -13,6 +13,7 @@
     <tr *ngFor="let item of dados">
       <td *ngFor="let coluna of colunas">
         <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
+          <!-- {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }} -->
           {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
         </div>
       </td>

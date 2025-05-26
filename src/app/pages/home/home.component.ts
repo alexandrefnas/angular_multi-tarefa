@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../../components/button/button.component';
-import { NgIf } from '@angular/common';
-import { ModalCadastroTarefasComponent } from '../../modal/modal-cadastro-tarefas/modal-cadastro-tarefas.component';
+import { IndexeddbService } from '../../services/indexeddb.service';
 
 @Component({
   selector: 'ale-home',
-  imports: [NgIf, ModalCadastroTarefasComponent, ButtonComponent],
+  imports: [ ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
+  // linkUrl = '#';
   showModal = false;
 
   handleModalClose(result: any) {
     console.log('Resultado da modal:', result);
     this.showModal = false;
+  }
+
+  constructor(private indexeddbService: IndexeddbService) {
+    // O banco já será aberto automaticamente ao instanciar o serviço.
   }
 }

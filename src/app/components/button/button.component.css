@@ -21,7 +21,6 @@
 .container__button > button {
   width: 90%;
 
-
   /* width: 100px; */
   height: 20px;
   border-radius: 5px;
@@ -32,6 +31,7 @@
   line-height: 1; /* Evita espaçamentos extras */
   font-size: 11px;
   /* padding-bottom: 2px; */
+  cursor: pointer;
 }
 
 .container__button > button:hover {
