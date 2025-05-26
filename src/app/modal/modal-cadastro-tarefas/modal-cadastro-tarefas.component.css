@@ -37,12 +37,12 @@
   flex-direction: column;
   align-items: center;
   position: fixed;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
 
- /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
   /* justify-content: center; */
   /* margin-top: 100px;
   height: 100vh; */
@@ -56,7 +56,7 @@
 
   min-width: 500px;
   max-width: 600px;
-  height: 320px;
+  height: 400px;
   gap: 20px;
 
   /* padrão do windows */
@@ -98,6 +98,7 @@
 }
 
 .title_container > .title2 > a {
+  cursor: pointer;
   color: white;
   transition: transform 0.6s;
 }
@@ -110,7 +111,8 @@
 .form__container-linha1,
 .form__container-linha2,
 .form__container-linha3,
-.form__container-linha4 {
+.form__container-linha4,
+.form__container-linha5 {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -136,6 +138,7 @@
 
 .form__button {
   width: 100px;
+height: 25px;
 }
 
 #servico {
@@ -146,9 +149,18 @@
   width: 35%;
 }
 
+#atividade {
+  width: 100%;
+}
+
+#obs {
+  width: 65%;
+}
+
 #quem {
   width: 35%;
 }
+
 #status {
   width: 20%;
 }
@@ -156,5 +168,5 @@
   width: 20%;
 }
 #valor {
-  width: 25%;
+  width: 35%;
 }

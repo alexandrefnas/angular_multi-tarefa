@@ -1,16 +1,4 @@
-<!-- <div class="container__modal-tarefas"> -->
-  <div class="modal-backdrop" (click)="onBackdropClick()"></div>
-
-  <!-- <div class="modal-content">
-<ale-cadastro-tarefas></ale-cadastro-tarefas> -->
-    <!-- <h2>{{ title }}</h2>
-    <p>{{ message }}</p>
-    <div class="buttons">
-      <button (click)="confirm()">Confirmar</button>
-      <button (click)="cancel()">Cancelar</button> -->
-    <!-- </div> -->
-  <!-- </div> -->
-
+<div class="modal-backdrop" (click)="onBackdropClick()"></div>
 <div class="container__cadastro-tarefas">
   <div class="container__cadastro-form">
     <div class="title_container">
@@ -67,6 +55,9 @@
             errorMessage="Campo obrigatório"
           ></ale-input-ale>
         </div>
+      </div>
+
+      <div class="form__container-linha3">
         <div class="form__container-input" id="obs">
           <ale-input-ale
             label="Obs"
@@ -75,9 +66,6 @@
             errorMessage=" "
           ></ale-input-ale>
         </div>
-      </div>
-
-      <div class="form__container-linha3">
         <div class="form__container-input" id="quem">
           <ale-input-ale
             label="Quem"
@@ -85,6 +73,17 @@
             [required]="false"
             errorMessage=" "
           ></ale-input-ale>
+        </div>
+      </div>
+      <div class="form__container-linha4">
+        <div class="form__container-data">
+          <ale-data-ale
+            label="Data Conclusão"
+            type="data"
+            formControlName="dataConclusao"
+            [required]="false"
+            errorMessage="Campo obrigatório! "
+          ></ale-data-ale>
         </div>
         <div class="form__container-select" id="status">
           <ale-select-ale
@@ -115,8 +114,7 @@
           ></ale-input-decimal-ale>
         </div>
       </div>
-
-      <div class="form__container-linha4">
+      <div class="form__container-linha5">
         <div class="form__button">
           <ale-button label="Salvar" type="submit"></ale-button>
         </div>
@@ -131,4 +129,3 @@
     </form>
   </div>
 </div>
-<!-- </div> -->

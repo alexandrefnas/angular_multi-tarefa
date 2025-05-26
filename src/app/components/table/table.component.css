@@ -39,6 +39,7 @@ flex-direction: row;
 
 .mostrar-acoes__button{
 width: 60px;
+height: 25px;
 }
 /* .buttons {
   margin-right: 4px;

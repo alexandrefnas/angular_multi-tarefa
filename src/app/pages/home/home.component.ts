@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ButtonComponent } from '../../components/button/button.component';
 import { NgIf } from '@angular/common';
 import { ModalCadastroTarefasComponent } from '../../modal/modal-cadastro-tarefas/modal-cadastro-tarefas.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'ale-home',
-  imports: [NgIf, ModalCadastroTarefasComponent, ButtonComponent],
+  imports: [ ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

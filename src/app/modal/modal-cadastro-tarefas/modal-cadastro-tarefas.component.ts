@@ -13,7 +13,14 @@ import { InputAleComponent } from '../../components/filds/input-ale/input-ale.co
 
 @Component({
   selector: 'ale-modal-cadastro-tarefas',
-  imports: [ReactiveFormsModule, SelectAleComponent, InputDecimalAleComponent, ButtonComponent, DataAleComponent, InputAleComponent],
+  imports: [
+    ReactiveFormsModule,
+    SelectAleComponent,
+    InputDecimalAleComponent,
+    ButtonComponent,
+    DataAleComponent,
+    InputAleComponent,
+  ],
   templateUrl: './modal-cadastro-tarefas.component.html',
   styleUrl: './modal-cadastro-tarefas.component.css',
 })
@@ -35,6 +42,7 @@ export class ModalCadastroTarefasComponent {
       atividade: ['', Validators.required],
       obs: [''],
       quem: [''],
+      dataConclusao: [''],
       statusSelecionada: [''],
       financeiroSelecionada: [''],
       valor: ['0'],
@@ -70,6 +78,7 @@ export class ModalCadastroTarefasComponent {
       atividade: '',
       obs: '',
       quem: '',
+      dataConclusao: '',
       statusSelecionada: '',
       financeiroSelecionada: '',
       valor: '0',

@@ -3,8 +3,9 @@
     <tr>
       <th *ngFor="let coluna of colunas">
         <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
-          {{ coluna | titlecase }}
+          {{ colunasLabels[coluna] | titlecase }}
         </div>
+        <!-- {{ coluna | titlecase }} -->
       </th>
       <th *ngIf="mostrarAcoes">Ações</th>
     </tr>

@@ -1,6 +1,18 @@
 <div class="container">
+  <div class="container__buttons">
+    <ale-button label="Cadastro" (click)="showModal = true"></ale-button>
+    <ale-modal-cadastro-tarefas
+      *ngIf="showModal"
+      [title]="'Confirmação'"
+      message="'Deseja continuar?'"
+      (onClose)="handleModalClose($event)"
+    >
+      <!-- [routerLink]="linkUrl" -->
+    </ale-modal-cadastro-tarefas>
+  </div>
   <div class="container__cadastro">
     <ale-table
+      [colunasLabels]="colunasLabels"
       [colunas]="colunasProdutos"
       [dados]="dadosProdutos"
       [tamanhosColunas]="tamanhosColunas"
