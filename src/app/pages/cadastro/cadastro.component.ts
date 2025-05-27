@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TableComponent } from '../../components/table/table.component';
@@ -6,6 +6,7 @@ import { ButtonComponent } from '../../components/button/button.component';
 import { NgIf } from '@angular/common';
 import { ModalCadastroTarefasComponent } from '../../modal/modal-cadastro-tarefas/modal-cadastro-tarefas.component';
 import { RouterModule } from '@angular/router';
+import { FirestoreService, Tarefa } from '../../services/firestore.service';
 
 @Component({
   selector: 'ale-cadastro',
@@ -21,13 +22,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit {
   showModal = false;
-
-  handleModalClose(result: any) {
-    console.log('Resultado da modal:', result);
-    this.showModal = false;
-  }
 
   tamanhosColunas = {
     atividade: '300px',
@@ -63,44 +59,34 @@ export class CadastroComponent {
     // 'valorNumerico',
   ];
 
-  // dadosProdutos: any[] = [];
-
-  // dadosProdutos = [
-  //   {
-  //     codigo: 'P001',
-  //     descricao: 'Teclado   Browser application bundle generation complete.',
-  //     descricao2: 'Teclado   Browser application bundle generation complete.',
-  //     preco: 99.9,
-  //     dataCadastro: '2024-01-10',
-  //   },
-  //   {
-  //     codigo: 'P002',
-  //     descricao: 'Mouse',
-  //     descricao2: 'Mouse',
-  //     preco: 49.5,
-  //     dataCadastro: '2024-02-15',
-  //   },
-  // ];
-
-  dadosProdutos = [
-    {
-      data: '05/25/2025',
-      servico: 'Serviço',
-      prioridadeSelecionada: 'Alta',
-      cliente: 'Cliente',
-      atividade: 'Atividade',
-      obs: 'Observações',
-      quem: 'Responsável',
-      statusSelecionada: 'Feito',
-      financeiroSelecionada: 'Pago',
-      valor: 1000,
-    },
-  ];
+  dadosProdutos: Tarefa[] = [];
 
   formatoProdutos = {
     valor: 'moeda',
     data: 'data',
   } as const;
+
+  constructor(private firestoreService: FirestoreService) {}
+
+  ngOnInit(): void {
+    this.firestoreService.getTarefas().subscribe((tarefas) => {
+    this.dadosProdutos = tarefas.map((tarefa) => ({
+      ...tarefa,
+      data: tarefa.data instanceof Date ? tarefa.data : new Date((tarefa.data as any).seconds * 1000),
+    }));
+    console.log('Tarefas carregadas:', this.dadosProdutos);
+  });
+  }
+
+  handleModalClose(result: any) {
+    console.log('Resultado da modal:', result);
+    this.showModal = false;
+
+    // Opcional: recarregar dados após fechar a modal
+    this.firestoreService.getTarefas().subscribe((tarefas) => {
+      this.dadosProdutos = tarefas;
+    });
+  }
 
   editarProduto(produto: any) {
     console.log('Editar:', produto);
@@ -110,3 +96,35 @@ export class CadastroComponent {
     console.log('Excluir:', produto);
   }
 }
+
+// dadosProdutos = [
+//   {
+//     codigo: 'P001',
+//     descricao: 'Teclado   Browser application bundle generation complete.',
+//     descricao2: 'Teclado   Browser application bundle generation complete.',
+//     preco: 99.9,
+//     dataCadastro: '2024-01-10',
+//   },
+//   {
+//     codigo: 'P002',
+//     descricao: 'Mouse',
+//     descricao2: 'Mouse',
+//     preco: 49.5,
+//     dataCadastro: '2024-02-15',
+//   },
+// ];
+
+// dadosProdutos = [
+//   {
+//     data: '05/25/2025',
+//     servico: 'Serviço',
+//     prioridadeSelecionada: 'Alta',
+//     cliente: 'Cliente',
+//     atividade: 'Atividade',
+//     obs: 'Observações',
+//     quem: 'Responsável',
+//     statusSelecionada: 'Feito',
+//     financeiroSelecionada: 'Pago',
+//     valor: 1000,
+//   },
+// ];

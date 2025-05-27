@@ -10,6 +10,7 @@ import { InputDecimalAleComponent } from '../../components/filds/input-decimal-a
 import { ButtonComponent } from '../../components/button/button.component';
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
+import { FirestoreService, Tarefa } from '../../services/firestore.service';
 
 @Component({
   selector: 'ale-modal-cadastro-tarefas',
@@ -27,13 +28,17 @@ import { InputAleComponent } from '../../components/filds/input-ale/input-ale.co
 export class ModalCadastroTarefasComponent {
   cadastroTarefas: FormGroup;
   valorNumerico: number = 0;
+
   @Input() title: string = 'Título';
   @Input() message: string = 'Mensagem da modal';
   @Input() closeOnBackdrop: boolean = true;
 
   @Output() onClose = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private firestoreService: FirestoreService
+  ) {
     this.cadastroTarefas = this.fb.group({
       data: [new Date(), Validators.required],
       servico: [''],
@@ -64,9 +69,19 @@ export class ModalCadastroTarefasComponent {
       return;
     }
 
-    const dados = this.cadastroTarefas.value;
-    console.log('Salvando dados:', dados);
-    // this.cancel();
+    const tarefa: Tarefa = this.cadastroTarefas.value;
+
+    this.firestoreService
+      .addTarefa(tarefa)
+      .then(() => {
+        console.log('Tarefa salva com sucesso!');
+        alert('Tarefa salva com sucesso!');
+        this.cancelar();
+      })
+      .catch((error) => {
+        console.error('Erro ao salvar tarefa:', error);
+        alert('Erro ao salvar tarefa!');
+      });
   }
 
   cancelar(): void {
