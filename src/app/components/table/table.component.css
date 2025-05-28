@@ -41,6 +41,17 @@ flex-direction: row;
 width: 60px;
 height: 25px;
 }
+
+.linha-destacada1 {
+  background-color: #ffcccc; /* Vermelho claro */
+  font-weight: bold;
+}
+
+.linha-destacada2 {
+  background-color: #fff3cd; /* Vermelho claro */
+  /* font-weight: bold; */
+}
+
 /* .buttons {
   margin-right: 4px;
   padding: 4px 8px;

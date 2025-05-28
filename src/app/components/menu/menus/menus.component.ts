@@ -12,8 +12,8 @@ export class MenusComponent {
   linkText = 'Cadastro';
   linkUrl = '/cadastro';
   // linkText2: string = "Teste";
-  linkUrl2 =  '/teste';
-
+  linkUrl2 = '/teste';
+  linkUrlTarefas = '/tarefas';
   // constructor(private router: Router) {
   //   this.router.events.subscribe((event) => {
   //     if (event instanceof NavigationEnd) {

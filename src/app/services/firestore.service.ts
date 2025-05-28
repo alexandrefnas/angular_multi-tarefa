@@ -8,6 +8,9 @@ import {
   collection,
   addDoc,
   setDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
 } from '@angular/fire/firestore';
 // export interface Cliente {
 //   id?: string;
@@ -24,7 +27,7 @@ export interface Tarefa {
   atividade: string;
   obs: string;
   quem: string;
-  dataConclusao: string;
+  dataConclusao?: Date | string | null;
   statusSelecionada: string;
   financeiroSelecionada: string;
   valor: string;
@@ -68,5 +71,15 @@ export class FirestoreService {
     return collectionData(tarefasRef, { idField: 'id' }) as Observable<
       Tarefa[]
     >;
+  }
+
+  async updateTarefa(id: string, tarefa: Partial<Tarefa>) {
+    const tarefaDocRef = doc(this.firestore, 'tarefas', id);
+    return updateDoc(tarefaDocRef, tarefa);
+  }
+
+  async deleteTarefa(id: string) {
+    const tarefaDocRef = doc(this.firestore, 'tarefas', id);
+    return deleteDoc(tarefaDocRef);
   }
 }

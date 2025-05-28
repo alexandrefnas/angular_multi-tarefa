@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { CadastroTarefasComponent } from './pages/cadastro-tarefas/cadastro-tarefas.component';
+import { ControleTarefasComponent } from './pages/controle-tarefas/controle-tarefas.component';
 
 export const routes: Routes = [
   {
@@ -15,5 +16,9 @@ export const routes: Routes = [
   {
     path: 'teste',
     component: CadastroTarefasComponent,
-  }
+  },
+  {
+    path: 'tarefas',
+    component: ControleTarefasComponent,
+  },
 ];

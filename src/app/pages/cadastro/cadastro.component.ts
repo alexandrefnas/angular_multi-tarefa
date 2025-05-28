@@ -28,7 +28,7 @@ export class CadastroComponent implements OnInit {
   tamanhosColunas = {
     atividade: '300px',
     obs: '200px',
-    valor: '100px',
+    valorNumerico: '150px',
     mostrarAcoes: '90px',
   };
 
@@ -42,7 +42,8 @@ export class CadastroComponent implements OnInit {
     quem: 'Responsável',
     statusSelecionada: 'Status',
     financeiroSelecionada: 'Financeiro',
-    valor: 'Valor',
+    // valor: 'Valor',
+    valorNumerico: 'Valor',
   };
 
   colunasProdutos = [
@@ -55,14 +56,15 @@ export class CadastroComponent implements OnInit {
     'quem',
     'statusSelecionada',
     'financeiroSelecionada',
-    'valor',
-    // 'valorNumerico',
+    // 'valor',
+    'valorNumerico',
   ];
 
   dadosProdutos: Tarefa[] = [];
 
   formatoProdutos = {
-    valor: 'moeda',
+    // valor: 'moeda',
+    valorNumerico: 'moeda',
     data: 'data',
   } as const;
 
@@ -70,12 +72,15 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.firestoreService.getTarefas().subscribe((tarefas) => {
-    this.dadosProdutos = tarefas.map((tarefa) => ({
-      ...tarefa,
-      data: tarefa.data instanceof Date ? tarefa.data : new Date((tarefa.data as any).seconds * 1000),
-    }));
-    console.log('Tarefas carregadas:', this.dadosProdutos);
-  });
+      this.dadosProdutos = tarefas.map((tarefa) => ({
+        ...tarefa,
+        data:
+          tarefa.data instanceof Date
+            ? tarefa.data
+            : new Date((tarefa.data as any).seconds * 1000),
+      }));
+      console.log('Tarefas carregadas:', this.dadosProdutos);
+    });
   }
 
   handleModalClose(result: any) {
@@ -83,9 +88,9 @@ export class CadastroComponent implements OnInit {
     this.showModal = false;
 
     // Opcional: recarregar dados após fechar a modal
-    this.firestoreService.getTarefas().subscribe((tarefas) => {
-      this.dadosProdutos = tarefas;
-    });
+    // this.firestoreService.getTarefas().subscribe((tarefas) => {
+    //   this.dadosProdutos = tarefas;
+    // });
   }
 
   editarProduto(produto: any) {

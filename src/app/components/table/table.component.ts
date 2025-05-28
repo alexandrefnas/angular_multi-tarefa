@@ -1,10 +1,10 @@
-import { NgFor, NgIf, NgStyle, TitleCasePipe } from '@angular/common';
+import { CommonModule, NgFor, NgIf, NgStyle, TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'ale-table',
-  imports: [NgIf, NgFor, NgStyle, TitleCasePipe, ButtonComponent],
+  imports: [  NgStyle, TitleCasePipe, ButtonComponent, CommonModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
@@ -15,6 +15,9 @@ export class TableComponent {
   @Input() formatoColunas: { [key: string]: 'texto' | 'moeda' | 'data' } = {};
   @Input() mostrarAcoes: boolean = false;
   @Input() colunasLabels!: { [key: string]: string };
+
+  @Input() destacarLinha1: (item: any) => boolean = () => false;
+  @Input() destacarLinha2: (item: any) => boolean = () => false;
 
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();

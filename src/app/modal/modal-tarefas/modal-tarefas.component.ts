@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,10 +11,12 @@ import { ButtonComponent } from '../../components/button/button.component';
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
 import { FirestoreService, Tarefa } from '../../services/firestore.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'ale-modal-cadastro-tarefas',
+  selector: 'ale-modal-tarefas',
   imports: [
+    NgIf,
     ReactiveFormsModule,
     SelectAleComponent,
     InputDecimalAleComponent,
@@ -22,23 +24,39 @@ import { FirestoreService, Tarefa } from '../../services/firestore.service';
     DataAleComponent,
     InputAleComponent,
   ],
-  templateUrl: './modal-cadastro-tarefas.component.html',
-  styleUrl: './modal-cadastro-tarefas.component.css',
+  templateUrl: './modal-tarefas.component.html',
+  styleUrl: './modal-tarefas.component.css',
 })
-export class ModalCadastroTarefasComponent {
-  cadastroTarefas: FormGroup;
-  valorNumerico: number = 0;
+export class ModalTarefasComponent {
+  @Input() tarefaParaEditar: Tarefa | null = null;
 
   @Input() title: string = 'Título';
   @Input() message: string = 'Mensagem da modal';
   @Input() closeOnBackdrop: boolean = true;
+  @Input() visible: boolean = false;
+
+  @Input() lista1 = [
+    { value: ' ', label: ' ' },
+    { value: 'Alta', label: 'Alta' },
+    { value: 'Moderado', label: 'Moderado' },
+    { value: 'Baixa', label: 'Baixa' },
+  ];
+
+  @Input() lista2 = [
+    { value: '', label: '' },
+    { value: 'Feito', label: 'Feito' },
+  ];
+
+  @Input() lista3 = [
+    { value: '', label: '' },
+    { value: 'Pago', label: 'Pago' },
+  ];
 
   @Output() onClose = new EventEmitter<boolean>();
-//  @Output() closeModal = new EventEmitter<void>();
+  @Output() onSave = new EventEmitter<Tarefa>();
 
-  // onCloseModal() {
-  //   this.closeModal.emit();
-  // }
+  cadastroTarefas: FormGroup;
+  valorNumerico: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -60,12 +78,10 @@ export class ModalCadastroTarefasComponent {
     });
   }
 
-  // confirm() {
-  //   this.onClose.emit(true);
-  // }
-
-  cancel() {
-    this.onClose.emit(false);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tarefaParaEditar'] && this.tarefaParaEditar) {
+      this.cadastroTarefas.patchValue(this.tarefaParaEditar);
+    }
   }
 
   salvar() {
@@ -76,17 +92,9 @@ export class ModalCadastroTarefasComponent {
 
     const tarefa: Tarefa = this.cadastroTarefas.value;
 
-    this.firestoreService
-      .addTarefa(tarefa)
-      .then(() => {
-        console.log('Tarefa salva com sucesso!');
-        alert('Tarefa salva com sucesso!');
-        this.cancelar();
-      })
-      .catch((error) => {
-        console.error('Erro ao salvar tarefa:', error);
-        alert('Erro ao salvar tarefa!');
-      });
+    // Apenas emite para o componente pai
+    this.onSave.emit(tarefa);
+    this.cancelar();
   }
 
   cancelar(): void {
@@ -106,7 +114,7 @@ export class ModalCadastroTarefasComponent {
     });
 
     this.valorNumerico = 0;
-    // this.onClose.emit(false);
+    this.cancel();
   }
 
   onRawValueChange(value: number): void {
@@ -121,20 +129,7 @@ export class ModalCadastroTarefasComponent {
     }
   }
 
-  lista1 = [
-    { value: ' ', label: ' ' },
-    { value: 'Alta', label: 'Alta' },
-    { value: 'Moderado', label: 'Moderado' },
-    { value: 'Baixa', label: 'Baixa' },
-  ];
-
-  lista2 = [
-    { value: '', label: '' },
-    { value: 'Feito', label: 'Feito' },
-  ];
-
-  lista3 = [
-    { value: '', label: '' },
-    { value: 'Pago', label: 'Pago' },
-  ];
+  cancel() {
+    this.onClose.emit(false);
+  }
 }

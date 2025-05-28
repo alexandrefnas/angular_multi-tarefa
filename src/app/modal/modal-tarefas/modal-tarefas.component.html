@@ -1,0 +1,137 @@
+<div *ngIf="visible" class="modal-container" aria-modal="true">
+  <div  class="modal-backdrop" (click)="onBackdropClick()"></div>
+  <div class="container__cadastro-tarefas" >
+    <div class="container__cadastro-form">
+      <div class="title_container">
+        <div class="title1">
+          <h3>{{ title }}</h3>
+        </div>
+        <div class="title2">
+          <button type="button" (click)="cancelar()">X</button>
+        </div>
+      </div>
+      <form [formGroup]="cadastroTarefas" (ngSubmit)="salvar()">
+        <div class="form__container-linha1">
+          <div class="form__container-data">
+            <ale-data-ale
+              label="Data"
+              type="data"
+              formControlName="data"
+              [required]="true"
+              errorMessage="Campo obrigatório!"
+            ></ale-data-ale>
+          </div>
+          <div class="form__container-input" id="servico">
+            <ale-input-ale
+              label="Serviço"
+              type="servico"
+              formControlName="servico"
+              [required]="false"
+              errorMessage=" "
+            ></ale-input-ale>
+          </div>
+          <div class="form__container-select">
+            <ale-select-ale
+              [label]="'Alerta'"
+              [placeholder]="''"
+              [niveis]="lista1"
+              formControlName="prioridadeSelecionada"
+              errorMessage=" "
+            ></ale-select-ale>
+          </div>
+          <div class="form__container-input" id="cliente">
+            <ale-input-ale
+              label="Cliente"
+              formControlName="cliente"
+              [required]="true"
+              errorMessage="Campo obrigatório"
+            ></ale-input-ale>
+          </div>
+        </div>
+
+        <div class="form__container-linha2">
+          <div class="form__container-input" id="atividade">
+            <ale-input-ale
+              label="Descrição Atividade"
+              formControlName="atividade"
+              [required]="true"
+              errorMessage="Campo obrigatório"
+            ></ale-input-ale>
+          </div>
+        </div>
+
+        <div class="form__container-linha3">
+          <div class="form__container-input" id="obs">
+            <ale-input-ale
+              label="Obs"
+              formControlName="obs"
+              [required]="false"
+              errorMessage=" "
+            ></ale-input-ale>
+          </div>
+          <div class="form__container-input" id="quem">
+            <ale-input-ale
+              label="Quem"
+              formControlName="quem"
+              [required]="false"
+              errorMessage=" "
+            ></ale-input-ale>
+          </div>
+        </div>
+
+        <div class="form__container-linha4">
+          <div class="form__container-data">
+            <ale-data-ale
+              label="Data Conclusão"
+              type="data"
+              formControlName="dataConclusao"
+              [required]="false"
+              errorMessage="Campo obrigatório!"
+            ></ale-data-ale>
+          </div>
+          <div class="form__container-select" id="status">
+            <ale-select-ale
+              [label]="'Status'"
+              [placeholder]="''"
+              [niveis]="lista2"
+              formControlName="statusSelecionada"
+              errorMessage=" "
+            ></ale-select-ale>
+          </div>
+          <div class="form__container-select" id="financeiro">
+            <ale-select-ale
+              [label]="'Financeiro'"
+              [placeholder]="''"
+              [niveis]="lista3"
+              formControlName="financeiroSelecionada"
+              errorMessage=" "
+            ></ale-select-ale>
+          </div>
+          <div class="form__container-input" id="valor">
+            <ale-input-decimal-ale
+              label="Valor"
+              formControlName="valor"
+              [maskType]="'money'"
+              [required]="false"
+              errorMessage=" "
+              (rawValueChange)="onRawValueChange($event)"
+            ></ale-input-decimal-ale>
+          </div>
+        </div>
+
+        <div class="form__container-linha5">
+          <div class="form__button">
+            <ale-button label="Salvar" type="submit"></ale-button>
+          </div>
+          <div class="form__button">
+            <ale-button
+              class="button-cancelar"
+              label="Cancelar"
+              (click)="cancelar()"
+            ></ale-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
