@@ -1,6 +1,6 @@
 <div *ngIf="visible" class="modal-container" aria-modal="true">
-  <div  class="modal-backdrop" (click)="onBackdropClick()"></div>
-  <div class="container__cadastro-tarefas" >
+  <div class="modal-backdrop" (click)="onBackdropClick()"></div>
+  <div class="container__cadastro-tarefas">
     <div class="container__cadastro-form">
       <div class="title_container">
         <div class="title1">
@@ -35,29 +35,43 @@
               [label]="'Alerta'"
               [placeholder]="''"
               [niveis]="lista1"
-              formControlName="prioridadeSelecionada"
+              [formControl]="prioridadeControl"
               errorMessage=" "
+              [allowTyping]="false"
             ></ale-select-ale>
+            <!-- formControlName="prioridadeSelecionada" -->
           </div>
           <div class="form__container-input" id="cliente">
             <ale-input-ale
               label="Cliente"
               formControlName="cliente"
-              [required]="true"
+              [required]="false"
               errorMessage="Campo obrigatório"
             ></ale-input-ale>
           </div>
         </div>
 
         <div class="form__container-linha2">
-          <div class="form__container-input" id="atividade">
+          <div class="form__container-select" id="atividades">
+            <ale-select-ale
+              [label]="'Atividade'"
+              [placeholder]="''"
+              [niveis]="atividades"
+              [formControl]="atividadeControl"
+              [allowTyping]="true"
+              [required]="true"
+              errorMessage="Campo obrigatório "
+            ></ale-select-ale>
+            <!-- formControlName="atividade" -->
+          </div>
+          <!-- <div class="form__container-input" id="atividade">
             <ale-input-ale
               label="Descrição Atividade"
               formControlName="atividade"
-              [required]="true"
+              [required]="false"
               errorMessage="Campo obrigatório"
             ></ale-input-ale>
-          </div>
+          </div> -->
         </div>
 
         <div class="form__container-linha3">
@@ -69,13 +83,21 @@
               errorMessage=" "
             ></ale-input-ale>
           </div>
-          <div class="form__container-input" id="quem">
-            <ale-input-ale
+          <div class="form__container-select" id="quem">
+            <ale-select-ale
+              [label]="'Quem'"
+              [placeholder]="''"
+              [niveis]="lista4"
+              [formControl]="quemContol"
+              errorMessage=" "
+            ></ale-select-ale>
+            <!-- formControlName="quem" -->
+            <!-- <ale-input-ale
               label="Quem"
               formControlName="quem"
               [required]="false"
               errorMessage=" "
-            ></ale-input-ale>
+            ></ale-input-ale> -->
           </div>
         </div>
 
@@ -94,15 +116,17 @@
               [label]="'Status'"
               [placeholder]="''"
               [niveis]="lista2"
-              formControlName="statusSelecionada"
+              [formControl]="statusSelecionadaControl"
               errorMessage=" "
             ></ale-select-ale>
+            <!-- formControlName="statusSelecionada" -->
           </div>
           <div class="form__container-select" id="financeiro">
             <ale-select-ale
               [label]="'Financeiro'"
               [placeholder]="''"
               [niveis]="lista3"
+              [formControl]="financeiroSelecionadaControl"
               formControlName="financeiroSelecionada"
               errorMessage=" "
             ></ale-select-ale>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-// import { collectionData } from '@angular/fire/firestore';
-// import { addDoc, collection, Firestore, setDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   Firestore,
   collectionData,
@@ -12,26 +11,26 @@ import {
   doc,
   updateDoc,
 } from '@angular/fire/firestore';
-// export interface Cliente {
-//   id?: string;
-//   nome: string;
-//   email: string;
-// }
 
 export interface Tarefa {
   id?: string;
-  data: Date;
+  data: string | Date;
   servico: string;
   prioridadeSelecionada: string;
   cliente: string;
   atividade: string;
   obs: string;
   quem: string;
-  dataConclusao?: Date | string | null;
+  dataConclusao?: string | Date | null;
   statusSelecionada: string;
   financeiroSelecionada: string;
   valor: string;
   valorNumerico: number;
+}
+
+export interface TarefaCount {
+  prioridade: string;
+  quantidade: number;
 }
 
 @Injectable({
@@ -81,5 +80,23 @@ export class FirestoreService {
   async deleteTarefa(id: string) {
     const tarefaDocRef = doc(this.firestore, 'tarefas', id);
     return deleteDoc(tarefaDocRef);
+  }
+
+  getContagemPorPrioridade(): Observable<TarefaCount[]> {
+    return this.getTarefas().pipe(
+      map((tarefas: Tarefa[]) => {
+        const contagem: { [key: string]: number } = {};
+
+        tarefas.forEach((tarefa) => {
+          const prioridade = tarefa.prioridadeSelecionada.toLowerCase();
+          contagem[prioridade] = (contagem[prioridade] || 0) + 1;
+        });
+
+        return Object.keys(contagem).map((key) => ({
+          prioridade: key,
+          quantidade: contagem[key],
+        }));
+      })
+    );
   }
 }

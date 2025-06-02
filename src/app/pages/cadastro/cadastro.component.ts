@@ -71,16 +71,16 @@ export class CadastroComponent implements OnInit {
   constructor(private firestoreService: FirestoreService) {}
 
   ngOnInit(): void {
-    this.firestoreService.getTarefas().subscribe((tarefas) => {
-      this.dadosProdutos = tarefas.map((tarefa) => ({
-        ...tarefa,
-        data:
-          tarefa.data instanceof Date
-            ? tarefa.data
-            : new Date((tarefa.data as any).seconds * 1000),
-      }));
-      console.log('Tarefas carregadas:', this.dadosProdutos);
-    });
+    // this.firestoreService.getTarefas().subscribe((tarefas) => {
+    //   this.dadosProdutos = tarefas.map((tarefa) => ({
+    //     ...tarefa,
+    //     data:
+    //       tarefa.data instanceof Date
+    //         ? tarefa.data
+    //         : new Date((tarefa.data as any).seconds * 1000),
+    //   }));
+    //   console.log('Tarefas carregadas:', this.dadosProdutos);
+    // });
   }
 
   handleModalClose(result: any) {

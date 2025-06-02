@@ -1,13 +1,21 @@
 .container__home {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
-  padding-top: 55px;
+  /* padding: 0 40px 0 40px; */
+  height: 100vh;
+  margin-top: 51px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(168, 168, 166);
+  /* background: radial-gradient(
+    circle,
+    #e7e6e4 0%,     /* mais claro no centro
+    #b1afab 60%,    /* cor original
+    #9b9a98 100%    /* opcional: ainda mais escuro nas bordas
+    );
+  /* background-color: #7b5814; */
   /* width: 90vw; */
   /* max-width: 600px; */
-  height: 100vh;
-  background-color: #7b5814;
 }
 
 /* #logomarca-principal { */

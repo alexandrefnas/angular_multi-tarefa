@@ -19,27 +19,27 @@ td {
   padding: 10px;
   border-bottom: 1px solid #e0e0e0;
   text-align: left;
+  text-transform: uppercase;
 }
 
 th {
-  background-color: #f3f3f3;
+  background: linear-gradient(to bottom, #282c31, #888c92);
   font-weight: 600;
-  color: #222;
+  color: white;
 }
 
 tr:hover {
   background-color: #f0f8ff; /* leve azul no hover */
 }
 
-
-.container__mostrar-acoes{
-display: flex;
-flex-direction: row;
+.container__mostrar-acoes {
+  display: flex;
+  flex-direction: row;
 }
 
-.mostrar-acoes__button{
-width: 60px;
-height: 25px;
+.mostrar-acoes__button {
+  width: 60px;
+  height: 25px;
 }
 
 .linha-destacada1 {
@@ -48,7 +48,7 @@ height: 25px;
 }
 
 .linha-destacada2 {
-  background-color: #fff3cd; /* Vermelho claro */
+  background-color: #ffff00;
   /* font-weight: bold; */
 }
 

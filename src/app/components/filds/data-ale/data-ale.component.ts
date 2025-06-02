@@ -1,4 +1,10 @@
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+} from '@angular/core';
 import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
@@ -24,10 +30,15 @@ import { NgIf } from '@angular/common';
 })
 export class DataAleComponent implements ControlValueAccessor {
   @Input() label: string = '';
-  @Input() value: Date = new Date();
+  @Input() value: Date | null | undefined = undefined;
+
+  // @Input() value: Date = new Date();
   @Input() errorMessage: string = 'Campo obrigatório';
   @Input() required: boolean = false;
   @Input() isFocused: boolean = false;
+
+  @Output() valueChange = new EventEmitter<Date>();
+
   onChange = (value: any) => {};
   onTouched = () => {};
 
@@ -49,6 +60,8 @@ export class DataAleComponent implements ControlValueAccessor {
 
   onDateChange(event: any) {
     this.value = event.value;
+    this.valueChange.emit(this.value ?? undefined);
+
     this.onChange(this.value);
     this.onTouched();
   }

@@ -1,10 +1,21 @@
 .container {
-  margin-top: 100px;
+  margin-top: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 40px 0 40px;
-  height: 100vh;
+  height: 95vh;
+  background-color: rgb(168, 168, 166);
+}
+
+.container__menu-tabela {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #999;
 }
 
 .container__cadastro {
@@ -18,8 +29,51 @@
 .container__buttons {
   width: 100px;
   height: 25px;
-  align-self: flex-end;
-  /* padding-bottom: 20px; */
-  margin-bottom: 20px;
   margin-left: 0;
+  /* align-self: flex-end; */
+  /* padding-bottom: 20px; */
+  /* margin-bottom: 20px; */
+}
+
+#menu-tabela__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 30%;
+margin-right: 20px;
+  /* align-self: flex-end; */
+  /* padding-bottom: 20px; */
+  /* margin-bottom: 20px; */
+  /* margin-left: 0; */
+}
+
+#menu-tabela__pesquisa {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+
+#pesquisa__todos {
+  display: flex;
+  justify-content: center;
+  width: 35%;
+}
+
+#pesquisa__periodo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 65%;
+  gap: 15px;
+}
+
+#periodo__datas {
+  width: 75%;
+}
+
+#pesquisa__buscaConfirma {
+  width: 50px;
+  padding: 8px;
 }

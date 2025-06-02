@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -44,12 +51,34 @@ export class ModalTarefasComponent {
 
   @Input() lista2 = [
     { value: '', label: '' },
-    { value: 'Feito', label: 'Feito' },
+    { value: 'FEITO', label: 'FEITO' },
   ];
 
   @Input() lista3 = [
     { value: '', label: '' },
-    { value: 'Pago', label: 'Pago' },
+    { value: 'PAGO', label: 'PAGO' },
+  ];
+
+  @Input() lista4 = [
+    { value: '', label: '' },
+    { value: 'MÉCIO', label: 'MÉCIO' },
+    { value: 'DOUGLAS', label: 'DOUGLAS' },
+    { value: 'ALEXANDRE', label: 'ALEXANDRE' },
+  ];
+
+  atividades = [
+    { value: 'ABERTURA MEI', label: 'ABERTURA MEI' },
+    { value: 'BAIXA CNPJ ME', label: 'BAIXA CNPJ ME' },
+    { value: 'BAIXA CNPJ MEI', label: 'BAIXA CNPJ MEI' },
+    { value: 'CORRIGIR NFC REJEITADA', label: 'CORRIGIR NFC REJEITADA' },
+    { value: 'DECLARAÇÃO IR PF', label: 'DECLARAÇÃO IR PF' },
+    { value: 'EMISSÃO DE NF', label: 'EMISSÃO DE NF' },
+    { value: 'EMISSÃO DE NFSE', label: 'EMISSÃO DE NFSE' },
+    { value: 'ENVIAR GUIAS INSS', label: 'ENVIAR GUIAS INSS' },
+    { value: 'IMPORTAR XML DE COMPRA', label: 'IMPORTAR XML DE COMPRA	' },
+    { value: 'PARCELAMENTO MEI', label: 'PARCELAMENTO MEI' },
+    { value: 'PREECHER CARNE LEÃO', label: 'PREECHER CARNE LEÃO' },
+    { value: 'REQUERIMENTO AUXÍLIO INSS', label: 'REQUERIMENTO AUXÍLIO INSS' },
   ];
 
   @Output() onClose = new EventEmitter<boolean>();
@@ -63,10 +92,10 @@ export class ModalTarefasComponent {
     private firestoreService: FirestoreService
   ) {
     this.cadastroTarefas = this.fb.group({
-      data: [new Date(), Validators.required],
+      data: ['', Validators.required],
       servico: [''],
       prioridadeSelecionada: [''],
-      cliente: ['', Validators.required],
+      cliente: [''],
       atividade: ['', Validators.required],
       obs: [''],
       quem: [''],
@@ -78,24 +107,67 @@ export class ModalTarefasComponent {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tarefaParaEditar'] && this.tarefaParaEditar) {
-      this.cadastroTarefas.patchValue(this.tarefaParaEditar);
-    }
+  // Getter para facilitar o acesso com cast para FormControl
+  get prioridadeControl(): FormControl {
+    return this.cadastroTarefas.get('prioridadeSelecionada') as FormControl;
   }
+
+  get atividadeControl(): FormControl {
+    return this.cadastroTarefas.get('atividade') as FormControl;
+  }
+  get quemContol(): FormControl {
+    return this.cadastroTarefas.get('quem') as FormControl;
+  }
+  get statusSelecionadaControl(): FormControl {
+    return this.cadastroTarefas.get('statusSelecionada') as FormControl;
+  }
+  get financeiroSelecionadaControl(): FormControl {
+    return this.cadastroTarefas.get('financeiroSelecionada') as FormControl;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+  if (changes['tarefaParaEditar'] && this.tarefaParaEditar) {
+    const tarefa = { ...this.tarefaParaEditar };
+
+    if (typeof tarefa.data === 'string') {
+      const [ano, mes, dia] = tarefa.data.split('-').map(Number);
+      tarefa.data = new Date(ano, mes - 1, dia); // data local, sem fuso
+    }
+
+    if (typeof tarefa.dataConclusao === 'string' && tarefa.dataConclusao) {
+      const [ano, mes, dia] = tarefa.dataConclusao.split('-').map(Number);
+      tarefa.dataConclusao = new Date(ano, mes - 1, dia);
+    }
+
+    this.cadastroTarefas.patchValue(tarefa);
+  }
+}
 
   salvar() {
     if (!this.cadastroTarefas.valid) {
       console.log('Formulário inválido. Preencha os campos obrigatórios.');
+      this.cadastroTarefas.markAllAsTouched();
       return;
     }
 
-    const tarefa: Tarefa = this.cadastroTarefas.value;
+    const tarefa: Tarefa = {
+      ...this.cadastroTarefas.value,
+      data: this.formatarDataString(new Date(this.cadastroTarefas.value.data)),
+      dataConclusao: this.cadastroTarefas.value.dataConclusao
+        ? this.formatarDataString(this.cadastroTarefas.value.dataConclusao)
+        : '',
+    };
 
-    // Apenas emite para o componente pai
     this.onSave.emit(tarefa);
     this.cancelar();
   }
+
+  private formatarDataString(data: Date): string {
+  const ano = data.getFullYear();
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const dia = String(data.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
 
   cancelar(): void {
     this.cadastroTarefas.reset({
@@ -131,5 +203,15 @@ export class ModalTarefasComponent {
 
   cancel() {
     this.onClose.emit(false);
+  }
+
+  private formatarData(date: Date): string {
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+    const dia = String(date.getDate()).padStart(2, '0');
+    const mes = String(date.getMonth() + 1).padStart(2, '0');
+    const ano = date.getFullYear();
+    return `${ano}-${mes}-${dia}`; // Exemplo: '2025-05-29'
   }
 }

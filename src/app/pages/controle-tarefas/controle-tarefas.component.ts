@@ -1,12 +1,28 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button.component';
 import { TableComponent } from '../../components/table/table.component';
 import { FirestoreService, Tarefa } from '../../services/firestore.service';
 import { ModalTarefasComponent } from '../../modal/modal-tarefas/modal-tarefas.component';
+import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 
 @Component({
   selector: 'ale-controle-tarefas',
-  imports: [ButtonComponent, TableComponent, ModalTarefasComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonComponent,
+    TableComponent,
+    ModalTarefasComponent,
+    DataAleComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './controle-tarefas.component.html',
   styleUrl: './controle-tarefas.component.css',
 })
@@ -14,9 +30,17 @@ export class ControleTarefasComponent {
   mostrarModal: boolean = false;
   mostrarModalEditar: boolean = false;
 
+  mostrarTodos: boolean = false;
+  mostrarTodosAtivo: boolean = false;
+
   tarefaEmEdicao: Tarefa | null = null;
 
   dadosProdutos: Tarefa[] = [];
+
+  // pesquisaPeriodo!: FormGroup;
+
+  dataInicio: Date | null = null;
+  dataFim: Date | null = null;
 
   prioridades = [
     { value: '', label: '' },
@@ -39,7 +63,8 @@ export class ControleTarefasComponent {
   ];
 
   tamanhosColunas = {
-    atividade: '200px',
+    cliente: '150px',
+    atividade: 'auto',
     obs: '200px',
     valorNumerico: '150px',
     mostrarAcoes: '90px',
@@ -88,23 +113,108 @@ export class ControleTarefasComponent {
     this.carregarTarefas();
   }
 
+  verificarCheckbox(): void {
+    if (this.mostrarTodosAtivo) {
+      this.mostrarTodos = false;
+      this.mostrarTodosAtivo = false;
+      this.carregarTarefas();
+    } //  else {
+    //   this.mostrarTodosAtivo = true;
+    //   this.mostrarTodos = true;
+    // }
+  }
+
+  buttonBuscar(): void {
+    this.carregarTarefas();
+    this.mostrarTodosAtivo = true;
+    // console.log('verificando data: ' + this.dataInicio + ' ' + this.dataFim);
+  }
+
+  // private formatarDataISO(date: Date): string {
+  //   return date.toISOString().slice(0, 10); // Retorna '2025-05-29'
+  // }
+
   carregarTarefas(): void {
     this.firestoreService.getTarefas().subscribe((tarefas) => {
-      this.dadosProdutos = tarefas.map((tarefa) => ({
+      let tarefasMapeadas = tarefas.map((tarefa) => ({
         ...tarefa,
-        data:
-          tarefa.data instanceof Date
-            ? tarefa.data
-            : new Date((tarefa.data as any).seconds * 1000),
-
-        dataConclusao:
-          tarefa.dataConclusao instanceof Date
-            ? tarefa.dataConclusao
-            : tarefa.dataConclusao
-            ? new Date((tarefa.dataConclusao as any).seconds * 1000)
-            : null,
+        data: tarefa.data,
+        dataConclusao: tarefa.dataConclusao || '',
       }));
+
+      tarefasMapeadas.sort((a, b) => {
+        const prioridadeA = (a.prioridadeSelecionada || '').toLowerCase();
+        const prioridadeB = (b.prioridadeSelecionada || '').toLowerCase();
+
+        if (prioridadeA < prioridadeB) return -1;
+        if (prioridadeA > prioridadeB) return 1;
+
+        // Se prioridades forem iguais, ordena por data mais antiga
+        const dataA =
+          a.data instanceof Date ? this.formatarDataString(a.data) : a.data;
+        const dataB =
+          b.data instanceof Date ? this.formatarDataString(b.data) : b.data;
+
+        return dataA.localeCompare(dataB);
+      });
+      // ✅ Sempre aplica o filtro de período se houver datas
+      if (this.dataInicio && this.dataFim) {
+        tarefasMapeadas = this.filtrarPorPeriodo(
+          tarefasMapeadas,
+          this.dataInicio,
+          this.dataFim
+        );
+      }
+
+      if (this.mostrarTodos) {
+        this.dadosProdutos = tarefasMapeadas;
+        console.log('Exibindo todas as tarefas após filtro de período.');
+      } else {
+        this.dadosProdutos = tarefasMapeadas.filter((tarefa) => {
+          const dataConclusaoVazia = !tarefa.dataConclusao;
+          const financeiroVazio =
+            !tarefa.financeiroSelecionada ||
+            tarefa.financeiroSelecionada === '';
+          const valorMaiorQueZero = tarefa.valorNumerico > 0;
+
+          if (dataConclusaoVazia) {
+            return valorMaiorQueZero ? financeiroVazio : true;
+          } else {
+            return valorMaiorQueZero ? financeiroVazio : false;
+          }
+        });
+        console.log('Exibindo tarefas com todos os filtros aplicados.');
+      }
     });
+  }
+
+  private filtrarPorPeriodo(
+    tarefas: any[],
+    dataInicio: string | Date,
+    dataFim: string | Date
+  ): any[] {
+    const inicio = this.formatarDataString(new Date(dataInicio));
+    const fim = this.formatarDataString(new Date(dataFim));
+
+    console.log('Filtro de período:');
+    console.log('Início:', inicio);
+    console.log('Fim:', fim);
+
+    return tarefas.filter((tarefa) => {
+      const tarefaData =
+        tarefa.data instanceof Date
+          ? this.formatarDataString(tarefa.data)
+          : tarefa.data;
+
+      return tarefaData >= inicio && tarefaData <= fim;
+    });
+  }
+
+  private formatarDataString(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
   }
 
   abrirModal(): void {

@@ -153,9 +153,13 @@
   width: 35%;
 }
 
-#atividade {
+#atividades {
   width: 100%;
 }
+
+/* #atividade {
+  width: 55%;
+} */
 
 #obs {
   width: 65%;

@@ -1,6 +1,6 @@
 .container__menu-bar {
   width: 100%;
-  height: 8vh;
+  height:100%;
   display: flex;
   /* position: fixed; */
   align-items: center;

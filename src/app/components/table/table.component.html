@@ -23,7 +23,7 @@
       <td *ngIf="mostrarAcoes">
         <div
           class="container__mostrar-acoes"
-          [ngStyle]="{ width: tamanhosColunas['mostrarAcoes'] || 'auto' }"
+          [ngStyle]="{ width: tamanhosColunas['mostrarAcoes'] || 'auto', minWidth: '100px' }"
         >
           <div class="mostrar-acoes__button">
             <ale-button

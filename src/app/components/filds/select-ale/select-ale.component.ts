@@ -1,12 +1,22 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'ale-select-ale',
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgFor, NgIf, CommonModule, FormsModule],
   templateUrl: './select-ale.component.html',
-  styleUrl: './select-ale.component.css',
+  styleUrls: ['./select-ale.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,21 +26,46 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
   ],
 })
 export class SelectAleComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() placeholder = 'Selecione...';
+  @Input() label: string = '';
+  @Input() placeholder: string = '';
+  @Input() allowTyping: boolean = false;
   @Input() niveis: { value: string; label: string }[] = [];
-  @Input() isFocused = false;
-  @Input() errorMessage = 'Campo obrigatório';
 
-  @Input() selectedValue: string | null = null;
-  @Output() selectedValueChange = new EventEmitter<string | null>();
-  @Output() selected = new EventEmitter<string | null>();
+  selectedValue: string = '';
+  isFocused: boolean = false;
+  showOptions: boolean = false;
+  filteredOptions: { value: string; label: string }[] = [];
 
-  onChange = (_: any) => {};
+  private onChange = (_: any) => {};
   onTouched = () => {};
 
-  writeValue(value: string | null): void {
+  // Quando digita no input
+  onInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedValue = input.value;
+    this.onChange(this.selectedValue);
+
+    // Filtro simples
+    this.filteredOptions = this.niveis.filter((option) =>
+      option.label.toLowerCase().includes(this.selectedValue.toLowerCase())
+    );
+  }
+
+  // Quando seleciona da lista
+  selectOption(option: { value: string; label: string }): void {
+    this.selectedValue = option.value;
+    this.onChange(this.selectedValue);
+    this.showOptions = false;
+  }
+
+  onSelectChange(event: any): void {
+    this.selectedValue = event;
+    this.onChange(event);
+  }
+  // Métodos do ControlValueAccessor
+  writeValue(value: any): void {
     this.selectedValue = value;
+    this.filteredOptions = this.niveis;
   }
 
   registerOnChange(fn: any): void {
@@ -41,19 +76,121 @@ export class SelectAleComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    // Implementar se necessário
-  }
-
-  onSelectChange(value: string | null): void {
-    this.selectedValue = value;
-    this.selectedValueChange.emit(value);
-    this.selected.emit(value);
-    this.onChange(value);
-    this.onTouched();
-  }
-
   hasError(): boolean {
-    return !this.selectedValue;
+    // Aqui você pode colocar sua lógica de validação
+    return false;
+  }
+
+  get errorMessage(): string {
+    // Mensagem de erro padrão ou personalizada
+    return 'Campo obrigatório';
+  }
+  @Input() showOptionsClose: boolean = false;
+  toggleOptions(): void {
+    if (this.showOptionsClose) this.showOptions = !this.showOptions;
+    else this.showOptionsClose = true;
+  }
+
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.showOptions = false;
+      this.showOptionsClose = true;
+    }
   }
 }
+
+// import { CommonModule, NgFor, NgIf } from '@angular/common';
+// import {
+//   Component,
+//   Input,
+//   Output,
+//   EventEmitter,
+//   forwardRef,
+// } from '@angular/core';
+// import {
+//   ControlValueAccessor,
+//   FormControl,
+//   FormsModule,
+//   NG_VALUE_ACCESSOR,
+// } from '@angular/forms';
+
+// @Component({
+//   selector: 'ale-select-ale',
+//   imports: [NgFor, NgIf, CommonModule, FormsModule],
+//   templateUrl: './select-ale.component.html',
+//   styleUrls: ['./select-ale.component.css'],
+//   providers: [
+//     {
+//       provide: NG_VALUE_ACCESSOR,
+//       useExisting: forwardRef(() => SelectAleComponent),
+//       multi: true,
+//     },
+//   ],
+// })
+// export class SelectAleComponent implements ControlValueAccessor {
+//   @Input() label!: string;
+//   @Input() placeholder!: string;
+//   @Input() niveis: { value: string; label: string }[] = [];
+//   @Input() errorMessage!: string;
+//   @Input() allowTyping: boolean = false;
+
+//   isFocused = false;
+//   showOptions = false;
+
+//   filteredOptions: any[] = [];
+
+//   selectedValue: string | null = null;
+
+//   onChange = (value: any) => {};
+//   onTouched = () => {};
+
+//   writeValue(value: any): void {
+//     this.selectedValue = value;
+//   }
+
+//   registerOnChange(fn: any): void {
+//     this.onChange = fn;
+//   }
+
+//   registerOnTouched(fn: any): void {
+//     this.onTouched = fn;
+//   }
+
+//   setDisabledState?(isDisabled: boolean): void {
+//     // Se quiser implementar disabled.
+//   }
+
+//   onSelectChange(event: any): void {
+//     this.selectedValue = event;
+//     this.onChange(event);
+//   }
+
+//   onInputChange(event: Event): void {
+//     const input = event.target as HTMLInputElement;
+//     this.selectedValue = input.value;
+//     this.filterOptions();
+//     this.onChange(this.selectedValue);
+//   }
+
+//   selectOption(option: any): void {
+//     this.selectedValue = option.value;
+//     this.showOptions = false;
+//     this.onChange(this.selectedValue);
+//   }
+
+//   filterOptions(): void {
+//     if (!this.selectedValue) {
+//       this.filteredOptions = [...this.niveis];
+//       return;
+//     }
+
+//     const val = this.selectedValue.toLowerCase();
+//     this.filteredOptions = this.niveis.filter((opt) =>
+//       opt.label.toLowerCase().includes(val)
+//     );
+//   }
+
+//   hasError(): boolean {
+//     return !!this.errorMessage;
+//   }
+// }

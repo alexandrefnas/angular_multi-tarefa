@@ -1,10 +1,16 @@
-import { CommonModule, NgFor, NgIf, NgStyle, TitleCasePipe } from '@angular/common';
+import {
+  CommonModule,
+  NgFor,
+  NgIf,
+  NgStyle,
+  TitleCasePipe,
+} from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'ale-table',
-  imports: [  NgStyle, TitleCasePipe, ButtonComponent, CommonModule],
+  imports: [NgStyle, TitleCasePipe, ButtonComponent, CommonModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
@@ -30,7 +36,16 @@ export class TableComponent {
           currency: 'BRL',
         }).format(valor);
       case 'data':
-        return new Intl.DateTimeFormat('pt-BR').format(new Date(valor));
+        if (!valor) return '';
+        if (typeof valor === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+          const partes = valor.split('-');
+          return `${partes[2]}/${partes[1]}/${partes[0]}`; // '29/05/2025'
+        }
+        return valor;
+      // if (!valor) return '';
+      // const data = new Date(valor);
+      // if (isNaN(data.getTime())) return '';
+      // return new Intl.DateTimeFormat('pt-BR').format(data);
       default:
         return valor;
     }

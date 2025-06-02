@@ -1,21 +1,82 @@
+<!-- <div
+  class="form-field"
+  [class.focused]="isFocused || selectedValue || placeholder"
+>
+  <label class="form-label">{{ label }}</label>
+
+  <ng-container *ngIf="allowTyping; else selectMode">
+    <input
+      class="form-input"
+      [value]="selectedValue"
+      (input)="onInputChange($event)"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false; onTouched()"
+      [placeholder]="placeholder"
+    />
+  </ng-container>
+
+  <ng-template #selectMode>
+    <select
+      class="form-input"
+      [ngModel]="selectedValue"
+      (ngModelChange)="onSelectChange($event)"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false; onTouched()"
+    >
+      <option [ngValue]="null" disabled hidden>{{ placeholder }}</option>
+      <option *ngFor="let nivel of niveis" [ngValue]="nivel.value">
+        {{ nivel.label }}
+      </option>
+    </select>
+  </ng-template>
+
+  <div class="form-error" *ngIf="hasError() && !isFocused">
+    {{ errorMessage }}
+  </div>
+</div> -->
+
 <div
   class="form-field"
   [class.focused]="isFocused || selectedValue || placeholder"
 >
   <label class="form-label">{{ label }}</label>
 
-  <select
-    class="form-input"
-    [ngModel]="selectedValue"
-    (ngModelChange)="onSelectChange($event)"
-    (focus)="isFocused = true"
-    (blur)="isFocused = false"
-  >
-    <option [ngValue]="null" disabled hidden>{{ placeholder }}</option>
-    <option *ngFor="let nivel of niveis" [ngValue]="nivel.value">
-      {{ nivel.label }}
-    </option>
-  </select>
+  <ng-container *ngIf="allowTyping; else selectMode">
+    <input
+      class="form-input"
+      [value]="selectedValue"
+      (input)="onInputChange($event)"
+      (focus)="isFocused = true; showOptions = true"
+      (blur)="isFocused = false; onTouched()"
+      (keydown)="onKeyDown($event)"
+      (click)="toggleOptions()"
+      [placeholder]="placeholder"
+    />
+
+    <ul *ngIf="showOptions && filteredOptions.length" class="options-dropdown">
+      <li
+        *ngFor="let option of filteredOptions"
+        (mousedown)="selectOption(option)"
+      >
+        {{ option.label }}
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #selectMode>
+    <select
+      class="form-input"
+      [ngModel]="selectedValue"
+      (ngModelChange)="onSelectChange($event)"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false; onTouched()"
+    >
+      <option [ngValue]="null" disabled hidden>{{ placeholder }}</option>
+      <option *ngFor="let nivel of niveis" [ngValue]="nivel.value">
+        {{ nivel.label }}
+      </option>
+    </select>
+  </ng-template>
 
   <div class="form-error" *ngIf="hasError() && !isFocused">
     {{ errorMessage }}
