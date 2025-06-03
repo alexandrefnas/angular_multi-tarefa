@@ -1,76 +1,90 @@
 <div class="container">
   <div class="container__menu-tabela">
-    <div id="menu-tabela__pesquisa">
-      <div id="pesquisa__todos">
-        <label>
-          <input
-            type="checkbox"
-            [(ngModel)]="mostrarTodos"
-            (change)="verificarCheckbox()"
-          />
-          Mostrar todos
-        </label>
+    <div class="conatiner__menu-tabela-pesquisa">
+      <div id="menu-tabela__pesquisa">
+        <div id="pesquisa__todos">
+          <label>
+            <input
+              type="checkbox"
+              [(ngModel)]="filtros"
+              (change)="filtrosCheckbox()"
+            />
+            Filtros
+          </label>
+          <label *ngIf="filtros">
+            <input type="checkbox" (change)="verificarCheckbox()" />
+            Mostrar todos
+          </label>
+        </div>
+        <div id="pesquisa__periodo" *ngIf="filtros">
+          <!-- <form [formGroup]="pesquisaPeriodo"> -->
+          <div class="periodo__datas">
+            <ale-data-ale
+              label="Data Início"
+              type="data"
+              (valueChange)="dataInicio = $event"
+              [required]="false"
+              errorMessage="Campo obrigatório!"
+            ></ale-data-ale>
+            <!-- formControlName="dataInicio" -->
+          </div>
+          <div class="periodo__datas">
+            <ale-data-ale
+              label="Data Fim"
+              type="data"
+              (valueChange)="dataFim = $event"
+              [required]="false"
+              errorMessage="Campo obrigatório!"
+            ></ale-data-ale>
+            <!-- formControlName="dataFim" -->
+          </div>
+          <div id="pesquisa__buscaConfirma">
+            <!-- <div class="botao-circular"> -->
+            <ale-button label="🔍" (click)="buttonBuscar()"></ale-button>
+            <!-- </div> -->
+          </div>
+          <!-- </form> -->
+        </div>
       </div>
-      <div id="pesquisa__periodo" *ngIf="mostrarTodos">
-        <!-- <form [formGroup]="pesquisaPeriodo"> -->
-        <div class="periodo__datas">
-          <ale-data-ale
-            label="Data Início"
-            type="data"
-            (valueChange)="dataInicio = $event"
-            [required]="false"
-            errorMessage="Campo obrigatório!"
-          ></ale-data-ale>
-          <!-- formControlName="dataInicio" -->
+      <div id="menu-tabela__buttons">
+        <div class="container__buttons">
+          <ale-button
+            label="Cadastro"
+            (click)="mostrarModal = true"
+          ></ale-button>
         </div>
-        <div class="periodo__datas">
-          <ale-data-ale
-            label="Data Fim"
-            type="data"
-            (valueChange)="dataFim = $event"
-            [required]="false"
-            errorMessage="Campo obrigatório!"
-          ></ale-data-ale>
-          <!-- formControlName="dataFim" -->
-        </div>
-        <div id="pesquisa__buscaConfirma">
-          <!-- <div class="botao-circular"> -->
-          <ale-button label="🔍" (click)="buttonBuscar()"></ale-button>
-          <!-- </div> -->
-        </div>
-        <!-- </form> -->
+        <ale-modal-tarefas
+          [visible]="mostrarModal"
+          [title]="'Cadastro de Tarefa'"
+          [lista1]="prioridades"
+          [lista2]="status"
+          [lista3]="financeiro"
+          (onClose)="mostrarModal = false"
+          (onSave)="salvarTarefa($event)"
+        >
+          <!-- [routerLink]="linkUrl" -->
+        </ale-modal-tarefas>
+        <ale-modal-tarefas
+          [visible]="mostrarModalEditar"
+          [title]="'Editar Tarefa'"
+          [tarefaParaEditar]="tarefaEmEdicao"
+          [lista1]="prioridades"
+          [lista2]="status"
+          [lista3]="financeiro"
+          (onClose)="fecharModal()"
+          (onSave)="salvarTarefa($event)"
+        >
+          <!-- [routerLink]="linkUrl" -->
+        </ale-modal-tarefas>
       </div>
     </div>
-    <div id="menu-tabela__buttons">
-      <div class="container__buttons">
-        <ale-button label="Cadastro" (click)="mostrarModal = true"></ale-button>
-      </div>
-      <ale-modal-tarefas
-        [visible]="mostrarModal"
-        [title]="'Cadastro de Tarefa'"
-        [lista1]="prioridades"
-        [lista2]="status"
-        [lista3]="financeiro"
-        (onClose)="mostrarModal = false"
-        (onSave)="salvarTarefa($event)"
-      >
-        <!-- [routerLink]="linkUrl" -->
-      </ale-modal-tarefas>
-      <ale-modal-tarefas
-        [visible]="mostrarModalEditar"
-        [title]="'Editar Tarefa'"
-        [tarefaParaEditar]="tarefaEmEdicao"
-        [lista1]="prioridades"
-        [lista2]="status"
-        [lista3]="financeiro"
-        (onClose)="fecharModal()"
-        (onSave)="salvarTarefa($event)"
-      >
-        <!-- [routerLink]="linkUrl" -->
-      </ale-modal-tarefas>
+    <div class="conatiner__pesquisa-label">
+      <input type="text" placeholder="Pesquisar..." [(ngModel)]="termoPesquisa" (keyup.enter)="carregarTarefas()">
     </div>
   </div>
-  <div class="container__cadastro">
+
+  <!-- // Tabela -->
+  <div class="container__tabela">
     <ale-table
       [colunasLabels]="colunasLabels"
       [colunas]="colunasProdutos"

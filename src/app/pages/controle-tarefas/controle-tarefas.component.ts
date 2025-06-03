@@ -11,6 +11,8 @@ import { TableComponent } from '../../components/table/table.component';
 import { FirestoreService, Tarefa } from '../../services/firestore.service';
 import { ModalTarefasComponent } from '../../modal/modal-tarefas/modal-tarefas.component';
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
+import { fail } from 'node:assert';
+import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
 
 @Component({
   selector: 'ale-controle-tarefas',
@@ -30,13 +32,14 @@ export class ControleTarefasComponent {
   mostrarModal: boolean = false;
   mostrarModalEditar: boolean = false;
 
+  filtros: boolean = false;
   mostrarTodos: boolean = false;
   mostrarTodosAtivo: boolean = false;
 
   tarefaEmEdicao: Tarefa | null = null;
 
   dadosProdutos: Tarefa[] = [];
-
+  termoPesquisa: string = '';
   // pesquisaPeriodo!: FormGroup;
 
   dataInicio: Date | null = null;
@@ -113,21 +116,32 @@ export class ControleTarefasComponent {
     this.carregarTarefas();
   }
 
+  filtrosCheckbox(): void {
+    // if (this.mostrarTodosAtivo) {
+    if (!this.filtros) this.filtros = false;
+    else this.filtros = true;
+    // this.mostrarTodosAtivo = false;
+    // this.carregarTarefas();
+    // }
+  }
+
   verificarCheckbox(): void {
     if (this.mostrarTodosAtivo) {
       this.mostrarTodos = false;
       this.mostrarTodosAtivo = false;
-      this.carregarTarefas();
-    } //  else {
-    //   this.mostrarTodosAtivo = true;
-    //   this.mostrarTodos = true;
-    // }
+      // this.carregarTarefas();
+    } else {
+      this.mostrarTodos = true;
+      this.mostrarTodosAtivo = true;
+      // this.mostrarTodosAtivo = true;
+    }
   }
 
   buttonBuscar(): void {
     this.carregarTarefas();
-    this.mostrarTodosAtivo = true;
-    // console.log('verificando data: ' + this.dataInicio + ' ' + this.dataFim);
+    console.log(
+      'verificando filtro ' + this.mostrarTodos + ' ' + this.mostrarTodosAtivo
+    );
   }
 
   // private formatarDataISO(date: Date): string {
@@ -166,9 +180,15 @@ export class ControleTarefasComponent {
         );
       }
 
+      // ✅ Filtro de pesquisa por palavra
+      tarefasMapeadas = this.filtrarPorPesquisa(
+        tarefasMapeadas,
+        this.termoPesquisa
+      );
+
       if (this.mostrarTodos) {
         this.dadosProdutos = tarefasMapeadas;
-        console.log('Exibindo todas as tarefas após filtro de período.');
+        // console.log('Exibindo todas as tarefas após filtro de período.');
       } else {
         this.dadosProdutos = tarefasMapeadas.filter((tarefa) => {
           const dataConclusaoVazia = !tarefa.dataConclusao;
@@ -176,14 +196,14 @@ export class ControleTarefasComponent {
             !tarefa.financeiroSelecionada ||
             tarefa.financeiroSelecionada === '';
           const valorMaiorQueZero = tarefa.valorNumerico > 0;
-
+          // console.log(tarefa.valorNumerico);
           if (dataConclusaoVazia) {
             return valorMaiorQueZero ? financeiroVazio : true;
           } else {
             return valorMaiorQueZero ? financeiroVazio : false;
           }
         });
-        console.log('Exibindo tarefas com todos os filtros aplicados.');
+        // console.log('Exibindo tarefas com todos os filtros aplicados.');
       }
     });
   }
@@ -209,6 +229,49 @@ export class ControleTarefasComponent {
       return tarefaData >= inicio && tarefaData <= fim;
     });
   }
+
+  private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
+    if (!termo || termo.trim() === '') {
+      return tarefas;
+    }
+
+    const termoLower = termo.toLowerCase();
+
+    return tarefas.filter((tarefa) => {
+      return (
+        (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
+        (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
+        (tarefa.atividade &&
+          tarefa.atividade.toLowerCase().includes(termoLower)) ||
+        (tarefa.prioridadeSelecionada &&
+          tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
+        (tarefa.data &&
+          tarefa.data.toString().toLowerCase().includes(termoLower)) ||
+        (tarefa.obs &&
+          tarefa.obs.toString().toLowerCase().includes(termoLower)) ||
+        (tarefa.quem &&
+          tarefa.quem.toString().toLowerCase().includes(termoLower)) ||
+        (tarefa.financeiroSelecionada &&
+          tarefa.financeiroSelecionada
+            .toString()
+            .toLowerCase()
+            .includes(termoLower))
+      );
+    });
+  }
+
+  //     data: 'Data',
+  //     servico: 'Serviço',
+  //     prioridadeSelecionada: 'Prioridade',
+  //     cliente: 'Cliente',
+  //     atividade: 'Atividade',
+  //     obs: 'Observações',
+  //     quem: 'Responsável',
+  //     dataConclusao: 'Conclusão',
+  //     statusSelecionada: 'Status',
+  //     financeiroSelecionada: 'Financeiro',
+  //     // valor: 'Valor',
+  //     valorNumerico: 'Valor',
 
   private formatarDataString(data: Date): string {
     const ano = data.getFullYear();
