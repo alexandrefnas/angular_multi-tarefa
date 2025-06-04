@@ -25,8 +25,12 @@ export class TableComponent {
   @Input() destacarLinha1: (item: any) => boolean = () => false;
   @Input() destacarLinha2: (item: any) => boolean = () => false;
 
+  @Input() mostrarEditar: boolean = false;
+  @Input() mostrarExcluir: boolean = false;
+
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();
+
 
   formatarValor(valor: any, formato: string): string {
     switch (formato) {

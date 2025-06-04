@@ -28,6 +28,13 @@ th {
   color: white;
 }
 
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* ou outra cor de fundo */
+  z-index: 1;
+}
+
 tr:hover {
   background-color: #f0f8ff; /* leve azul no hover */
 }

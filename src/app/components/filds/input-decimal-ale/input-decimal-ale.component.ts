@@ -35,7 +35,7 @@ export class InputDecimalAleComponent implements OnChanges {
   @Output() valueChange = new EventEmitter<string>(); // Valor Formato
   @Output() rawValueChange = new EventEmitter<number>(); // Valor Limpo (ex: 1234.56)
 
-  isFocused: boolean = false;
+  @Input() isFocused: boolean = false;
   formattedValue: string = '';
 
   onChange = (_: any) => {};

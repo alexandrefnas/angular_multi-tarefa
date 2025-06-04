@@ -68,7 +68,7 @@ export class ControleTarefasComponent {
   tamanhosColunas = {
     cliente: '150px',
     atividade: 'auto',
-    obs: '200px',
+    obs: 'auto',
     valorNumerico: '150px',
     mostrarAcoes: '90px',
   };
@@ -82,10 +82,10 @@ export class ControleTarefasComponent {
     obs: 'Observações',
     quem: 'Responsável',
     dataConclusao: 'Conclusão',
-    statusSelecionada: 'Status',
-    financeiroSelecionada: 'Financeiro',
+    // statusSelecionada: 'Status',
+    // financeiroSelecionada: 'Financeiro',
     // valor: 'Valor',
-    valorNumerico: 'Valor',
+    // valorNumerico: 'Valor',
   };
 
   colunasProdutos = [
@@ -97,10 +97,10 @@ export class ControleTarefasComponent {
     'obs',
     'quem',
     'dataConclusao',
-    'statusSelecionada',
-    'financeiroSelecionada',
+    // 'statusSelecionada',
+    // 'financeiroSelecionada',
     // 'valor',
-    'valorNumerico',
+    // 'valorNumerico',
   ];
 
   formatoProdutos = {
@@ -192,16 +192,17 @@ export class ControleTarefasComponent {
       } else {
         this.dadosProdutos = tarefasMapeadas.filter((tarefa) => {
           const dataConclusaoVazia = !tarefa.dataConclusao;
-          const financeiroVazio =
-            !tarefa.financeiroSelecionada ||
-            tarefa.financeiroSelecionada === '';
-          const valorMaiorQueZero = tarefa.valorNumerico > 0;
-          // console.log(tarefa.valorNumerico);
-          if (dataConclusaoVazia) {
-            return valorMaiorQueZero ? financeiroVazio : true;
-          } else {
-            return valorMaiorQueZero ? financeiroVazio : false;
-          }
+          // const financeiroVazio =
+          //   !tarefa.financeiroSelecionada ||
+          //   tarefa.financeiroSelecionada === '';
+          // const valorMaiorQueZero = tarefa.valorNumerico > 0;
+          // // console.log(tarefa.valorNumerico);
+          // if (dataConclusaoVazia) {
+          //   return valorMaiorQueZero ? financeiroVazio : true;
+          // } else {
+          //   return valorMaiorQueZero ? financeiroVazio : false;
+          // }
+          return dataConclusaoVazia;
         });
         // console.log('Exibindo tarefas com todos os filtros aplicados.');
       }

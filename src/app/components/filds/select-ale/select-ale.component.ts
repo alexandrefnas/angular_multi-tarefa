@@ -28,13 +28,15 @@ import {
 export class SelectAleComponent implements ControlValueAccessor {
   @Input() label: string = '';
   @Input() placeholder: string = '';
-  @Input() allowTyping: boolean = false;
   @Input() niveis: { value: string; label: string }[] = [];
+  @Input() allowTyping: boolean = false;
+  @Input() required: boolean = false;
+  @Input() errorMessage: string = 'Campo obrigatório';
 
-  selectedValue: string = '';
-  isFocused: boolean = false;
-  showOptions: boolean = false;
-  filteredOptions: { value: string; label: string }[] = [];
+  @Input() isFocused: boolean = false;
+  @Input() selectedValue: string = '';
+  @Input() showOptions: boolean = false;
+  @Input() filteredOptions: { value: string; label: string }[] = [];
 
   private onChange = (_: any) => {};
   onTouched = () => {};
@@ -77,14 +79,14 @@ export class SelectAleComponent implements ControlValueAccessor {
   }
 
   hasError(): boolean {
-    // Aqui você pode colocar sua lógica de validação
-    return false;
+    return this.required && !this.selectedValue;
   }
 
-  get errorMessage(): string {
-    // Mensagem de erro padrão ou personalizada
-    return 'Campo obrigatório';
-  }
+  // get errorMessage(): string {
+  //   // Mensagem de erro padrão ou personalizada
+  //   return 'Campo obrigatório';
+  // }
+
   @Input() showOptionsClose: boolean = false;
   toggleOptions(): void {
     if (this.showOptionsClose) this.showOptions = !this.showOptions;
@@ -96,6 +98,12 @@ export class SelectAleComponent implements ControlValueAccessor {
       this.showOptions = false;
       this.showOptionsClose = true;
     }
+
+ if (event.key === 'Delete') {
+    this.selectedValue = '';
+    this.onChange(this.selectedValue);
+    this.filteredOptions = this.niveis;  // opcional: reseta as opções
+  }
   }
 }
 

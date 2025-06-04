@@ -25,14 +25,14 @@
           class="container__mostrar-acoes"
           [ngStyle]="{ width: tamanhosColunas['mostrarAcoes'] || 'auto', minWidth: '100px' }"
         >
-          <div class="mostrar-acoes__button">
+          <div class="mostrar-acoes__button" *ngIf="mostrarEditar">
             <ale-button
               class="button"
               label="Editar"
               (click)="onEditar(item)"
             ></ale-button>
           </div>
-          <div class="mostrar-acoes__button">
+          <div class="mostrar-acoes__button" *ngIf="mostrarExcluir">
             <ale-button
               class="button-cancelar"
               label="Excluir"

@@ -21,7 +21,16 @@
               errorMessage="Campo obrigatório!"
             ></ale-data-ale>
           </div>
-          <div class="form__container-input" id="servico">
+          <div class="form__container-select" id="servico">
+            <ale-select-ale
+              [label]="'Serviço'"
+              [placeholder]="''"
+              [niveis]="servicos"
+              [formControl]="servicoControl"
+              errorMessage=" "
+            ></ale-select-ale>
+          </div>
+          <!-- <div class="form__container-input" id="servico">
             <ale-input-ale
               label="Serviço"
               type="servico"
@@ -29,17 +38,17 @@
               [required]="false"
               errorMessage=" "
             ></ale-input-ale>
-          </div>
+          </div> -->
           <div class="form__container-select">
             <ale-select-ale
               [label]="'Alerta'"
               [placeholder]="''"
               [niveis]="lista1"
               [formControl]="prioridadeControl"
-              errorMessage=" "
               [allowTyping]="false"
+              [required]="true"
+              errorMessage="Campo obrigatório"
             ></ale-select-ale>
-            <!-- formControlName="prioridadeSelecionada" -->
           </div>
           <div class="form__container-input" id="cliente">
             <ale-input-ale
@@ -60,9 +69,8 @@
               [formControl]="atividadeControl"
               [allowTyping]="true"
               [required]="true"
-              errorMessage="Campo obrigatório "
+              errorMessage="Campo obrigatório"
             ></ale-select-ale>
-            <!-- formControlName="atividade" -->
           </div>
           <!-- <div class="form__container-input" id="atividade">
             <ale-input-ale
@@ -89,7 +97,8 @@
               [placeholder]="''"
               [niveis]="lista4"
               [formControl]="quemContol"
-              errorMessage=" "
+              [required]="false"
+              errorMessage="Teste "
             ></ale-select-ale>
             <!-- formControlName="quem" -->
             <!-- <ale-input-ale
@@ -111,7 +120,7 @@
               errorMessage="Campo obrigatório!"
             ></ale-data-ale>
           </div>
-          <div class="form__container-select" id="status">
+          <!-- <div class="form__container-select" id="status">
             <ale-select-ale
               [label]="'Status'"
               [placeholder]="''"
@@ -119,8 +128,7 @@
               [formControl]="statusSelecionadaControl"
               errorMessage=" "
             ></ale-select-ale>
-            <!-- formControlName="statusSelecionada" -->
-          </div>
+          </div> -->
           <div class="form__container-select" id="financeiro">
             <ale-select-ale
               [label]="'Financeiro'"
@@ -128,7 +136,8 @@
               [niveis]="lista3"
               [formControl]="financeiroSelecionadaControl"
               formControlName="financeiroSelecionada"
-              errorMessage=" "
+              [required]="false"
+              errorMessage="Teste "
             ></ale-select-ale>
           </div>
           <div class="form__container-input" id="valor">

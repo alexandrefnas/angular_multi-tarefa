@@ -1,11 +1,9 @@
 .container__menu-bar {
-  width: 100%;
+  width: 80%;
   height:100%;
   display: flex;
-  /* position: fixed; */
   align-items: center;
-
-}
+  }
 
 .container__menu-bar-logo {
   width: 30%;

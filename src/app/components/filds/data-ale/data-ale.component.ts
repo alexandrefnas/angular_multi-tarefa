@@ -42,6 +42,12 @@ export class DataAleComponent implements ControlValueAccessor {
   onChange = (value: any) => {};
   onTouched = () => {};
 
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Delete') {
+      this.value = null;
+    }
+  }
+
   writeValue(value: Date): void {
     this.value = value;
   }

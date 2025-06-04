@@ -42,8 +42,11 @@ export class ModalTarefasComponent {
   @Input() closeOnBackdrop: boolean = true;
   @Input() visible: boolean = false;
 
+  servicos = [
+    { value: 'Mensal', label: 'Mensal' },
+  ];
+
   @Input() lista1 = [
-    { value: ' ', label: ' ' },
     { value: 'Alta', label: 'Alta' },
     { value: 'Moderado', label: 'Moderado' },
     { value: 'Baixa', label: 'Baixa' },
@@ -60,8 +63,7 @@ export class ModalTarefasComponent {
   ];
 
   @Input() lista4 = [
-    { value: '', label: '' },
-    { value: 'MÉCIO', label: 'MÉCIO' },
+    { value: 'MECIO', label: 'MECIO' },
     { value: 'DOUGLAS', label: 'DOUGLAS' },
     { value: 'ALEXANDRE', label: 'ALEXANDRE' },
   ];
@@ -94,7 +96,7 @@ export class ModalTarefasComponent {
     this.cadastroTarefas = this.fb.group({
       data: ['', Validators.required],
       servico: [''],
-      prioridadeSelecionada: [''],
+      prioridadeSelecionada: ['', Validators.required],
       cliente: [''],
       atividade: ['', Validators.required],
       obs: [''],
@@ -108,6 +110,10 @@ export class ModalTarefasComponent {
   }
 
   // Getter para facilitar o acesso com cast para FormControl
+  get servicoControl(): FormControl {
+    return this.cadastroTarefas.get('servico') as FormControl;
+  }
+
   get prioridadeControl(): FormControl {
     return this.cadastroTarefas.get('prioridadeSelecionada') as FormControl;
   }
@@ -126,22 +132,22 @@ export class ModalTarefasComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-  if (changes['tarefaParaEditar'] && this.tarefaParaEditar) {
-    const tarefa = { ...this.tarefaParaEditar };
+    if (changes['tarefaParaEditar'] && this.tarefaParaEditar) {
+      const tarefa = { ...this.tarefaParaEditar };
 
-    if (typeof tarefa.data === 'string') {
-      const [ano, mes, dia] = tarefa.data.split('-').map(Number);
-      tarefa.data = new Date(ano, mes - 1, dia); // data local, sem fuso
+      if (typeof tarefa.data === 'string') {
+        const [ano, mes, dia] = tarefa.data.split('-').map(Number);
+        tarefa.data = new Date(ano, mes - 1, dia); // data local, sem fuso
+      }
+
+      if (typeof tarefa.dataConclusao === 'string' && tarefa.dataConclusao) {
+        const [ano, mes, dia] = tarefa.dataConclusao.split('-').map(Number);
+        tarefa.dataConclusao = new Date(ano, mes - 1, dia);
+      }
+
+      this.cadastroTarefas.patchValue(tarefa);
     }
-
-    if (typeof tarefa.dataConclusao === 'string' && tarefa.dataConclusao) {
-      const [ano, mes, dia] = tarefa.dataConclusao.split('-').map(Number);
-      tarefa.dataConclusao = new Date(ano, mes - 1, dia);
-    }
-
-    this.cadastroTarefas.patchValue(tarefa);
   }
-}
 
   salvar() {
     if (!this.cadastroTarefas.valid) {
@@ -163,11 +169,11 @@ export class ModalTarefasComponent {
   }
 
   private formatarDataString(data: Date): string {
-  const ano = data.getFullYear();
-  const mes = String(data.getMonth() + 1).padStart(2, '0');
-  const dia = String(data.getDate()).padStart(2, '0');
-  return `${ano}-${mes}-${dia}`;
-}
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
+  }
 
   cancelar(): void {
     this.cadastroTarefas.reset({

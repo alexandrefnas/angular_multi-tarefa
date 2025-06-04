@@ -8,30 +8,6 @@
   z-index: 998;
 }
 
-/* .modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  z-index: 1001;
-  border-radius: 8px;
-} */
-
-/* .modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  z-index: 1001;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  width: 400px;
-  height: 200px;
-  } */
-
 .container__cadastro-tarefas {
   display: flex;
   flex-direction: column;
@@ -41,11 +17,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
-
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
-  /* justify-content: center; */
-  /* margin-top: 100px;
-  height: 100vh; */
 }
 
 .container__cadastro-form {
@@ -64,8 +35,6 @@
   box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #999;
   background-color: #e0e0e0;
   border-radius: 10px;
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
 }
 
 .title_container {
@@ -73,9 +42,7 @@
   flex-direction: row;
   padding: 15px;
   background: linear-gradient(to bottom, #2d89ef, #1b4f9c);
-  /* color: white; */
   padding: 6px 10px;
-  /* font-weight: bold; */
   border-bottom: 1px solid #666;
   text-shadow: 1px 1px 1px #000;
   border-top-left-radius: 10px;
@@ -90,7 +57,6 @@
 
 .title_container > .title2 {
   width: 5%;
-  /* font-weight: bold; */
   color: white;
   display: flex;
   align-items: center;
@@ -125,7 +91,6 @@
   margin-bottom: 25px;
   padding: 15px;
   justify-content: center;
-  /* background-color: aqua; */
 }
 
 .form__container-data {
@@ -157,10 +122,6 @@
   width: 100%;
 }
 
-/* #atividade {
-  width: 55%;
-} */
-
 #obs {
   width: 65%;
 }
@@ -176,5 +137,5 @@
   width: 20%;
 }
 #valor {
-  width: 35%;
+  width: 25%;
 }

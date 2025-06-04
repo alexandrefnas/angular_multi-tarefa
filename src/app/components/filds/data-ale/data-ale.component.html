@@ -10,12 +10,15 @@
     (dateChange)="onDateChange($event)"
     (focus)="isFocused = true"
     (blur)="isFocused = false"
+    (keydown)="onKeydown($event)"
     readonly
     (click)="picker.open()"
   />
 
   <!-- Ícone opcional para abrir o calendário -->
-  <button type="button" (click)="picker.open()" class="calendar-button">📅</button>
+  <button type="button" (click)="picker.open()" class="calendar-button">
+    📅
+  </button>
 
   <mat-datepicker #picker></mat-datepicker>
 
@@ -23,4 +26,3 @@
     {{ errorMessage }}
   </div>
 </div>
-

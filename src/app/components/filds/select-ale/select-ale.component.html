@@ -68,6 +68,7 @@
       class="form-input"
       [ngModel]="selectedValue"
       (ngModelChange)="onSelectChange($event)"
+      (keydown)="onKeyDown($event)"
       (focus)="isFocused = true"
       (blur)="isFocused = false; onTouched()"
     >
@@ -78,7 +79,7 @@
     </select>
   </ng-template>
 
-  <div class="form-error" *ngIf="hasError() && !isFocused">
+  <div class="form-error" *ngIf="hasError() && !isFocused" @fadeInOut>
     {{ errorMessage }}
   </div>
 </div>

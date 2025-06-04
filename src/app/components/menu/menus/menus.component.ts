@@ -9,22 +9,10 @@ import { RouterModule } from '@angular/router';
 })
 export class MenusComponent {
   cadastro: any;
-  linkText = 'Cadastro';
-  linkUrl = '/cadastro';
-  // linkText2: string = "Teste";
-  linkUrl2 = '/teste';
+  // linkText = 'Cadastro';
+  // linkUrl = '/cadastro';
+  // linkUrl2 = '/teste';
   linkUrlTarefas = '/tarefas';
-  // constructor(private router: Router) {
-  //   this.router.events.subscribe((event) => {
-  //     if (event instanceof NavigationEnd) {
-  //       if (event.urlAfterRedirects === '/cadastro') {
-  //         this.linkText = 'Home';
-  //         this.linkUrl = '/';
-  //       } else {
-  //         this.linkText = 'Cadastro';
-  //         this.linkUrl = '/cadastro';
-  //       }
-  //     }
-  //   });
-  // }
+  linkUrlFinanceiro = '/financeiro';
+
 }
