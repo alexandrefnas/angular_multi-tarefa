@@ -17,6 +17,7 @@ import {
   imports: [NgFor, NgIf, CommonModule, FormsModule],
   templateUrl: './select-ale.component.html',
   styleUrls: ['./select-ale.component.css'],
+
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -24,6 +25,7 @@ import {
       multi: true,
     },
   ],
+
 })
 export class SelectAleComponent implements ControlValueAccessor {
   @Input() label: string = '';

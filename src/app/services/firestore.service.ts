@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   Firestore,
@@ -39,20 +39,6 @@ export interface TarefaCount {
 export class FirestoreService {
   constructor(private firestore: Firestore) {}
 
-  // ✅ Adicionar cliente
-  // addCliente(cliente: Cliente) {
-  //   const clientesRef = collection(this.firestore, 'clientes');
-  //   return addDoc(clientesRef, cliente);
-  // }
-
-  // ✅ Listar clientes
-  // getClientes(): Observable<Cliente[]> {
-  //   const clientesRef = collection(this.firestore, 'clientes');
-  //   return collectionData(clientesRef, { idField: 'id' }) as Observable<
-  //     Cliente[]
-  //   >;
-  // }
-
   // ✅ Adicionar tarefa
   async addTarefa(tarefa: Tarefa) {
     const tarefasRef = collection(this.firestore, 'tarefas');
@@ -66,6 +52,10 @@ export class FirestoreService {
 
   // ✅ Listar tarefas
   getTarefas(): Observable<Tarefa[]> {
+    if (!this.firestore) {
+      console.error('Firestore ainda não está pronto!');
+      return of([]); // ✅ Retorna array vazio.
+    }
     const tarefasRef = collection(this.firestore, 'tarefas');
     return collectionData(tarefasRef, { idField: 'id' }) as Observable<
       Tarefa[]

@@ -2,5 +2,10 @@
   <div class="chart__title">
     <h3>{{ title }}</h3>
   </div>
-  <div echarts [options]="chartOption" class="chart__area"></div>
+  <div
+    echarts
+    [options]="chartOption"
+    class="chart__area"
+    (chartInit)="onChartInit($event)"
+  ></div>
 </div>

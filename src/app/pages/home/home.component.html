@@ -1,15 +1,34 @@
 <div class="container__home">
-  <ale-chart-pie
-    [data$]="graficoDados$"
-    title="Tarefas por Prioridade"
-    [legendShow]="false"
-    legendColor="lightblue"
-    [labelShow]="true"
-    [colors]="[ '#ff0000', '#fff','#FFFF00']"
-    [radius]="['30%', '80%']"
-    corLabelFormatter="black"
-    labelFormatter="{c}"
-  ></ale-chart-pie>
+  <div id="container__home-left">
+<div id="acesso-rapido__titulo">
+<h3>Acesso Rápido</h3>
+</div>
+<div id="acesso-rapido__links">
+  <ul class="home-left-links">
+    <li *ngFor="let link of links">
+      <a [href]="link.url" target="_blank" rel="noopener noreferrer">
+        {{ link.texto }}
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+  <div id="container__home-center">
+    <ale-chart-pie
+      [data$]="graficoDados$"
+      title="Tarefas por Prioridade"
+      [legendShow]="false"
+      legendColor="lightblue"
+      [labelShow]="true"
+      [colors]="['#ff0000', '#fff', '#FFFF00']"
+      [radius]="['30%', '80%']"
+      (prioridadeSelecionada)="onPrioridadeSelecionada($event)"
+      corLabelFormatter="black"
+      labelFormatter="{c}"
+    ></ale-chart-pie>
+  </div>
+  <div id="container__home-right"></div>
 </div>
 
 <!-- labelFormatter="{b}: {c} unidades ({d}%)" -->

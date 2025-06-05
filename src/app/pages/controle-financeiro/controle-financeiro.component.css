@@ -11,6 +11,7 @@
   display: block;
   flex-direction: column;
   width: 70%;
+  max-width: 897px;
   margin-top: 10px;
   padding: 8px 5px 8px 5px;
   box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #999;
@@ -47,6 +48,7 @@
   height: 80vh;
   margin-top: 10px;
   overflow: auto;
+  max-width: 897px;
 }
 
 .container__buttons {

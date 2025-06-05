@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -46,7 +46,6 @@ export class ControleTarefasComponent {
   dataFim: Date | null = null;
 
   prioridades = [
-    { value: '', label: '' },
     { value: 'Alta', label: 'Alta' },
     { value: 'Moderado', label: 'Moderado' },
     { value: 'Baixa', label: 'Baixa' },
@@ -55,15 +54,9 @@ export class ControleTarefasComponent {
   destacarAlta = (item: any) => item.prioridadeSelecionada === 'Alta';
   destacarMedio = (item: any) => item.prioridadeSelecionada === 'Moderado';
 
-  status = [
-    { value: '', label: '' },
-    { value: 'Feito', label: 'Feito' },
-  ];
+  status = [{ value: 'Feito', label: 'Feito' }];
 
-  financeiro = [
-    { value: '', label: '' },
-    { value: 'Pago', label: 'Pago' },
-  ];
+  financeiro = [{ value: 'Pago', label: 'Pago' }];
 
   tamanhosColunas = {
     cliente: '150px',
@@ -110,10 +103,31 @@ export class ControleTarefasComponent {
     dataConclusao: 'data',
   } as const;
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private firestoreService: FirestoreService) {}
 
   ngOnInit(): void {
-    this.carregarTarefas();
+    // Verifica se há uma prioridade selecionada no localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      const prioridadeSelecionada = localStorage.getItem(
+        'prioridadeSelecionada'
+      );
+
+      if (prioridadeSelecionada) {
+        console.log(
+          'Prioridade recebida do localStorage:',
+          prioridadeSelecionada
+        );
+
+        // Aplicando a prioridade no filtro de pesquisa
+        this.termoPesquisa = prioridadeSelecionada;
+
+        // ✅ Opcional: limpa o localStorage para não manter o filtro
+        localStorage.removeItem('prioridadeSelecionada');
+      }
+      this.carregarTarefas();
+    } else {
+      console.warn('Ignorando carregarTarefas() pois não está no browser.');
+    }
   }
 
   filtrosCheckbox(): void {

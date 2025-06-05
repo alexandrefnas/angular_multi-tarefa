@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChartPieComponent } from '../../components/charts/chart-pie/chart-pie.component';
 import { map, Observable } from 'rxjs';
 import {
@@ -6,21 +7,21 @@ import {
   Tarefa,
   TarefaCount,
 } from '../../services/firestore.service';
-// import { ButtonComponent } from '../../components/button/button.component';
-// import { NgIf } from '@angular/common';
-// import { ModalCadastroTarefasComponent } from '../../modal/modal-cadastro-tarefas/modal-cadastro-tarefas.component';
-// import { RouterModule } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'ale-home',
-  imports: [ChartPieComponent],
+  imports: [ChartPieComponent, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
   graficoDados$: Observable<{ name: string; value: number }[]>;
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(
+    private firestoreService: FirestoreService,
+    private router: Router
+  ) {
     this.graficoDados$ = this.firestoreService.getTarefas().pipe(
       map((tarefas: Tarefa[]) =>
         // Primeiro: filtra apenas tarefas em aberto
@@ -43,6 +44,55 @@ export class HomeComponent {
         }));
       })
     );
+  }
+
+  links = [
+    {
+      texto: 'Emissão NF Simples',
+      url: 'https://www8.receita.fazenda.gov.br/simplesnacional/',
+    },
+    { texto: 'Emissão NF Mei', url: '' },
+    { texto: 'eCac', url: '' },
+    { texto: 'Conferir CNPJ', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+    { texto: 'Outros', url: '' },
+  ];
+
+  onPrioridadeSelecionada(prioridade: string) {
+    console.log('Prioridade recebida:', prioridade);
+
+    // ✅ Armazena no localStorage ou usa serviço para enviar para página tarefas
+    localStorage.setItem('prioridadeSelecionada', prioridade);
+
+    // ✅ Ou redireciona automaticamente:
+    this.router.navigate(['/tarefas']);
   }
 
   private capitalize(text: string): string {

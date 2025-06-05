@@ -6,6 +6,8 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
@@ -26,6 +28,7 @@ import {
   TarefaCount,
 } from '../../../services/firestore.service';
 import { Observable, Subscription } from 'rxjs';
+
 echarts.use([
   PieChart,
   TitleComponent,
@@ -67,6 +70,8 @@ export class ChartPieComponent implements OnInit, OnChanges {
   @Input() colors: string[] = []; // Cores das fatias
   @Input() radius: [string, string] = ['40%', '70%']; // Raio interno e externo
   @Input() labelFormatter: string = '{c} ({d}%)'; // Formatter
+
+ @Output() prioridadeSelecionada = new EventEmitter<string>();
 
   chartOption: EChartsOption = {};
 
@@ -137,6 +142,14 @@ export class ChartPieComponent implements OnInit, OnChanges {
         } as PieSeriesOption,
       ],
     };
+  }
+ /** ✅ Método para capturar a instância do gráfico e escutar eventos */
+  onChartInit(ec: any): void {
+    ec.on('click', (params: any) => {
+      console.log('Clicou no gráfico:', params);
+      const prioridade = params.name;  // O nome da prioridade
+      this.prioridadeSelecionada.emit(prioridade);
+    });
   }
 }
 

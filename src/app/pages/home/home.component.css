@@ -1,33 +1,89 @@
 .container__home {
   display: flex;
-  flex-direction: column;
-  /* padding: 0 40px 0 40px; */
-  height: 100vh;
-  margin-top: 51px;
+  flex-direction: row;
+  height: 100%;
   align-items: center;
   justify-content: center;
   background-color: rgb(168, 168, 166);
-  /* background: radial-gradient(
-    circle,
-    #e7e6e4 0%,     /* mais claro no centro
-    #b1afab 60%,    /* cor original
-    #9b9a98 100%    /* opcional: ainda mais escuro nas bordas
-    );
-  /* background-color: #7b5814; */
-  /* width: 90vw; */
-  /* max-width: 600px; */
+  /* margin-top: 51px; */
+  /* justify-content: left right; */
 }
 
-/* #logomarca-principal { */
-/* position: absolute;
-  width: 70%;
-  height: 300px;
-  object-fit: cover;
-object-position: top;
-  display: block;
-  margin: 0; */
-/* } */
-/* max-width: 100vw; */
-/* height: auto; */
-/* display: block; */
-/* height: 100px; */
+#container__home-left {
+  width: 250px;
+  height: 100%;
+  /* border: solid 1px red; */
+  padding: 20px 0 10px 10px;
+  /* gap: 10px; */
+}
+
+#acesso-rapido__titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 45px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #9da1a1, black, #9da1a1);
+  color: white;
+}
+
+#acesso-rapido__links {
+  padding: 20px 0 10px 25px;
+  /* border: solid 1px red; */
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+#acesso-rapido__links:hover {
+  overflow: auto;
+}
+
+/* Estilizando a barra de rolagem */
+#acesso-rapido__links::-webkit-scrollbar {
+  width: 6px;               /* Largura mais fina */
+}
+
+#acesso-rapido__links::-webkit-scrollbar-track {
+  background: transparent;  /* Fundo invisível */
+}
+
+#acesso-rapido__links::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Cor discreta */
+  border-radius: 4px;                   /* Arredondado */
+}
+
+
+.home-left-links li {
+  margin-bottom: 10px;
+}
+
+.home-left-links li a {
+  transition: font-size 0.3s ease;
+}
+
+.home-left-links li a:hover {
+  font-size: 1.2em;
+  color: blue;
+}
+
+#container__home-center {
+  display: flex;
+  justify-content: center;
+  /* border: solid 1px red; */
+  width: calc(100% - 200px - 20%);
+  height: 100%;
+  align-items: center;
+}
+
+#container__home-right {
+  width: 20%;
+  height: 100%;
+  /* border: solid 1px red; */
+}
+
+.home-left-links {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
