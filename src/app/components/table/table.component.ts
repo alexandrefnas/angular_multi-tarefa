@@ -7,10 +7,11 @@ import {
 } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'ale-table',
-  imports: [NgStyle, TitleCasePipe, ButtonComponent, CommonModule],
+  imports: [NgStyle, TitleCasePipe, ButtonComponent, CommonModule, RouterModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
@@ -27,10 +28,14 @@ export class TableComponent {
 
   @Input() mostrarEditar: boolean = false;
   @Input() mostrarExcluir: boolean = false;
+  @Input() linksDinamicos: { value: string; url: string }[] = [];
 
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();
 
+  isLink(valor: string): { value: string; url: string } | null {
+    return this.linksDinamicos.find((link) => link.value === valor) || null;
+  }
 
   formatarValor(valor: any, formato: string): string {
     switch (formato) {

@@ -34,6 +34,7 @@
   /* border: solid 1px red; */
   max-height: 60vh;
   overflow: hidden;
+
 }
 
 #acesso-rapido__links:hover {
@@ -60,7 +61,9 @@
 }
 
 .home-left-links li a {
+  text-decoration: none;
   transition: font-size 0.3s ease;
+  color: rgba(0, 0, 255, 0.349);
 }
 
 .home-left-links li a:hover {

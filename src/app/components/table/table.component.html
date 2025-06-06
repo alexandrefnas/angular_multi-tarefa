@@ -13,17 +13,37 @@
   <tbody>
     <tr
       *ngFor="let item of dados"
-      [ngClass]="{'linha-destacada1': destacarLinha1(item), 'linha-destacada2': destacarLinha2(item) }"
-      >
+      [ngClass]="{
+        'linha-destacada1': destacarLinha1(item),
+        'linha-destacada2': destacarLinha2(item)
+      }"
+    >
       <td *ngFor="let coluna of colunas">
         <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
-          {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
+          <ng-container *ngIf="isLink(item[coluna]); else textoNormal">
+            <a
+              [href]="isLink(item[coluna])?.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-dinamico"
+            >
+              {{ item[coluna] }}
+            </a>
+          </ng-container>
+
+          <ng-template #textoNormal>
+            {{ formatarValor(item[coluna], formatoColunas[coluna] || "texto") }}
+          </ng-template>
         </div>
       </td>
+
       <td *ngIf="mostrarAcoes">
         <div
           class="container__mostrar-acoes"
-          [ngStyle]="{ width: tamanhosColunas['mostrarAcoes'] || 'auto', minWidth: '100px' }"
+          [ngStyle]="{
+            width: tamanhosColunas['mostrarAcoes'] || 'auto',
+            minWidth: '100px'
+          }"
         >
           <div class="mostrar-acoes__button" *ngIf="mostrarEditar">
             <ale-button

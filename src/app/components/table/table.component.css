@@ -58,6 +58,15 @@ tr:hover {
   /* font-weight: bold; */
 }
 
+td a.link-dinamico {
+  color: blue;
+  text-decoration: underline;
+}
+
+td a.link-dinamico:hover {
+  color: darkblue;
+}
+
 /* .buttons {
   margin-right: 4px;
   padding: 4px 8px;

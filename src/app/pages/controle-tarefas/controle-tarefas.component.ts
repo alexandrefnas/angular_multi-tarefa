@@ -45,6 +45,27 @@ export class ControleTarefasComponent {
   dataInicio: Date | null = null;
   dataFim: Date | null = null;
 
+  linksAtalho = [
+    { value: 'ABERTURA MEI',                        url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746b6ddfa',    },
+    { value: 'BAIXA CERTIFICADO DIGITAL',           url: 'https://emissao-online.soluti.com.br/issue/plugin',    },
+    { value: 'BAIXA CNPJ ME',                       url: 'https://sso.acesso.gov.br/login?client_id=coletor-nacional.redesimservicos.rfb.gov.br&authorization_id=19746d12418',    },
+    { value: 'BAIXA CNPJ MEI',                      url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746a4625c',    },
+    { value: 'CORRIGIR NFC REJEITADA',              url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',    },
+    { value: 'EMISSÃO DE NF',                       url: 'https://nfse.uberlandia.mg.gov.br/index.html#/',    },
+    { value: 'EMISSÃO DE NFSE',                     url: 'https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2fEmissorNacional',    },
+    { value: 'EMISSÃO DE NFSe MEI',                 url: 'https://sso.acesso.gov.br/login?client_id=nfse.gov.br&authorization_id=19746bea468',    },
+    { value: 'EMISSÃO DE NF SIARE',                 url: 'https://www2.fazenda.mg.gov.br/sol/',    },
+    { value: 'EMITIR FGTS',                         url: 'https://sso.acesso.gov.br/login?client_id=por-p-fgtsd.estaleiro.serpro.gov.br&authorization_id=19746aa9a10',    },
+    { value: 'EMITIR BOLETO SEGURO VIDA',           url: 'https://cliente.portalpasi.com.br/login',    },
+    { value: 'ENVIAR GUIAS INSS',                   url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/dasnsimei.app/Identificacao',    },
+    { value: 'IMPORTAR XML DE COMPRA OLIVER',       url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',    },
+    { value: 'PARCELAMENTO MEI',                    url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2 ',    },
+    { value: 'REQUERIMENTO AUXÍLIO INSS',           url: 'https://www.gov.br/pt-br/temas/meu-inss',    },
+    { value: 'REQUIREMENTO DE CERTIFICADO DIGITAL', url: 'https://www.seguraonline.com.br/parceiros/',    },
+    { value: 'SALVA CHAVE NF COMPRAS',              url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',    },
+    { value: 'SEGURO DESEMPREGO',                   url: 'https://sd.maisemprego.mte.gov.br/sdweb/empregadorweb/index.jsf',    },
+  ];
+
   prioridades = [
     { value: 'Alta', label: 'Alta' },
     { value: 'Moderado', label: 'Moderado' },
@@ -103,7 +124,10 @@ export class ControleTarefasComponent {
     dataConclusao: 'data',
   } as const;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private firestoreService: FirestoreService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private firestoreService: FirestoreService
+  ) {}
 
   ngOnInit(): void {
     // Verifica se há uma prioridade selecionada no localStorage

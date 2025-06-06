@@ -70,17 +70,27 @@ export class ModalTarefasComponent {
 
   atividades = [
     { value: 'ABERTURA MEI', label: 'ABERTURA MEI' },
+    { value: 'BAIXA CERTIFICADO DIGITAL', label: 'BAIXA CERTIFICADO DIGITAL' },
     { value: 'BAIXA CNPJ ME', label: 'BAIXA CNPJ ME' },
     { value: 'BAIXA CNPJ MEI', label: 'BAIXA CNPJ MEI' },
     { value: 'CORRIGIR NFC REJEITADA', label: 'CORRIGIR NFC REJEITADA' },
     { value: 'DECLARAÇÃO IR PF', label: 'DECLARAÇÃO IR PF' },
     { value: 'EMISSÃO DE NF', label: 'EMISSÃO DE NF' },
+    { value: 'EMISSÃO DE NF SIARE', label: 'EMISSÃO DE NF SIARE' },
     { value: 'EMISSÃO DE NFSE', label: 'EMISSÃO DE NFSE' },
+    { value: 'EMISSÃO DE NFSE MEI', label: 'EMISSÃO DE NFSE MEI' },
+    { value: 'EMITIR FGTS', label: 'EMITIR FGTS' },
+    { value: 'EMITIR BOLETO SEGURO VIDA', label: 'EMITIR BOLETO SEGURO VIDA'},
     { value: 'ENVIAR GUIAS INSS', label: 'ENVIAR GUIAS INSS' },
-    { value: 'IMPORTAR XML DE COMPRA', label: 'IMPORTAR XML DE COMPRA	' },
+    { value: 'FAZER CARNE LEÃO', label: 'FAZER CARNE LEÃO' },
+    { value: 'IMPORTAR XML DE COMPRA OLIVER', label: 'IMPORTAR XML DE COMPRA OLIVER' },
+    { value: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL', label: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL' },
     { value: 'PARCELAMENTO MEI', label: 'PARCELAMENTO MEI' },
     { value: 'PREECHER CARNE LEÃO', label: 'PREECHER CARNE LEÃO' },
     { value: 'REQUERIMENTO AUXÍLIO INSS', label: 'REQUERIMENTO AUXÍLIO INSS' },
+    { value: 'REQUIREMENTO DE CERTIFICADO DIGITAL', label: 'REQUIREMENTO DE CERTIFICADO DIGITAL'},
+    { value: 'SALVA CHAVE NF COMPRAS', label: 'SALVA CHAVE NF COMPRAS'},
+    { value: 'SEGURO DESEMPREGO', label: 'SEGURO DESEMPREGO'},
   ];
 
   @Output() onClose = new EventEmitter<boolean>();
