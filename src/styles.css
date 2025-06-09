@@ -3,6 +3,7 @@
 html,
 body {
   height: 90%;
+  background-color: rgb(233, 233, 230);
 }
 
 body {
@@ -18,7 +19,6 @@ body {
   /* color: white; */
   /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
-
 
 a {
   text-decoration: none;

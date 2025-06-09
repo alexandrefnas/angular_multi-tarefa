@@ -55,6 +55,7 @@
           <div class="mostrar-acoes__button" *ngIf="mostrarExcluir">
             <ale-button
               class="button-cancelar"
+              *ngIf="ehAdmin"
               label="Excluir"
               (click)="onExcluir(item)"
             ></ale-button>

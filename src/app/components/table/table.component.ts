@@ -5,17 +5,24 @@ import {
   NgStyle,
   TitleCasePipe,
 } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'ale-table',
-  imports: [NgStyle, TitleCasePipe, ButtonComponent, CommonModule, RouterModule],
+  imports: [
+    NgStyle,
+    TitleCasePipe,
+    ButtonComponent,
+    CommonModule,
+    RouterModule,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   @Input() colunas: string[] = [];
   @Input() dados: any[] = [];
   @Input() tamanhosColunas: { [coluna: string]: string } = {};
@@ -32,6 +39,20 @@ export class TableComponent {
 
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();
+
+  // usuario$ = this.auth.getUsuarioAtual();
+  usuario: any;
+  constructor(public auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.auth.getUsuarioAtual().subscribe((user) => {
+      this.usuario = user;
+    });
+  }
+
+  get ehAdmin() {
+    return this.usuario?.perfil === 'admin';
+  }
 
   isLink(valor: string): { value: string; url: string } | null {
     return this.linksDinamicos.find((link) => link.value === valor) || null;
