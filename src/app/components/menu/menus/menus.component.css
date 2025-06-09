@@ -34,6 +34,7 @@
 .container__menu-bar-menus > ul > li {
   margin-right: 30px;
   list-style: none;
+  cursor: pointer;
   transition: transform 0.4s;
 }
 
@@ -47,8 +48,8 @@
   display: flex;
   /* align-items: center; */
   justify-content: center;
-align-items: center;
-gap: 5px;
+  align-items: center;
+  gap: 5px;
 }
 
 .btn {

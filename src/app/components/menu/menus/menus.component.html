@@ -5,9 +5,10 @@
     </a>
   </div>
   <div class="container__menu-bar-menus">
-    <ul>
+    <ul >
+      <li *ngIf="estaNaHome"><a (click)="acessoRapido()">Acesso Rápido</a></li>
       <li><a [routerLink]="linkUrlTarefas">Tarefas</a></li>
-      <li><a [routerLink]="linkUrlFinanceiro">Financeiro</a></li>
+      <li *ngIf="usuario?.perfil === 'admin'"><a [routerLink]="linkUrlFinanceiro">Financeiro</a></li>
     </ul>
   </div>
   <div class="container__menu-bar-sair">

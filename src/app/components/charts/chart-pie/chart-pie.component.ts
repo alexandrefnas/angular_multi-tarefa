@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   OnChanges,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
@@ -71,11 +71,11 @@ export class ChartPieComponent implements OnInit, OnChanges {
   @Input() radius: [string, string] = ['40%', '70%']; // Raio interno e externo
   @Input() labelFormatter: string = '{c} ({d}%)'; // Formatter
 
- @Output() prioridadeSelecionada = new EventEmitter<string>();
+  @Output() prioridadeSelecionada = new EventEmitter<string>();
 
   chartOption: EChartsOption = {};
 
-   private subscription!: Subscription;
+  private subscription!: Subscription;
 
   ngOnInit(): void {
     this.subscribeData();
@@ -105,7 +105,7 @@ export class ChartPieComponent implements OnInit, OnChanges {
     }
   }
 
-  private setupChart(data: { name: string; value: number }[]): void {
+  private setupChart(data: { name: string; value: number; itemStyle?: any  }[]): void {
     this.chartOption = {
       color: this.colors.length ? this.colors : undefined, // ✅ Aplica se tiver
       tooltip: { trigger: 'item' },
@@ -143,11 +143,11 @@ export class ChartPieComponent implements OnInit, OnChanges {
       ],
     };
   }
- /** ✅ Método para capturar a instância do gráfico e escutar eventos */
+  /** ✅ Método para capturar a instância do gráfico e escutar eventos */
   onChartInit(ec: any): void {
     ec.on('click', (params: any) => {
       console.log('Clicou no gráfico:', params);
-      const prioridade = params.name;  // O nome da prioridade
+      const prioridade = params.name; // O nome da prioridade
       this.prioridadeSelecionada.emit(prioridade);
     });
   }
