@@ -46,28 +46,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private firestoreService: FirestoreService,
     private router: Router
   ) {
-    // this.graficoDados$ = this.firestoreService.getTarefas().pipe(
-    //   map((tarefas: Tarefa[]) =>
-    //     // Primeiro: filtra apenas tarefas em aberto
-    //     tarefas.filter(
-    //       (tarefa) => !tarefa.dataConclusao || tarefa.dataConclusao === ''
-    //     )
-    //   ),
-    //   map((tarefasEmAberto: Tarefa[]) => {
-    //     // Agrupa e conta as prioridades
-    //     const counts: { [prioridade: string]: number } = {};
-    //     tarefasEmAberto.forEach((tarefa) => {
-    //       const prioridade = tarefa.prioridadeSelecionada || 'Sem prioridade';
-    //       counts[prioridade] = (counts[prioridade] || 0) + 1;
-    //     });
-
-    //     // Transforma em array de objetos para o gráfico
-    //     return Object.keys(counts).map((prioridade) => ({
-    //       name: this.capitalize(prioridade),
-    //       value: counts[prioridade],
-    //     }));
-    //   })
-    // );
     const coresPorPrioridade: Record<string, string> = {
       Alta: '#ff0000',
       Moderado: '#FFFF00',
