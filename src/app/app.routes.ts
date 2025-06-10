@@ -12,11 +12,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'tarefas', component: ControleTarefasComponent, canActivate: [AuthGuard] },
-  { path: 'financeiro', component: ControleFinanceiroComponent, canActivate: [PerfilGuard] },
-  {
-    path: 'cadastro',
-    component: CadastrouComponent,
-    // canActivate: [PerfilGuard], // 🔒 Só admins
-  },
+  { path: 'financeiro', component: ControleFinanceiroComponent, canActivate: [PerfilGuard] }, // 🔒 Só admins
+  { path: 'cadastro', component: CadastrouComponent, canActivate: [PerfilGuard] }, // 🔒 Só admins
   { path: '**', redirectTo: '' },
 ];

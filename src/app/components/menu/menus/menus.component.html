@@ -1,25 +1,80 @@
-<div class="container__menu-bar" *ngIf="auth.estaLogado()" >
+<div class="container__menu-bar" *ngIf="auth.estaLogado()">
   <div class="container__menu-bar-logo">
     <a [routerLink]="''">
       <img src="assets/images/logo_rezende_contabilidade.jpg" alt="" />
     </a>
   </div>
   <div class="container__menu-bar-menus">
-    <ul >
-      <li *ngIf="estaNaHome"><a (click)="acessoRapido()">Acesso Rápido</a></li>
-      <li><a [routerLink]="linkUrlTarefas">Tarefas</a></li>
-      <li *ngIf="usuario?.perfil === 'admin'"><a [routerLink]="linkUrlFinanceiro">Financeiro</a></li>
+    <ul>
+      <li class="menu-bar__principal" *ngIf="estaNaHome">
+        <a (click)="acessoRapido()">Acesso Rápido</a>
+      </li>
+      <li class="menu-bar__principal">
+        <a [routerLink]="linkUrlTarefas">Tarefas</a>
+      </li>
+
+      <li>
+        <ale-submenu-item
+          *ngIf="isAdmin"
+          [titulo]="'Financeiro'"
+          [itens]="financeiro"
+        ></ale-submenu-item>
+      </li>
+
+      <li>
+        <ale-submenu-item
+          *ngIf="isAdmin"
+          [titulo]="'Controle'"
+          [itens]="getItensVisiveis(controle)"
+        ></ale-submenu-item>
+        <!-- *ngIf="isAdmin" -->
+      </li>
+
+      <li class="menu-bar__principal" *ngIf="isAdmin"><a>DRE</a></li>
     </ul>
   </div>
   <div class="container__menu-bar-sair">
-    <nav *ngIf="usuario?.perfil === 'admin'">
-      <a [routerLink]="'/cadastro'">
+    <!-- <nav *ngIf="isAdmin">
+      <a [routerLink]="">
         <button class="btns btn-primary">+ Usuário</button>
       </a>
-    </nav>
+    </nav> -->
     <nav>
       <button class="btn" (click)="onSair()">Sair</button>
     </nav>
   </div>
 </div>
 <!-- *ngIf="usuario?.perfil === 'admin'" -->
+
+<!-- <li
+    *ngIf="isAdmin"
+    class="has-submenu"
+    (mouseenter)="abrirSubmenu()"
+    (mouseleave)="fecharSubmenu()"
+  >
+    <a class="menu-bar__principal">Financeiro</a>
+    <ul class="submenu" [class.open]="submenuAberto">
+      <li class="menu-bar__principal">
+        <a [routerLink]="linkUrlFinanceiro">Contas a Receber</a>
+      </li>
+      <li class="menu-bar__principal"><a>Contas a Pagar</a></li>
+    </ul>
+  </li> -->
+<!-- <li
+    *ngIf="isAdmin"
+    class="has-submenu"
+    (mouseenter)="abrirSubmenu2()"
+    (mouseleave)="fecharSubmenu2()"
+  >
+    <a class="menu-bar__principal">Controle</a>
+    <ul class="submenu" [class.open]="submenuAberto2">
+      <li class="menu-bar__principal"><a href="#">Usuários</a></li>
+      <li class="menu-bar__principal"><a href="#">Clientes</a></li>
+      <li class="menu-bar__principal"><a href="#">Atividades</a></li>
+      <li class="menu-bar__principal"><a href="#">Receitas</a></li>
+      <li class="menu-bar__principal"><a href="#">Despesas</a></li>
+      <li class="menu-bar__principal"><a href="#">Links</a></li>
+    </ul>
+  </li> -->
+
+<!-- <li class="menu-bar__principal"><a>Controle</a></li> -->

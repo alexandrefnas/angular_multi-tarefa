@@ -11,9 +11,9 @@
   top: 0;
 }
 
-.containder__tela {
+.container__tela {
   width: 100%;
-  height: calc(100vh - 60px);
-  margin-top: 50px;
-  /* border: 1px solid red; */
+  height: 100vh; /* altura total da viewport */
+  padding-top: 50px; /* espaço reservado para o menu fixo */
+  padding-bottom: 15px;
 }

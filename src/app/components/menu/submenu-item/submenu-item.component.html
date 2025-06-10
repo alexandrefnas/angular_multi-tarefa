@@ -1,0 +1,11 @@
+<div class="submenu-wrapper" (mouseenter)="abrir()" (mouseleave)="fechar()">
+  <!-- <li class="has-submenu"> -->
+    <a class="menu-bar__principal">{{ titulo }}</a>
+    <ul class="submenu" [class.open]="submenuAberto">
+      <li *ngFor="let item of itens" class="menu-bar__submenu-item">
+        <a *ngIf="item.rota" [routerLink]="item.rota" (click)="fechar()">{{ item.label }}</a>
+        <a *ngIf="!item.rota" href="#" >{{ item.label }}</a>
+      </li>
+    </ul>
+  <!-- </li> -->
+</div>

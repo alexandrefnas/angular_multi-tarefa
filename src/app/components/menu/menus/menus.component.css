@@ -7,7 +7,7 @@
 }
 
 .container__menu-bar-logo {
-  width: 30%;
+  width: 20%;
   /* height: 100%; */
   overflow: hidden;
   display: flex;
@@ -23,28 +23,43 @@
 }
 
 .container__menu-bar-menus {
-  width: 55%;
+  width: 75%;
 }
 
-.container__menu-bar-menus > ul {
+ .container__menu-bar-menus > ul {
   display: flex;
   flex-direction: row;
 }
 
 .container__menu-bar-menus > ul > li {
-  margin-right: 30px;
+  /* margin-right: 30px; */
   list-style: none;
-  cursor: pointer;
-  transition: transform 0.4s;
+  /* color: black; */
+  /* cursor: pointer; */
+  /* transition: transform 0.4s; */
 }
 
-.container__menu-bar-menus > ul > li:hover {
+.container__menu-bar-menus > ul > li > a {
+  color: black;
+}
+/* .container__menu-bar-menus > ul > */
+
+.menu-bar__principal {
+  display: block;
+  padding: 10px 20px;
+  cursor: pointer;
+ width: max-content;
+  white-space: nowrap;
+
+}
+
+.menu-bar__principal:hover {
   font-weight: bold;
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
 }
 
 .container__menu-bar-sair {
-  width: 25%;
+  width: 15%;
   display: flex;
   /* align-items: center; */
   justify-content: center;
@@ -67,7 +82,7 @@
   background-color: #9c9b9b;
 }
 
-.btns {
+/* .btns {
   padding: 2px 10px;
   width: 100px;
   font-size: 1.1rem;
@@ -76,11 +91,43 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-  /* color: white; */
-  /* font-weight: bold; */
-  /* margin-left: 10px; */
+
 }
 
 .btns:hover {
   background-color: #9c9b9b;
+} */
+
+/* .has-submenu {
+  position: relative;
 }
+
+.container__menu-bar-menus .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content; /* 🔑 se ajusta ao conteúdo mais longo
+  white-space: nowrap; /* 🔑 evita quebra de linha
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 999;
+  padding: 0;
+  list-style: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container__menu-bar-menus .submenu li {
+  padding: 8px 12px;
+}
+
+.container__menu-bar-menus .submenu li a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.container__menu-bar-menus .submenu.open {
+  display: block;
+} */

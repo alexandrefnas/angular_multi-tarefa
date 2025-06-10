@@ -13,7 +13,7 @@ import { NgIf } from '@angular/common';
     <header class="container__menu" >
       <ale-menus (sair)="logout()"></ale-menus>
     </header>
-    <div class="containder__tela">
+    <div class="container__tela">
       <router-outlet></router-outlet>
     </div>
     `,

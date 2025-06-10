@@ -3,9 +3,10 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { NgIf } from '@angular/common';
 import { filter } from 'rxjs';
+import { SubmenuItemComponent } from '../submenu-item/submenu-item.component';
 @Component({
   selector: 'ale-menus',
-  imports: [RouterModule, NgIf],
+  imports: [RouterModule, NgIf, SubmenuItemComponent],
   templateUrl: './menus.component.html',
   styleUrl: './menus.component.css',
 })
@@ -15,10 +16,48 @@ export class MenusComponent implements OnInit {
   linkUrlFinanceiro = '/financeiro';
   usuario: any;
   estaNaHome = false;
+  submenuAberto = false;
+  submenuAberto2 = false;
 
   @Output() sair = new EventEmitter<void>(); // ✅ Evento personalizado
 
+  // toggleSubmenu(event: MouseEvent) {
+  //   event.preventDefault(); // evita navegação
+  //   this.submenuAberto = !this.submenuAberto;
+  // }
+
+  financeiro = [
+    { label: 'Contas a Receber', rota: this.linkUrlFinanceiro , somenteAdmin:true},
+    { label: 'Contas a Pagar' },
+  ];
+
+  controle = [
+    { label: 'Usuários', rota: '/cadastro', somenteAdmin:true },
+    { label: 'Clientes' },
+    { label: 'Atividades' },
+    { label: 'Receitas' },
+    { label: 'Despesas' },
+    { label: 'Links' },
+  ];
+
+  // abrirSubmenu() {
+  //   this.submenuAberto = true;
+  // }
+  // abrirSubmenu2() {
+  //   this.submenuAberto2 = true;
+  // }
+
+  // fecharSubmenu() {
+  //   this.submenuAberto = false;
+  // }
+  // fecharSubmenu2() {
+  //   this.submenuAberto2 = false;
+  // }
+
   constructor(public auth: AuthService, private router: Router) {}
+  get isAdmin(): boolean {
+    return this.usuario?.perfil === 'admin';
+  }
 
   ngOnInit(): void {
     this.auth.getUsuarioAtual().subscribe((user) => {
@@ -32,6 +71,10 @@ export class MenusComponent implements OnInit {
       .subscribe((event: any) => {
         this.verificarRota(event.urlAfterRedirects);
       });
+  }
+
+  getItensVisiveis(itens: any[]): any[] {
+    return itens.filter((item) => !item.somenteAdmin || this.isAdmin);
   }
 
   verificarRota(url: string): void {

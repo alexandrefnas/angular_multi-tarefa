@@ -1,0 +1,50 @@
+.submenu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-bar__principal {
+  display: block;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menu-bar__principal:hover {
+font-weight: bold;
+}
+
+.submenu {
+  position: absolute;
+  top: 100%; /* encosta o submenu no menu principal */
+  left: 0;
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 0;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.submenu.open {
+  display: block;
+}
+
+.menu-bar__submenu-item {
+  list-style: none;
+  padding: 10px 16px;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+}
+
+.menu-bar__submenu-item:hover {
+  /* background-color: #f1f1f1; */
+  font-weight: bold;
+}
+
+/* .submenu-wrapper,
+.submenu,
+.menu-bar__principal {
+  outline: 1px dashed red; /* ajuda a visualizar gaps
+} */
