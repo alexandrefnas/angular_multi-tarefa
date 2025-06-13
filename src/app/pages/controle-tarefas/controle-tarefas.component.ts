@@ -293,52 +293,53 @@ export class ControleTarefasComponent {
   //   });
   // }
 
-private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
-  if (!termo || termo.trim() === '') {
-    return tarefas;
+  private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
+    if (!termo || termo.trim() === '') {
+      return tarefas;
+    }
+
+    const termoLower = termo.toLowerCase().trim();
+    const termoISO = this.converterDataParaISO(termoLower); // tenta converter para yyyy-MM-dd
+    const termoEhData = !!termoISO; // só filtra por data se for válido
+
+    return tarefas.filter((tarefa) => {
+      const data =
+        tarefa.data instanceof Date
+          ? this.formatarDataString(tarefa.data)
+          : tarefa.data;
+
+      const dataConclusao =
+        tarefa.dataConclusao instanceof Date
+          ? this.formatarDataString(tarefa.dataConclusao)
+          : tarefa.dataConclusao;
+
+      return (
+        (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
+        (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
+        (tarefa.atividade &&
+          tarefa.atividade.toLowerCase().includes(termoLower)) ||
+        (tarefa.prioridadeSelecionada &&
+          tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
+        (tarefa.obs && tarefa.obs.toLowerCase().includes(termoLower)) ||
+        (tarefa.quem && tarefa.quem.toLowerCase().includes(termoLower)) ||
+        (tarefa.financeiroSelecionada &&
+          tarefa.financeiroSelecionada.toLowerCase().includes(termoLower)) ||
+        (termoEhData &&
+          ((data && data.includes(termoISO)) ||
+            (dataConclusao && dataConclusao.includes(termoISO))))
+      );
+    });
   }
 
-  const termoLower = termo.toLowerCase().trim();
-  const termoISO = this.converterDataParaISO(termoLower); // tenta converter para yyyy-MM-dd
-  const termoEhData = !!termoISO; // só filtra por data se for válido
-
-  return tarefas.filter((tarefa) => {
-    const data = tarefa.data instanceof Date
-      ? this.formatarDataString(tarefa.data)
-      : tarefa.data;
-
-    const dataConclusao = tarefa.dataConclusao instanceof Date
-      ? this.formatarDataString(tarefa.dataConclusao)
-      : tarefa.dataConclusao;
-
-    return (
-      (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
-      (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
-      (tarefa.atividade && tarefa.atividade.toLowerCase().includes(termoLower)) ||
-      (tarefa.prioridadeSelecionada &&
-        tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
-      (tarefa.obs && tarefa.obs.toLowerCase().includes(termoLower)) ||
-      (tarefa.quem && tarefa.quem.toLowerCase().includes(termoLower)) ||
-      (tarefa.financeiroSelecionada &&
-        tarefa.financeiroSelecionada.toLowerCase().includes(termoLower)) ||
-      (termoEhData &&
-        ((data && data.includes(termoISO)) ||
-         (dataConclusao && dataConclusao.includes(termoISO))))
-    );
-  });
-}
-
-
-private converterDataParaISO(dataStr: string): string {
-  const regex = /^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/;
-  const match = dataStr.match(regex);
-  if (match) {
-    const [, dia, mes, ano] = match;
-    return `${ano}-${mes}-${dia}`;
+  private converterDataParaISO(dataStr: string): string {
+    const regex = /^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/;
+    const match = dataStr.match(regex);
+    if (match) {
+      const [, dia, mes, ano] = match;
+      return `${ano}-${mes}-${dia}`;
+    }
+    return '';
   }
-  return '';
-}
-
 
   private formatarDataString(data: Date): string {
     const ano = data.getFullYear();
