@@ -46,7 +46,7 @@ export class ControleTarefasComponent {
   dataInicio: Date | null = null;
   dataFim: Date | null = null;
 
- links: any[] = [];
+  links: any[] = [];
 
   // linksAtalho = [
   //   {
@@ -410,6 +410,8 @@ export class ControleTarefasComponent {
         ) {
           const dataProximaTarefa = this.somarMesMaisUm(tarefa.data);
           tarefa.data = dataProximaTarefa;
+          tarefa.dataConclusao = '';
+          tarefa.quem = '';
           await this.firestoreService.addTarefa(tarefa);
           console.log('Tarefa subsequente cadastrada com sucesso:', tarefa);
           // console.log(

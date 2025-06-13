@@ -16,6 +16,7 @@
             <div class="form__container-input" id="razaoSocial">
               <ale-input-ale
                 label="Razao Social"
+                type="text"
                 formControlName="razaoSocial"
                 errorMessage="Campo obrigatório"
               ></ale-input-ale>
@@ -24,6 +25,7 @@
             <div class="form__container-input" id="nomeFantasia">
               <ale-input-ale
                 label="Nome Fantasia"
+                type="text"
                 formControlName="nomeFantasia"
                 [required]="true"
                 errorMessage="Campo obrigatório"
@@ -104,6 +106,7 @@
             <div class="form__container-input" id="nomeResponsavel">
               <ale-input-ale
                 label="Nome Responsavel"
+                type="name"
                 formControlName="nomeResponsavel"
                 [required]="false"
                 errorMessage="Campo obrigatório"
@@ -123,6 +126,7 @@
             <div class="form__container-input" id="fone">
               <ale-input-decimal-ale
                 label="Fone"
+                type="tel"
                 formControlName="fone"
                 [maskType]="'phone'"
                 [required]="false"
@@ -132,6 +136,7 @@
             <div class="form__container-input" id="email">
               <ale-input-ale
                 label="e-mail"
+                type="email"
                 formControlName="email"
                 [required]="false"
                 errorMessage="Campo obrigatório"
@@ -169,8 +174,8 @@
                 formControlName="caminhoPasta"
                 [required]="false"
                 errorMessage="Campo obrigatório"
-                ></ale-input-ale>
-                <!-- [copiaConteudo]="!somenteVisualizacao" -->
+              ></ale-input-ale>
+              <!-- [copiaConteudo]="!somenteVisualizacao" -->
             </div>
           </div>
           <div class="linha6" *ngIf="!somenteVisualizacao">

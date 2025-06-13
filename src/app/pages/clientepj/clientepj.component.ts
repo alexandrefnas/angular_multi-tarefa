@@ -38,7 +38,7 @@ export class ClientepjComponent implements OnInit {
     razaoSocial: { width: '250px' },
     cnpj: { width: '150px' },
     nomeResponsavel: { width: 'auto', minWidth: '200px' },
-    mostrarAcoes: { width: '100px' },
+    // mostrarAcoes: { width: '10px' },
   };
 
   formatoProdutos = {
