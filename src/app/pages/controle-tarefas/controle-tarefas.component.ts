@@ -1,11 +1,6 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button.component';
 import { TableComponent } from '../../components/table/table.component';
 import { FirestoreService, Tarefa } from '../../services/firestore.service';
@@ -41,124 +36,11 @@ export class ControleTarefasComponent {
 
   dadosProdutos: Tarefa[] = [];
   termoPesquisa: string = '';
-  // pesquisaPeriodo!: FormGroup;
 
-  dataInicio: Date | null = null;
-  dataFim: Date | null = null;
+  dataInicio: string | Date | null = null;
+  dataFim: string | Date | null = null;
 
   links: any[] = [];
-
-  // linksAtalho = [
-  //   {
-  //     value: 'ABERTURA MEI',
-  //     url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746b6ddfa',
-  //   },
-  //   {
-  //     value: 'BAIXA CERTIFICADO DIGITAL',
-  //     url: 'https://emissao-online.soluti.com.br/issue/plugin',
-  //   },
-  //   {
-  //     value: 'BAIXA CNPJ ME',
-  //     url: 'https://sso.acesso.gov.br/login?client_id=coletor-nacional.redesimservicos.rfb.gov.br&authorization_id=19746d12418',
-  //   },
-  //   {
-  //     value: 'BAIXA CNPJ MEI',
-  //     url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746a4625c',
-  //   },
-  //   {
-  //     value: 'CORRIGIR NFC REJEITADA',
-  //     url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',
-  //   },
-  //   {
-  //     value: 'EMITIR NF',
-  //     url: 'https://nfse.uberlandia.mg.gov.br/index.html#/',
-  //   },
-  //   {
-  //     value: 'EMITIR NFSE',
-  //     url: 'https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2fEmissorNacional',
-  //   },
-  //   {
-  //     value: 'EMITIR NFSe MEI',
-  //     url: 'https://sso.acesso.gov.br/login?client_id=nfse.gov.br&authorization_id=19746bea468',
-  //   },
-  //   { value: 'EMITIR NF SIARE', url: 'https://www2.fazenda.mg.gov.br/sol/' },
-  //   {
-  //     value: 'EMITIR FGTS',
-  //     url: 'https://sso.acesso.gov.br/login?client_id=por-p-fgtsd.estaleiro.serpro.gov.br&authorization_id=19746aa9a10',
-  //   },
-  //   {
-  //     value: 'EMITIR BOLETO SEGURO VIDA',
-  //     url: 'https://cliente.portalpasi.com.br/login',
-  //   },
-  //   {
-  //     value: 'ENVIAR GUIAS INSS',
-  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/dasnsimei.app/Identificacao',
-  //   },
-  //   {
-  //     value: 'IMPORTAR XML DE COMPRA OLIVER',
-  //     url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',
-  //   },
-  //   {
-  //     value: 'PARCELAMENTO MEI',
-  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2 ',
-  //   },
-  //   {
-  //     value: 'REQUERIMENTO AUXÍLIO INSS',
-  //     url: 'https://www.gov.br/pt-br/temas/meu-inss',
-  //   },
-  //   {
-  //     value: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
-  //     url: 'https://www.seguraonline.com.br/parceiros/',
-  //   },
-  //   {
-  //     value: 'SALVA CHAVE NF COMPRAS',
-  //     url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',
-  //   },
-  //   {
-  //     value: 'SEGURO DESEMPREGO',
-  //     url: 'https://sd.maisemprego.mte.gov.br/sdweb/empregadorweb/index.jsf',
-  //   },
-  //   {
-  //     value: 'DOCUMETAÇÃO MRV',
-  //     url: 'https://bpoacnbrprod.service-now.com/mrv_portal_terceiros',
-  //   },
-  //   {
-  //     value: 'NEGOCIAÇÃO ME',
-  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2',
-  //   },
-  //   {
-  //     value: 'RENOVA CERTIFICADO DIGITAL',
-  //     url: 'https://www.seguraonline.com.br/parceiros/',
-  //   },
-  //   {
-  //     value: 'REGISTRO DE MARCA',
-  //     url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',
-  //   },
-  //   {
-  //     value: 'BAIXA XML NF COMPRAS',
-  //     url: 'https://meu.inpi.gov.br/pag/',
-  //   },
-  //   {
-  //     value: 'EMITIR CERTIFICADO DIGITAL',
-  //     url: 'https://emissao-online.soluti.com.br/issue/plugin',
-  //   },
-  //   {
-  //     value: 'PARCELAMENTO DIVIDA ATIVA',
-  //     url: 'https://www.regularize.pgfn.gov.br',
-  //   },
-  //   {
-  //     value: 'EMITIR GUIA FGTS',
-  //     url: 'https://fgtsdigital.sistema.gov.br/portal/login',
-  //   },
-  //   {
-  //     value: 'EMITIR BOLETO SEGURO DE VIDA',
-  //     url: 'https://cliente.portalpasi.com.br/login',
-  //   },
-  //   {
-  //     value: 'CANCELAMENTO EXTEPORANIO',
-  //     url: 'https://www2.fazenda.mg.gov.br/sol/',
-  //   },
-  // ];
 
   prioridades = [
     { value: 'Alta', label: 'Alta' },
@@ -190,10 +72,6 @@ export class ControleTarefasComponent {
     obs: 'Observações',
     quem: 'Responsável',
     dataConclusao: 'Conclusão',
-    // statusSelecionada: 'Status',
-    // financeiroSelecionada: 'Financeiro',
-    // valor: 'Valor',
-    // valorNumerico: 'Valor',
   };
 
   colunasProdutos = [
@@ -205,14 +83,9 @@ export class ControleTarefasComponent {
     'obs',
     'quem',
     'dataConclusao',
-    // 'statusSelecionada',
-    // 'financeiroSelecionada',
-    // 'valor',
-    // 'valorNumerico',
   ];
 
   formatoProdutos = {
-    // valor: 'moeda',
     valorNumerico: 'moeda',
     data: 'data',
     dataConclusao: 'data',
@@ -252,23 +125,25 @@ export class ControleTarefasComponent {
   }
 
   filtrosCheckbox(): void {
-    // if (this.mostrarTodosAtivo) {
-    if (!this.filtros) this.filtros = false;
-    else this.filtros = true;
-    // this.mostrarTodosAtivo = false;
-    // this.carregarTarefas();
-    // }
+    // if (!this.filtros)
+    // else
+    // this.filtros = !this.filtros;
+    if (!this.filtros) {
+      this.filtros = false;
+      this.limparFiltros();
+    } else {
+      this.filtros = true;
+    }
   }
 
   verificarCheckbox(): void {
     if (this.mostrarTodosAtivo) {
       this.mostrarTodos = false;
       this.mostrarTodosAtivo = false;
-      // this.carregarTarefas();
+      this.carregarTarefas();
     } else {
       this.mostrarTodos = true;
       this.mostrarTodosAtivo = true;
-      // this.mostrarTodosAtivo = true;
     }
   }
 
@@ -278,10 +153,6 @@ export class ControleTarefasComponent {
       'verificando filtro ' + this.mostrarTodos + ' ' + this.mostrarTodosAtivo
     );
   }
-
-  // private formatarDataISO(date: Date): string {
-  //   return date.toISOString().slice(0, 10); // Retorna '2025-05-29'
-  // }
 
   carregarTarefas(): void {
     this.firestoreService.getTarefas().subscribe((tarefas) => {
@@ -307,7 +178,7 @@ export class ControleTarefasComponent {
         return dataA.localeCompare(dataB);
       });
       // ✅ Sempre aplica o filtro de período se houver datas
-      if (this.dataInicio && this.dataFim) {
+      if (this.dataInicio || this.dataFim) {
         tarefasMapeadas = this.filtrarPorPeriodo(
           tarefasMapeadas,
           this.dataInicio,
@@ -337,55 +208,137 @@ export class ControleTarefasComponent {
 
   private filtrarPorPeriodo(
     tarefas: any[],
-    dataInicio: string | Date,
-    dataFim: string | Date
+    dataInicio: string | Date | null,
+    dataFim: string | Date | null
   ): any[] {
-    const inicio = this.formatarDataString(new Date(dataInicio));
-    const fim = this.formatarDataString(new Date(dataFim));
-
-    console.log('Filtro de período:');
-    console.log('Início:', inicio);
-    console.log('Fim:', fim);
-
     return tarefas.filter((tarefa) => {
       const tarefaData =
         tarefa.data instanceof Date
           ? this.formatarDataString(tarefa.data)
           : tarefa.data;
 
-      return tarefaData >= inicio && tarefaData <= fim;
+      if (dataInicio && dataFim) {
+        const inicio = this.formatarDataString(new Date(dataInicio));
+        const fim = this.formatarDataString(new Date(dataFim));
+        return tarefaData >= inicio && tarefaData <= fim;
+      } else if (dataInicio) {
+        const inicio = this.formatarDataString(new Date(dataInicio));
+        return tarefaData >= inicio;
+      } else if (dataFim) {
+        const fim = this.formatarDataString(new Date(dataFim));
+        return tarefaData <= fim;
+      }
+      return true;
     });
   }
 
-  private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
-    if (!termo || termo.trim() === '') {
-      return tarefas;
-    }
-
-    const termoLower = termo.toLowerCase();
-
-    return tarefas.filter((tarefa) => {
-      return (
-        (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
-        (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
-        (tarefa.atividade &&
-          tarefa.atividade.toLowerCase().includes(termoLower)) ||
-        (tarefa.prioridadeSelecionada &&
-          tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
-        (tarefa.data &&
-          tarefa.data.toString().toLowerCase().includes(termoLower)) ||
-        (tarefa.obs &&
-          tarefa.obs.toString().toLowerCase().includes(termoLower)) ||
-        (tarefa.quem &&
-          tarefa.quem.toString().toLowerCase().includes(termoLower)) ||
-        (tarefa.financeiroSelecionada &&
-          tarefa.financeiroSelecionada
-            .toString()
-            .toLowerCase()
-            .includes(termoLower))
-      );
-    });
+  limparFiltros(): void {
+    this.dataInicio = null;
+    this.dataFim = null;
+    this.termoPesquisa = '';
+    this.mostrarTodos = false;
+    this.mostrarTodosAtivo = false;
+    this.carregarTarefas();
   }
+
+  // private filtrarPorPeriodo(
+  //   tarefas: any[],
+  //   dataInicio: string | Date | null,
+  //   dataFim: string | Date | null
+  // ): any[] {
+  //   const inicio = this.formatarDataString(new Date(dataInicio));
+  //   const fim = this.formatarDataString(new Date(dataFim));
+
+  //   console.log('Filtro de período:');
+  //   console.log('Início:', inicio);
+  //   console.log('Fim:', fim);
+
+  //   return tarefas.filter((tarefa) => {
+  //     const tarefaData =
+  //       tarefa.data instanceof Date
+  //         ? this.formatarDataString(tarefa.data)
+  //         : tarefa.data;
+
+  //     return tarefaData >= inicio && tarefaData <= fim;
+  //   });
+  // }
+
+  // private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
+  //   if (!termo || termo.trim() === '') {
+  //     return tarefas;
+  //   }
+
+  //   const termoLower = termo.toLowerCase();
+
+  //   return tarefas.filter((tarefa) => {
+  //     return (
+  //       (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
+  //       (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
+  //       (tarefa.atividade &&
+  //         tarefa.atividade.toLowerCase().includes(termoLower)) ||
+  //       (tarefa.prioridadeSelecionada &&
+  //         tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
+  //       (tarefa.data &&
+  //         tarefa.data.toString().toLowerCase().includes(termoLower)) ||
+  //       (tarefa.obs &&
+  //         tarefa.obs.toString().toLowerCase().includes(termoLower)) ||
+  //       (tarefa.quem &&
+  //         tarefa.quem.toString().toLowerCase().includes(termoLower)) ||
+  //       (tarefa.financeiroSelecionada &&
+  //         tarefa.financeiroSelecionada
+  //           .toString()
+  //           .toLowerCase()
+  //           .includes(termoLower))
+  //     );
+  //   });
+  // }
+
+private filtrarPorPesquisa(tarefas: any[], termo: string): any[] {
+  if (!termo || termo.trim() === '') {
+    return tarefas;
+  }
+
+  const termoLower = termo.toLowerCase().trim();
+  const termoISO = this.converterDataParaISO(termoLower); // tenta converter para yyyy-MM-dd
+  const termoEhData = !!termoISO; // só filtra por data se for válido
+
+  return tarefas.filter((tarefa) => {
+    const data = tarefa.data instanceof Date
+      ? this.formatarDataString(tarefa.data)
+      : tarefa.data;
+
+    const dataConclusao = tarefa.dataConclusao instanceof Date
+      ? this.formatarDataString(tarefa.dataConclusao)
+      : tarefa.dataConclusao;
+
+    return (
+      (tarefa.servico && tarefa.servico.toLowerCase().includes(termoLower)) ||
+      (tarefa.cliente && tarefa.cliente.toLowerCase().includes(termoLower)) ||
+      (tarefa.atividade && tarefa.atividade.toLowerCase().includes(termoLower)) ||
+      (tarefa.prioridadeSelecionada &&
+        tarefa.prioridadeSelecionada.toLowerCase().includes(termoLower)) ||
+      (tarefa.obs && tarefa.obs.toLowerCase().includes(termoLower)) ||
+      (tarefa.quem && tarefa.quem.toLowerCase().includes(termoLower)) ||
+      (tarefa.financeiroSelecionada &&
+        tarefa.financeiroSelecionada.toLowerCase().includes(termoLower)) ||
+      (termoEhData &&
+        ((data && data.includes(termoISO)) ||
+         (dataConclusao && dataConclusao.includes(termoISO))))
+    );
+  });
+}
+
+
+private converterDataParaISO(dataStr: string): string {
+  const regex = /^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/;
+  const match = dataStr.match(regex);
+  if (match) {
+    const [, dia, mes, ano] = match;
+    return `${ano}-${mes}-${dia}`;
+  }
+  return '';
+}
+
 
   private formatarDataString(data: Date): string {
     const ano = data.getFullYear();
@@ -414,12 +367,6 @@ export class ControleTarefasComponent {
           tarefa.quem = '';
           await this.firestoreService.addTarefa(tarefa);
           console.log('Tarefa subsequente cadastrada com sucesso:', tarefa);
-          // console.log(
-          //   'Data conclusão Alterada: ',
-          //   tarefa.dataConclusao + `  `,
-          //   tarefa.servico + `  Data proximo Mês: `,
-          //   dataProximaTarefa
-          // );
         }
         // Edição
         await this.firestoreService.updateTarefa(
@@ -451,19 +398,11 @@ export class ControleTarefasComponent {
     console.log(resultado); // 2025-07-09
     return resultado;
   }
-  // gerarId(): string {
-  //   return Math.random().toString(36).substr(2, 9);
-  // }
 
   handleModalClose(result: any) {
     console.log('Resultado da modal:', result);
     this.mostrarModal = false;
     this.mostrarModalEditar = false;
-
-    // Opcional: recarregar dados após fechar a modal
-    // this.firestoreService.getTarefas().subscribe((tarefas) => {
-    //   this.dadosProdutos = tarefas;
-    // });
   }
 
   dataConclusaoAtual: any;
