@@ -7,7 +7,7 @@
       <ul class="home-left-links">
         <li *ngFor="let link of links">
           <a [href]="link.url" target="_blank" rel="noopener noreferrer">
-            {{ link.texto }}
+            {{ link.value }}
           </a>
         </li>
       </ul>
@@ -28,7 +28,7 @@
       ></ale-chart-pie>
       <!-- [colors]="['#ff0000', '#FFFF00', '#fff']" -->
   </div>
-  <div id="container__home-right"></div>
+  <div id="container__home-right" *ngIf="mostrarAcessoRapido"></div>
 </div>
 
 <!-- labelFormatter="{b}: {c} unidades ({d}%)" -->

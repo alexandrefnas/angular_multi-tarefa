@@ -19,6 +19,7 @@ import { DataAleComponent } from '../../components/filds/data-ale/data-ale.compo
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
 import { FirestoreService, Tarefa } from '../../services/firestore.service';
 import { NgIf } from '@angular/common';
+import { LinkService } from '../../shared/link.service';
 
 @Component({
   selector: 'ale-modal-tarefas',
@@ -43,6 +44,7 @@ export class ModalTarefasComponent {
   @Input() visible: boolean = false;
 
   servicos = [{ value: 'Mensal', label: 'Mensal' }];
+  links: any[] = [];
 
   @Input() lista1 = [
     { value: 'Alta', label: 'Alta' },
@@ -66,41 +68,42 @@ export class ModalTarefasComponent {
     { value: 'ALEXANDRE', label: 'ALEXANDRE' },
   ];
 
-  atividades = [
-    { value: 'ABERTURA MEI', label: 'ABERTURA MEI' },
-    { value: 'BAIXA CERTIFICADO DIGITAL', label: 'BAIXA CERTIFICADO DIGITAL' },
-    { value: 'BAIXA CNPJ ME', label: 'BAIXA CNPJ ME' },
-    { value: 'BAIXA CNPJ MEI', label: 'BAIXA CNPJ MEI' },
-    { value: 'CORRIGIR NFC REJEITADA', label: 'CORRIGIR NFC REJEITADA' },
-    { value: 'DECLARAÇÃO IR PF', label: 'DECLARAÇÃO IR PF' },
-    { value: 'EMITIR NF', label: 'EMITIR NF' },
-    { value: 'EMITIR NF SIARE', label: 'EMITIR NF SIARE' },
-    { value: 'EMITIR NFSE', label: 'EMITIR NFSE' },
-    { value: 'EMITIR NFSE MEI', label: 'EMITIR NFSE MEI' },
-    { value: 'EMITIR FGTS', label: 'EMITIR FGTS' },
-    { value: 'EMITIR BOLETO SEGURO VIDA', label: 'EMITIR BOLETO SEGURO VIDA' },
-    { value: 'ENVIAR GUIAS INSS', label: 'ENVIAR GUIAS INSS' },
-    { value: 'FAZER CARNE LEÃO', label: 'FAZER CARNE LEÃO' },
-    {
-      value: 'IMPORTAR XML DE COMPRA OLIVER',
-      label: 'IMPORTAR XML DE COMPRA OLIVER',
-    },
-    { value: 'IMPOSTO DE RENDA', label: 'IMPOSTO DE RENDA' },
-    {
-      value: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
-      label: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
-    },
-    { value: 'PARCELAMENTO MEI', label: 'PARCELAMENTO MEI' },
-    { value: 'PREECHER CARNE LEÃO', label: 'PREECHER CARNE LEÃO' },
-    { value: 'REGISTRO DE FUNCIONARIO', label: 'REGISTRO DE FUNCIONÁRIO' },
-    { value: 'REQUERIMENTO AUXÍLIO INSS', label: 'REQUERIMENTO AUXÍLIO INSS' },
-    {
-      value: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
-      label: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
-    },
-    { value: 'SALVA CHAVE NF COMPRAS', label: 'SALVA CHAVE NF COMPRAS' },
-    { value: 'SEGURO DESEMPREGO', label: 'SEGURO DESEMPREGO' },
-  ];
+ atividades: { value: string; label: string }[] = [];
+//  atividades = [
+//     { value: 'ABERTURA MEI', label: 'ABERTURA MEI' },
+//     { value: 'BAIXA CERTIFICADO DIGITAL', label: 'BAIXA CERTIFICADO DIGITAL' },
+//     { value: 'BAIXA CNPJ ME', label: 'BAIXA CNPJ ME' },
+//     { value: 'BAIXA CNPJ MEI', label: 'BAIXA CNPJ MEI' },
+//     { value: 'CORRIGIR NFC REJEITADA', label: 'CORRIGIR NFC REJEITADA' },
+//     { value: 'DECLARAÇÃO IR PF', label: 'DECLARAÇÃO IR PF' },
+//     { value: 'EMITIR NF', label: 'EMITIR NF' },
+//     { value: 'EMITIR NF SIARE', label: 'EMITIR NF SIARE' },
+//     { value: 'EMITIR NFSE', label: 'EMITIR NFSE' },
+//     { value: 'EMITIR NFSE MEI', label: 'EMITIR NFSE MEI' },
+//     { value: 'EMITIR FGTS', label: 'EMITIR FGTS' },
+//     { value: 'EMITIR BOLETO SEGURO VIDA', label: 'EMITIR BOLETO SEGURO VIDA' },
+//     { value: 'ENVIAR GUIAS INSS', label: 'ENVIAR GUIAS INSS' },
+//     { value: 'FAZER CARNE LEÃO', label: 'FAZER CARNE LEÃO' },
+//     {
+//       value: 'IMPORTAR XML DE COMPRA OLIVER',
+//       label: 'IMPORTAR XML DE COMPRA OLIVER',
+//     },
+//     { value: 'IMPOSTO DE RENDA', label: 'IMPOSTO DE RENDA' },
+//     {
+//       value: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
+//       label: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
+//     },
+//     { value: 'PARCELAMENTO MEI', label: 'PARCELAMENTO MEI' },
+//     { value: 'PREECHER CARNE LEÃO', label: 'PREECHER CARNE LEÃO' },
+//     { value: 'REGISTRO DE FUNCIONARIO', label: 'REGISTRO DE FUNCIONÁRIO' },
+//     { value: 'REQUERIMENTO AUXÍLIO INSS', label: 'REQUERIMENTO AUXÍLIO INSS' },
+//     {
+//       value: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
+//       label: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
+//     },
+//     { value: 'SALVA CHAVE NF COMPRAS', label: 'SALVA CHAVE NF COMPRAS' },
+//     { value: 'SEGURO DESEMPREGO', label: 'SEGURO DESEMPREGO' },
+//   ];
 
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onSave = new EventEmitter<Tarefa>();
@@ -110,8 +113,14 @@ export class ModalTarefasComponent {
 
   constructor(
     private fb: FormBuilder,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private linkService: LinkService
   ) {
+     this.atividades = this.linkService.links.map(link => ({
+      value: link.value,
+      label: link.value
+    }));
+
     this.cadastroTarefas = this.fb.group({
       data: ['', Validators.required],
       servico: [''],

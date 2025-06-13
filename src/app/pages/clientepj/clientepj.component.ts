@@ -35,9 +35,10 @@ export class ClientepjComponent implements OnInit {
   colunasProdutos = ['razaoSocial', 'cnpj', 'nomeResponsavel'];
 
   tamanhosColunas = {
-    razaoSocial: '250px',
-    cnpj: '150px',
-    nomeResponsavel: 'auto',
+    razaoSocial: { width: '250px' },
+    cnpj: { width: '150px' },
+    nomeResponsavel: { width: 'auto', minWidth: '200px' },
+    mostrarAcoes: { width: '100px' },
   };
 
   formatoProdutos = {
@@ -53,23 +54,16 @@ export class ClientepjComponent implements OnInit {
     this.carregarClientes();
   }
 
-  // salvarClientepj(dados: Clientepj) {
-  //   this.firestoreService
-  //     .addCadastroClientepj(dados)
-  //     .then(() => {
-  //       console.log('Cliente salvo com sucesso no Firestore!');
-  //       // Aqui você pode mostrar uma mensagem, recarregar lista, etc.
-  //     })
-  //     .catch((erro) => {
-  //       console.error('Erro ao salvar cliente:', erro);
-  //     });
-  // }
-
   fecharModal() {
     this.mostrarModal = false;
     this.modoVisualizacao = false;
     this.mostrarModalEditar = false;
- console.log('FECHAR mostrarModal: '+this.mostrarModal + ' modoVisualizacao: '+this.modoVisualizacao);
+    console.log(
+      'FECHAR mostrarModal: ' +
+        this.mostrarModal +
+        ' modoVisualizacao: ' +
+        this.modoVisualizacao
+    );
   }
 
   carregarClientes(): void {
@@ -92,7 +86,12 @@ export class ClientepjComponent implements OnInit {
     this.clientepjEmEdicao = { ...cliente };
     this.modoVisualizacao = true; // modo somente visualização (form bloqueado)
     this.mostrarModal = true;
-    console.log('VISUALIZAR mostrarModal: '+this.mostrarModal + ' modoVisualizacao: '+this.modoVisualizacao);
+    console.log(
+      'VISUALIZAR mostrarModal: ' +
+        this.mostrarModal +
+        ' modoVisualizacao: ' +
+        this.modoVisualizacao
+    );
   }
 
   editarCliente(cliente: Clientepj): void {
@@ -100,7 +99,12 @@ export class ClientepjComponent implements OnInit {
     this.clientepjEmEdicao = { ...cliente };
     this.mostrarModal = true;
     this.modoVisualizacao = false;
-    console.log('EDITAR mostrarModal: '+this.mostrarModal + ' modoVisualizacao: '+this.modoVisualizacao);
+    console.log(
+      'EDITAR mostrarModal: ' +
+        this.mostrarModal +
+        ' modoVisualizacao: ' +
+        this.modoVisualizacao
+    );
   }
 
   // excluirCliente(cliente: any): void {}

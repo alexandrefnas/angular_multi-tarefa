@@ -25,7 +25,13 @@ import { AuthService } from '../../services/auth.service';
 export class TableComponent implements OnInit {
   @Input() colunas: string[] = [];
   @Input() dados: any[] = [];
-  @Input() tamanhosColunas: { [coluna: string]: string } = {};
+  @Input() tamanhosColunas: {
+    [key: string]: {
+      width?: string;
+      minWidth?: string;
+      maxWidth?: string;
+    };
+  } = {};
   @Input() formatoColunas: {
     [key: string]: 'texto' | 'moeda' | 'data' | 'cnpj';
   } = {};
@@ -99,7 +105,7 @@ export class TableComponent implements OnInit {
   }
 
   abrirVisualizacao(item: any) {
-     this.linhaClicada.emit(item);
+    this.linhaClicada.emit(item);
   }
 
   onEditar(item: any) {

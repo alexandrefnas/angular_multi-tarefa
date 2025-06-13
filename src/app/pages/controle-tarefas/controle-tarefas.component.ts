@@ -13,6 +13,7 @@ import { ModalTarefasComponent } from '../../modal/modal-tarefas/modal-tarefas.c
 import { DataAleComponent } from '../../components/filds/data-ale/data-ale.component';
 import { fail } from 'node:assert';
 import { InputAleComponent } from '../../components/filds/input-ale/input-ale.component';
+import { LinkService } from '../../shared/link.service';
 
 @Component({
   selector: 'ale-controle-tarefas',
@@ -45,26 +46,119 @@ export class ControleTarefasComponent {
   dataInicio: Date | null = null;
   dataFim: Date | null = null;
 
-  linksAtalho = [
-    { value: 'ABERTURA MEI',                        url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746b6ddfa',    },
-    { value: 'BAIXA CERTIFICADO DIGITAL',           url: 'https://emissao-online.soluti.com.br/issue/plugin',    },
-    { value: 'BAIXA CNPJ ME',                       url: 'https://sso.acesso.gov.br/login?client_id=coletor-nacional.redesimservicos.rfb.gov.br&authorization_id=19746d12418',    },
-    { value: 'BAIXA CNPJ MEI',                      url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746a4625c',    },
-    { value: 'CORRIGIR NFC REJEITADA',              url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',    },
-    { value: 'EMITIR NF',                           url: 'https://nfse.uberlandia.mg.gov.br/index.html#/',    },
-    { value: 'EMITIR NFSE',                         url: 'https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2fEmissorNacional',    },
-    { value: 'EMITIR NFSe MEI',                     url: 'https://sso.acesso.gov.br/login?client_id=nfse.gov.br&authorization_id=19746bea468',    },
-    { value: 'EMITIR NF SIARE',                     url: 'https://www2.fazenda.mg.gov.br/sol/',    },
-    { value: 'EMITIR FGTS',                         url: 'https://sso.acesso.gov.br/login?client_id=por-p-fgtsd.estaleiro.serpro.gov.br&authorization_id=19746aa9a10',    },
-    { value: 'EMITIR BOLETO SEGURO VIDA',           url: 'https://cliente.portalpasi.com.br/login',    },
-    { value: 'ENVIAR GUIAS INSS',                   url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/dasnsimei.app/Identificacao',    },
-    { value: 'IMPORTAR XML DE COMPRA OLIVER',       url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',    },
-    { value: 'PARCELAMENTO MEI',                    url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2 ',    },
-    { value: 'REQUERIMENTO AUXÍLIO INSS',           url: 'https://www.gov.br/pt-br/temas/meu-inss',    },
-    { value: 'REQUIREMENTO DE CERTIFICADO DIGITAL', url: 'https://www.seguraonline.com.br/parceiros/',    },
-    { value: 'SALVA CHAVE NF COMPRAS',              url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',    },
-    { value: 'SEGURO DESEMPREGO',                   url: 'https://sd.maisemprego.mte.gov.br/sdweb/empregadorweb/index.jsf',    },
-  ];
+ links: any[] = [];
+
+  // linksAtalho = [
+  //   {
+  //     value: 'ABERTURA MEI',
+  //     url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746b6ddfa',
+  //   },
+  //   {
+  //     value: 'BAIXA CERTIFICADO DIGITAL',
+  //     url: 'https://emissao-online.soluti.com.br/issue/plugin',
+  //   },
+  //   {
+  //     value: 'BAIXA CNPJ ME',
+  //     url: 'https://sso.acesso.gov.br/login?client_id=coletor-nacional.redesimservicos.rfb.gov.br&authorization_id=19746d12418',
+  //   },
+  //   {
+  //     value: 'BAIXA CNPJ MEI',
+  //     url: 'https://sso.acesso.gov.br/login?client_id=mei.receita.economia.gov.br&authorization_id=19746a4625c',
+  //   },
+  //   {
+  //     value: 'CORRIGIR NFC REJEITADA',
+  //     url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',
+  //   },
+  //   {
+  //     value: 'EMITIR NF',
+  //     url: 'https://nfse.uberlandia.mg.gov.br/index.html#/',
+  //   },
+  //   {
+  //     value: 'EMITIR NFSE',
+  //     url: 'https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2fEmissorNacional',
+  //   },
+  //   {
+  //     value: 'EMITIR NFSe MEI',
+  //     url: 'https://sso.acesso.gov.br/login?client_id=nfse.gov.br&authorization_id=19746bea468',
+  //   },
+  //   { value: 'EMITIR NF SIARE', url: 'https://www2.fazenda.mg.gov.br/sol/' },
+  //   {
+  //     value: 'EMITIR FGTS',
+  //     url: 'https://sso.acesso.gov.br/login?client_id=por-p-fgtsd.estaleiro.serpro.gov.br&authorization_id=19746aa9a10',
+  //   },
+  //   {
+  //     value: 'EMITIR BOLETO SEGURO VIDA',
+  //     url: 'https://cliente.portalpasi.com.br/login',
+  //   },
+  //   {
+  //     value: 'ENVIAR GUIAS INSS',
+  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/dasnsimei.app/Identificacao',
+  //   },
+  //   {
+  //     value: 'IMPORTAR XML DE COMPRA OLIVER',
+  //     url: 'https://oliversistemas.com.br/contabilidade/clientes/index?busca_simples=true&situacao=ativo ',
+  //   },
+  //   {
+  //     value: 'PARCELAMENTO MEI',
+  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2 ',
+  //   },
+  //   {
+  //     value: 'REQUERIMENTO AUXÍLIO INSS',
+  //     url: 'https://www.gov.br/pt-br/temas/meu-inss',
+  //   },
+  //   {
+  //     value: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
+  //     url: 'https://www.seguraonline.com.br/parceiros/',
+  //   },
+  //   {
+  //     value: 'SALVA CHAVE NF COMPRAS',
+  //     url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',
+  //   },
+  //   {
+  //     value: 'SEGURO DESEMPREGO',
+  //     url: 'https://sd.maisemprego.mte.gov.br/sdweb/empregadorweb/index.jsf',
+  //   },
+  //   {
+  //     value: 'DOCUMETAÇÃO MRV',
+  //     url: 'https://bpoacnbrprod.service-now.com/mrv_portal_terceiros',
+  //   },
+  //   {
+  //     value: 'NEGOCIAÇÃO ME',
+  //     url: 'https://www8.receita.fazenda.gov.br/SimplesNacional/Servicos/Grupo.aspx?grp=t&area=2',
+  //   },
+  //   {
+  //     value: 'RENOVA CERTIFICADO DIGITAL',
+  //     url: 'https://www.seguraonline.com.br/parceiros/',
+  //   },
+  //   {
+  //     value: 'REGISTRO DE MARCA',
+  //     url: 'https://www.nfe.fazenda.gov.br/portal/principal.aspx',
+  //   },
+  //   {
+  //     value: 'BAIXA XML NF COMPRAS',
+  //     url: 'https://meu.inpi.gov.br/pag/',
+  //   },
+  //   {
+  //     value: 'EMITIR CERTIFICADO DIGITAL',
+  //     url: 'https://emissao-online.soluti.com.br/issue/plugin',
+  //   },
+  //   {
+  //     value: 'PARCELAMENTO DIVIDA ATIVA',
+  //     url: 'https://www.regularize.pgfn.gov.br',
+  //   },
+  //   {
+  //     value: 'EMITIR GUIA FGTS',
+  //     url: 'https://fgtsdigital.sistema.gov.br/portal/login',
+  //   },
+  //   {
+  //     value: 'EMITIR BOLETO SEGURO DE VIDA',
+  //     url: 'https://cliente.portalpasi.com.br/login',
+  //   },
+  //   {
+  //     value: 'CANCELAMENTO EXTEPORANIO',
+  //     url: 'https://www2.fazenda.mg.gov.br/sol/',
+  //   },
+  // ];
 
   prioridades = [
     { value: 'Alta', label: 'Alta' },
@@ -80,11 +174,11 @@ export class ControleTarefasComponent {
   financeiro = [{ value: 'Pago', label: 'Pago' }];
 
   tamanhosColunas = {
-    cliente: '150px',
-    atividade: 'auto',
-    obs: 'auto',
-    valorNumerico: '150px',
-    mostrarAcoes: '90px',
+    cliente: { width: '150px' },
+    atividade: { width: 'auto' },
+    obs: { width: 'auto' },
+    valorNumerico: { width: '150px' },
+    mostrarAcoes: { width: '100px' },
   };
 
   colunasLabels = {
@@ -126,8 +220,11 @@ export class ControleTarefasComponent {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private firestoreService: FirestoreService
-  ) {}
+    private firestoreService: FirestoreService,
+    private linkService: LinkService
+  ) {
+    this.links = this.linkService.links;
+  }
 
   ngOnInit(): void {
     // Verifica se há uma prioridade selecionada no localStorage
@@ -230,7 +327,7 @@ export class ControleTarefasComponent {
       } else {
         this.dadosProdutos = tarefasMapeadas.filter((tarefa) => {
           const dataConclusaoVazia = !tarefa.dataConclusao;
-          
+
           return dataConclusaoVazia;
         });
         // console.log('Exibindo tarefas com todos os filtros aplicados.');
@@ -290,7 +387,6 @@ export class ControleTarefasComponent {
     });
   }
 
-
   private formatarDataString(data: Date): string {
     const ano = data.getFullYear();
     const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -308,6 +404,21 @@ export class ControleTarefasComponent {
   async salvarTarefa(tarefa: Tarefa): Promise<void> {
     try {
       if (this.tarefaEmEdicao && this.tarefaEmEdicao.id) {
+        if (
+          this.dataConclusaoAtual != tarefa.dataConclusao &&
+          tarefa.servico === 'Mensal'
+        ) {
+          const dataProximaTarefa = this.somarMesMaisUm(tarefa.data);
+          tarefa.data = dataProximaTarefa;
+          await this.firestoreService.addTarefa(tarefa);
+          console.log('Tarefa subsequente cadastrada com sucesso:', tarefa);
+          // console.log(
+          //   'Data conclusão Alterada: ',
+          //   tarefa.dataConclusao + `  `,
+          //   tarefa.servico + `  Data proximo Mês: `,
+          //   dataProximaTarefa
+          // );
+        }
         // Edição
         await this.firestoreService.updateTarefa(
           this.tarefaEmEdicao.id,
@@ -326,6 +437,18 @@ export class ControleTarefasComponent {
     }
   }
 
+  somarMesMaisUm(data: string | Date) {
+    // const dataOriginal = '2025-06-09';
+    const dataParaSomaMes = new Date(data);
+
+    // somar 1 mês
+    dataParaSomaMes.setMonth(dataParaSomaMes.getMonth() + 1);
+
+    // formatar de volta para yyyy-MM-dd
+    const resultado = dataParaSomaMes.toISOString().split('T')[0];
+    console.log(resultado); // 2025-07-09
+    return resultado;
+  }
   // gerarId(): string {
   //   return Math.random().toString(36).substr(2, 9);
   // }
@@ -341,11 +464,14 @@ export class ControleTarefasComponent {
     // });
   }
 
+  dataConclusaoAtual: any;
   editarProduto(produto: Tarefa): void {
     console.log('Editar:', produto);
     this.tarefaEmEdicao = { ...produto }; // Faz uma cópia para não editar diretamente
     this.mostrarModal = true;
     this.mostrarModalEditar = true;
+    this.dataConclusaoAtual = produto.dataConclusao;
+    console.log('Data de Conclusão atual:', this.dataConclusaoAtual);
   }
 
   async excluirProduto(produto: Tarefa): Promise<void> {
@@ -367,21 +493,21 @@ export class ControleTarefasComponent {
     }
   }
 }
-    //     data: 'Data',
-    //     servico: 'Serviço',
-    //     prioridadeSelecionada: 'Prioridade',
-    //     cliente: 'Cliente',
-    //     atividade: 'Atividade',
-    //     obs: 'Observações',
-    //     quem: 'Responsável',
-    //     dataConclusao: 'Conclusão',
-    //     statusSelecionada: 'Status',
-    //     financeiroSelecionada: 'Financeiro',
-    //     // valor: 'Valor',
-    //     valorNumerico: 'Valor',
+//     data: 'Data',
+//     servico: 'Serviço',
+//     prioridadeSelecionada: 'Prioridade',
+//     cliente: 'Cliente',
+//     atividade: 'Atividade',
+//     obs: 'Observações',
+//     quem: 'Responsável',
+//     dataConclusao: 'Conclusão',
+//     statusSelecionada: 'Status',
+//     financeiroSelecionada: 'Financeiro',
+//     // valor: 'Valor',
+//     valorNumerico: 'Valor',
 
-    // abrirModal(): void {
-    //   this.mostrarModal = true;
-    //   this.mostrarModalEditar = true;
-    //   this.tarefaEmEdicao = null;
-    // }
+// abrirModal(): void {
+//   this.mostrarModal = true;
+//   this.mostrarModalEditar = true;
+//   this.tarefaEmEdicao = null;
+// }

@@ -7,7 +7,7 @@
         </div>
         <!-- {{ coluna | titlecase }} -->
       </th>
-      <th *ngIf="mostrarAcoes">Ações</th>
+      <th *ngIf="mostrarAcoes" style="text-align: center">Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -17,10 +17,11 @@
         'linha-destacada1': destacarLinha1(item),
         'linha-destacada2': destacarLinha2(item)
       }"
-
     >
       <td *ngFor="let coluna of colunas" (click)="abrirVisualizacao(item)">
-        <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
+        <div
+          [ngStyle]="tamanhosColunas[coluna] || { width: 'auto' }"
+        >
           <ng-container *ngIf="isLink(item[coluna]); else textoNormal">
             <a
               [href]="isLink(item[coluna])?.url"
@@ -38,17 +39,14 @@
         </div>
       </td>
 
-      <td *ngIf="mostrarAcoes">
+      <td *ngIf="mostrarAcoes" >
         <div
           class="container__mostrar-acoes"
-          [ngStyle]="{
-            width: tamanhosColunas['mostrarAcoes'] || 'auto',
-            minWidth: '100px'
-          }"
+          [ngStyle]="tamanhosColunas['mostrarAcoes'] || { width: 'auto' }"
         >
           <div class="mostrar-acoes__button" *ngIf="mostrarEditar">
             <ale-button
-              class="button"
+              class="buttons"
               label="Editar"
               (click)="onEditar(item)"
             ></ale-button>

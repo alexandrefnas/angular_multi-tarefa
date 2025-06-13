@@ -1,13 +1,21 @@
+:host {
+  display: block;
+  width: 90%;
+  height: 100%;
+}
+
 .container__home {
   display: flex;
   flex-direction: row;
   height: 100%;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  /* background-color: rgb(168, 168, 166); */
-  /* margin-top: 51px; */
-  /* justify-content: left right; */
+  /* border: solid 1px red; */
 }
+/* background-color: rgb(168, 168, 166); */
+/* margin-top: 51px; */
+/* justify-content: left right; */
 
 #container__home-left {
   width: 250px;
@@ -34,7 +42,6 @@
   /* border: solid 1px red; */
   max-height: 60vh;
   overflow: hidden;
-
 }
 
 #acesso-rapido__links:hover {
@@ -43,18 +50,17 @@
 
 /* Estilizando a barra de rolagem */
 #acesso-rapido__links::-webkit-scrollbar {
-  width: 6px;               /* Largura mais fina */
+  width: 6px; /* Largura mais fina */
 }
 
 #acesso-rapido__links::-webkit-scrollbar-track {
-  background: transparent;  /* Fundo invisível */
+  background: transparent; /* Fundo invisível */
 }
 
 #acesso-rapido__links::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.3); /* Cor discreta */
-  border-radius: 4px;                   /* Arredondado */
+  border-radius: 4px; /* Arredondado */
 }
-
 
 .home-left-links li {
   margin-bottom: 10px;

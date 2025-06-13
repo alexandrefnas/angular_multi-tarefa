@@ -61,11 +61,10 @@ export class ControleFinanceiroComponent {
   // destacarMedio = (item: any) => item.prioridadeSelecionada === 'Moderado';
 
   tamanhosColunas = {
-    cliente: '150px',
-    atividade: 'auto',
-    // obs: 'auto',
-    valorNumerico: '150px',
-    mostrarAcoes: '90px',
+    cliente: { width: '150px' },
+      atividade: { width: 'auto' },
+      valorNumerico: { width: '150px' },
+      mostrarAcoes: { width: '60px' },
   };
 
   colunasLabels = {
