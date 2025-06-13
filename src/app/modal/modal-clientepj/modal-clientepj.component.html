@@ -1,0 +1,185 @@
+<div *ngIf="visible" class="modal-container" aria-modal="true">
+  <div class="modal-backdrop" (click)="onBackdropClick()"></div>
+  <div class="container__cadastro-tarefas">
+    <div class="container__cadastro-form">
+      <div class="title_container">
+        <div class="title1">
+          <h3>{{ title }}</h3>
+        </div>
+        <div class="title2">
+          <button type="button" (click)="close()">X</button>
+        </div>
+      </div>
+      <div class="cadastro-form__container">
+        <form [formGroup]="cadastroCliente" (ngSubmit)="salvar()">
+          <div class="linha1">
+            <div class="form__container-input" id="razaoSocial">
+              <ale-input-ale
+                label="Razao Social"
+                formControlName="razaoSocial"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+              <!-- [required]="true" -->
+            </div>
+            <div class="form__container-input" id="nomeFantasia">
+              <ale-input-ale
+                label="Nome Fantasia"
+                formControlName="nomeFantasia"
+                [required]="true"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+          </div>
+          <div class="linha2">
+            <div class="form__container-input" id="cnpj">
+              <ale-input-decimal-ale
+                label="CNPJ"
+                formControlName="cnpj"
+                [maskType]="'cnpj'"
+                [required]="true"
+                errorMessage="Campo obrigatório"
+              ></ale-input-decimal-ale>
+            </div>
+            <div class="form__container-input" id="inscricaoEstadual">
+              <ale-input-ale
+                label="Inscricao Estadual"
+                [numerico]="true"
+                formControlName="inscricaoEstadual"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+            <div class="form__container-select" id="naturezaJuridica">
+              <ale-select-ale
+                [label]="'Natureza Juridica'"
+                [placeholder]="''"
+                [niveis]="listNaturezaJuridica"
+                [formControl]="getControl('naturezaJuridica')"
+                [allowTyping]="true"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-select-ale>
+            </div>
+            <div class="form__container-select" id="atividade">
+              <ale-select-ale
+                [label]="'Atividade'"
+                [placeholder]="''"
+                [niveis]="listAtividade"
+                [formControl]="getControl('atividade')"
+                [allowTyping]="false"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-select-ale>
+            </div>
+          </div>
+          <div class="linha3">
+            <div class="form__container-select" id="tributacao">
+              <ale-select-ale
+                [label]="'Tributacao'"
+                [placeholder]="''"
+                [niveis]="listTributacao"
+                [formControl]="getControl('tributacao')"
+                [allowTyping]="false"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-select-ale>
+            </div>
+            <div class="form__container-data" id="inicioAtividade">
+              <ale-data-ale
+                label="Início Atividade"
+                type="data"
+                formControlName="inicioAtividade"
+                [required]="false"
+                errorMessage="Campo obrigatório!"
+              ></ale-data-ale>
+            </div>
+            <div class="form__container-data" id="clienteDesde">
+              <ale-data-ale
+                label="Cliente Desde"
+                type="data"
+                formControlName="clienteDesde"
+                [required]="false"
+                errorMessage="Campo obrigatório!"
+              ></ale-data-ale>
+            </div>
+            <div class="form__container-input" id="nomeResponsavel">
+              <ale-input-ale
+                label="Nome Responsavel"
+                formControlName="nomeResponsavel"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+          </div>
+          <div class="linha4">
+            <div class="form__container-input" id="cpf">
+              <ale-input-decimal-ale
+                label="CPF"
+                formControlName="cpf"
+                [maskType]="'cpf'"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-decimal-ale>
+            </div>
+            <div class="form__container-input" id="fone">
+              <ale-input-decimal-ale
+                label="Fone"
+                formControlName="fone"
+                [maskType]="'phone'"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-decimal-ale>
+            </div>
+            <div class="form__container-input" id="email">
+              <ale-input-ale
+                label="e-mail"
+                formControlName="email"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+            <div class="form__container-input" id="senhaGov">
+              <ale-input-ale
+                label="Senha Gov"
+                formControlName="senhaGov"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+          </div>
+          <div class="linha5">
+            <div class="form__container-input" id="usuarioSiare">
+              <ale-input-ale
+                label="Usuário Siare"
+                formControlName="usuarioSiare"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+            <div class="form__container-input" id="senhaSiare">
+              <ale-input-ale
+                label="Senha Siare"
+                formControlName="senhaSiare"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+              ></ale-input-ale>
+            </div>
+            <div class="form__container-input" id="caminhoPasta">
+              <ale-input-ale
+                label="Caminho Pasta"
+                formControlName="caminhoPasta"
+                [required]="false"
+                errorMessage="Campo obrigatório"
+                ></ale-input-ale>
+                <!-- [copiaConteudo]="!somenteVisualizacao" -->
+            </div>
+          </div>
+          <div class="linha6" *ngIf="!somenteVisualizacao">
+            <div class="form__button">
+              <ale-button label="Salvar" type="submit"></ale-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

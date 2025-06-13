@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Detalhes</h2>
+
+<mat-dialog-content>
+  <p><strong>Nome:</strong> {{ dados.nome }}</p>
+  <p><strong>Email:</strong> {{ dados.email }}</p>
+  <p><strong>Perfil:</strong> {{ dados.perfil }}</p>
+  <!-- adicione os campos que quiser -->
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="fechar()">Fechar</button>
+</mat-dialog-actions>

@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  Injector,
   Input,
   Output,
 } from '@angular/core';
@@ -9,7 +10,11 @@ import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
 } from '@angular/material/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+} from '@angular/forms';
 import { FildsModule } from '../filds.module';
 import { NgIf } from '@angular/common';
 
@@ -36,7 +41,7 @@ export class DataAleComponent implements ControlValueAccessor {
   @Input() errorMessage: string = 'Campo obrigatório';
   @Input() required: boolean = false;
   @Input() isFocused: boolean = false;
-
+  @Input() disabled: boolean = false;
   @Output() valueChange = new EventEmitter<Date>();
 
   onChange = (value: any) => {};
@@ -62,6 +67,7 @@ export class DataAleComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     // implementar se quiser lidar com desabilitado
+    this.disabled = isDisabled;
   }
 
   onDateChange(event: any) {
@@ -72,7 +78,24 @@ export class DataAleComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
+  ngControl: NgControl | null = null;
+
+  constructor(private injector: Injector) {}
+
+  ngOnInit(): void {
+    try {
+      this.ngControl = this.injector.get(NgControl);
+      if (this.ngControl) {
+        this.ngControl.valueAccessor = this;
+      }
+    } catch (e) {
+      // Ignora se não estiver dentro de um FormControl
+    }
+  }
+
   hasError(): boolean {
-    return this.required && !this.value;
+    return (
+      !!this.ngControl?.control?.invalid && !!this.ngControl?.control?.touched
+    );
   }
 }

@@ -8,7 +8,7 @@
   z-index: 998;
 }
 
-.container__cadastro-tarefas {
+.container__form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,8 +19,8 @@
   z-index: 999;
 }
 
-.container__cadastro-form {
-  display: block;
+.container__form-windows {
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 70vw;
@@ -28,7 +28,8 @@
   min-width: 500px;
   max-width: 600px;
   height: 400px;
-  gap: 20px;
+  gap: 5px;
+  box-sizing: border-box;
 
   /* padrão do windows */
   border: 3px solid #ccc;
@@ -39,8 +40,8 @@
 
 .title_container {
   display: flex;
+  width: 100%;
   flex-direction: row;
-  padding: 15px;
   background: linear-gradient(to bottom, #2d89ef, #1b4f9c);
   padding: 6px 10px;
   border-bottom: 1px solid #666;
@@ -78,64 +79,9 @@
   transform: scale(1.4);
 }
 
-.form__container-linha1,
-.form__container-linha2,
-.form__container-linha3,
-.form__container-linha4,
-.form__container-linha5 {
-  display: flex;
-  flex-direction: row;
+.field__container {
   width: 100%;
-  height: 50px;
-  gap: 5px;
-  margin-bottom: 25px;
-  padding: 15px;
-  justify-content: center;
-}
-
-.form__container-data {
-  width: 25%;
-}
-
-.form__container-input {
-  width: 50%;
-}
-
-.form__container-select {
-  width: 20%;
-}
-
-.form__button {
-  width: 100px;
-  height: 25px;
-}
-
-#servico {
-  width: 20%;
-}
-
-#cliente {
-  width: 35%;
-}
-
-#atividades {
-  width: 100%;
-}
-
-#obs {
-  width: 65%;
-}
-
-#quem {
-  width: 35%;
-}
-
-#status {
-  width: 20%;
-}
-#financeiro {
-  width: 20%;
-}
-#valor {
-  width: 25%;
+  height: 100%;
+  border: solid 1px red;
+  flex-grow: 1;
 }

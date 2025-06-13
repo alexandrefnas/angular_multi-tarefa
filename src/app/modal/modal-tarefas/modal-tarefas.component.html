@@ -17,7 +17,7 @@
               label="Data"
               type="data"
               formControlName="data"
-              [required]="true"
+              [required]="false"
               errorMessage="Campo obrigatório!"
             ></ale-data-ale>
           </div>
@@ -26,27 +26,18 @@
               [label]="'Serviço'"
               [placeholder]="''"
               [niveis]="servicos"
-              [formControl]="servicoControl"
+              [formControl]="getControl('servico')"
               errorMessage=" "
             ></ale-select-ale>
           </div>
-          <!-- <div class="form__container-input" id="servico">
-            <ale-input-ale
-              label="Serviço"
-              type="servico"
-              formControlName="servico"
-              [required]="false"
-              errorMessage=" "
-            ></ale-input-ale>
-          </div> -->
           <div class="form__container-select">
             <ale-select-ale
               [label]="'Alerta'"
               [placeholder]="''"
               [niveis]="lista1"
-              [formControl]="prioridadeControl"
+              [formControl]="getControl('prioridadeSelecionada')"
               [allowTyping]="false"
-              [required]="true"
+              [required]="false"
               errorMessage="Campo obrigatório"
             ></ale-select-ale>
           </div>
@@ -66,20 +57,12 @@
               [label]="'Atividade'"
               [placeholder]="''"
               [niveis]="atividades"
-              [formControl]="atividadeControl"
+              [formControl]="getControl('atividade')"
               [allowTyping]="true"
-              [required]="true"
+              [required]="false"
               errorMessage="Campo obrigatório"
             ></ale-select-ale>
           </div>
-          <!-- <div class="form__container-input" id="atividade">
-            <ale-input-ale
-              label="Descrição Atividade"
-              formControlName="atividade"
-              [required]="false"
-              errorMessage="Campo obrigatório"
-            ></ale-input-ale>
-          </div> -->
         </div>
 
         <div class="form__container-linha3">
@@ -96,17 +79,10 @@
               [label]="'Quem'"
               [placeholder]="''"
               [niveis]="lista4"
-              [formControl]="quemContol"
+              [formControl]="getControl('quem')"
               [required]="false"
               errorMessage="Teste "
             ></ale-select-ale>
-            <!-- formControlName="quem" -->
-            <!-- <ale-input-ale
-              label="Quem"
-              formControlName="quem"
-              [required]="false"
-              errorMessage=" "
-            ></ale-input-ale> -->
           </div>
         </div>
 
@@ -120,21 +96,12 @@
               errorMessage="Campo obrigatório!"
             ></ale-data-ale>
           </div>
-          <!-- <div class="form__container-select" id="status">
-            <ale-select-ale
-              [label]="'Status'"
-              [placeholder]="''"
-              [niveis]="lista2"
-              [formControl]="statusSelecionadaControl"
-              errorMessage=" "
-            ></ale-select-ale>
-          </div> -->
           <div class="form__container-select" id="financeiro">
             <ale-select-ale
               [label]="'Financeiro'"
               [placeholder]="''"
               [niveis]="lista3"
-              [formControl]="financeiroSelecionadaControl"
+              [formControl]="getControl('financeiroSelecionada')"
               formControlName="financeiroSelecionada"
               [required]="false"
               errorMessage="Teste "

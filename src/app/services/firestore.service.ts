@@ -28,6 +28,27 @@ export interface Tarefa {
   valorNumerico: number;
 }
 
+export interface Clientepj {
+  id?: string;
+  razaoSocial: string;
+  nomeFantasia: string;
+  cnpj: string;
+  inscricaoEstadual: string;
+  naturezaJuridica: string;
+  atividade: string;
+  tributacao: string;
+  inicioAtividade: string | Date;
+  clienteDesde: string | Date;
+  nomeResponsavel: string;
+  cpf: string;
+  fone: string;
+  email: string;
+  senhaGov: string;
+  usuarioSiare: string;
+  senhaSiare: string;
+  caminhoPasta: string;
+}
+
 export interface TarefaCount {
   prioridade: string;
   quantidade: number;
@@ -39,6 +60,41 @@ export interface TarefaCount {
 export class FirestoreService {
   constructor(private firestore: Firestore) {}
 
+  // Cadastro Clientes
+  // ✅ Adicionar Clientepj
+  async addCadastroClientepj(clientepj: Clientepj) {
+    const clientepjfasRef = collection(this.firestore, 'clientepj');
+    const docRef = await addDoc(clientepjfasRef, clientepj);
+
+    // ➡️ Atualiza o documento adicionando o ID dentro dele:
+    await setDoc(docRef, { ...clientepj, id: docRef.id }, { merge: true });
+
+    return docRef;
+  }
+
+  // ✅ Listar Cliente
+  getClientepj(): Observable<Clientepj[]> {
+    if (!this.firestore) {
+      console.error('Firestore ainda não está pronto!');
+      return of([]); // ✅ Retorna array vazio.
+    }
+    const clientepjfasRef = collection(this.firestore, 'clientepj');
+    return collectionData(clientepjfasRef, { idField: 'id' }) as Observable<
+      Clientepj[]
+    >;
+  }
+
+  async updateClientepj(id: string, clientepj: Partial<Clientepj>) {
+    const clienteDocRef = doc(this.firestore, 'clientepj', id);
+    return updateDoc(clienteDocRef, clientepj);
+  }
+
+  async deleteClientepj(id: string) {
+    const clientepjDocRef = doc(this.firestore, 'clientepj', id);
+    return deleteDoc(clientepjDocRef);
+  }
+
+  // Tarefas
   // ✅ Adicionar tarefa
   async addTarefa(tarefa: Tarefa) {
     const tarefasRef = collection(this.firestore, 'tarefas');

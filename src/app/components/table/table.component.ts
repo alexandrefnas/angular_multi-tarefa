@@ -26,7 +26,9 @@ export class TableComponent implements OnInit {
   @Input() colunas: string[] = [];
   @Input() dados: any[] = [];
   @Input() tamanhosColunas: { [coluna: string]: string } = {};
-  @Input() formatoColunas: { [key: string]: 'texto' | 'moeda' | 'data' } = {};
+  @Input() formatoColunas: {
+    [key: string]: 'texto' | 'moeda' | 'data' | 'cnpj';
+  } = {};
   @Input() mostrarAcoes: boolean = false;
   @Input() colunasLabels!: { [key: string]: string };
 
@@ -39,6 +41,7 @@ export class TableComponent implements OnInit {
 
   @Output() editar = new EventEmitter<any>();
   @Output() excluir = new EventEmitter<any>();
+  @Output() linhaClicada = new EventEmitter<any>();
 
   // usuario$ = this.auth.getUsuarioAtual();
   usuario: any;
@@ -65,6 +68,20 @@ export class TableComponent implements OnInit {
           style: 'currency',
           currency: 'BRL',
         }).format(valor);
+
+      case 'cnpj':
+        if (!valor) return '';
+        const cnpj = valor.toString().replace(/\D/g, '');
+        if (cnpj.length === 14) {
+          return cnpj.replace(
+            /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+            '$1.$2.$3/$4-$5'
+          );
+        }
+
+        // Retorna valor original se não for um CNPJ válido
+        return valor;
+
       case 'data':
         if (!valor) return '';
         if (typeof valor === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
@@ -79,6 +96,10 @@ export class TableComponent implements OnInit {
       default:
         return valor;
     }
+  }
+
+  abrirVisualizacao(item: any) {
+     this.linhaClicada.emit(item);
   }
 
   onEditar(item: any) {

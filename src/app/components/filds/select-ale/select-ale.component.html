@@ -1,40 +1,3 @@
-<!-- <div
-  class="form-field"
-  [class.focused]="isFocused || selectedValue || placeholder"
->
-  <label class="form-label">{{ label }}</label>
-
-  <ng-container *ngIf="allowTyping; else selectMode">
-    <input
-      class="form-input"
-      [value]="selectedValue"
-      (input)="onInputChange($event)"
-      (focus)="isFocused = true"
-      (blur)="isFocused = false; onTouched()"
-      [placeholder]="placeholder"
-    />
-  </ng-container>
-
-  <ng-template #selectMode>
-    <select
-      class="form-input"
-      [ngModel]="selectedValue"
-      (ngModelChange)="onSelectChange($event)"
-      (focus)="isFocused = true"
-      (blur)="isFocused = false; onTouched()"
-    >
-      <option [ngValue]="null" disabled hidden>{{ placeholder }}</option>
-      <option *ngFor="let nivel of niveis" [ngValue]="nivel.value">
-        {{ nivel.label }}
-      </option>
-    </select>
-  </ng-template>
-
-  <div class="form-error" *ngIf="hasError() && !isFocused">
-    {{ errorMessage }}
-  </div>
-</div> -->
-
 <div
   class="form-field"
   [class.focused]="isFocused || selectedValue || placeholder"
@@ -51,7 +14,9 @@
       (keydown)="onKeyDown($event)"
       (click)="toggleOptions()"
       [placeholder]="placeholder"
+      [disabled]="disabled"
     />
+    <!-- (blur)= "onBlur()" -->
 
     <ul *ngIf="showOptions && filteredOptions.length" class="options-dropdown">
       <li
@@ -71,15 +36,20 @@
       (keydown)="onKeyDown($event)"
       (focus)="isFocused = true"
       (blur)="isFocused = false; onTouched()"
+      [disabled]="disabled"
     >
       <option [ngValue]="null" disabled hidden>{{ placeholder }}</option>
-      <option *ngFor="let nivel of niveis" [ngValue]="nivel.value">
+      <option
+        class="list-format"
+        *ngFor="let nivel of niveis"
+        [ngValue]="nivel.value"
+      >
         {{ nivel.label }}
       </option>
     </select>
   </ng-template>
 
-  <div class="form-error" *ngIf="hasError() && !isFocused" >
+  <div class="form-error" *ngIf="hasError() && !isFocused">
     {{ errorMessage }}
   </div>
 </div>

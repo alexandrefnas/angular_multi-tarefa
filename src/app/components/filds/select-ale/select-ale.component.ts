@@ -5,11 +5,15 @@ import {
   Output,
   EventEmitter,
   forwardRef,
+  Injector,
+  ElementRef,
+  HostListener,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   FormsModule,
   NG_VALUE_ACCESSOR,
+  NgControl,
 } from '@angular/forms';
 
 @Component({
@@ -25,7 +29,6 @@ import {
       multi: true,
     },
   ],
-
 })
 export class SelectAleComponent implements ControlValueAccessor {
   @Input() label: string = '';
@@ -39,6 +42,7 @@ export class SelectAleComponent implements ControlValueAccessor {
   @Input() selectedValue: string = '';
   @Input() showOptions: boolean = false;
   @Input() filteredOptions: { value: string; label: string }[] = [];
+  @Input() disabled: boolean = false;
 
   private onChange = (_: any) => {};
   onTouched = () => {};
@@ -80,10 +84,34 @@ export class SelectAleComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  hasError(): boolean {
-    return this.required && !this.selectedValue;
+  ngControl: NgControl | null = null;
+
+  constructor(private injector: Injector, private elementRef: ElementRef) {}
+
+  ngOnInit(): void {
+    try {
+      this.ngControl = this.injector.get(NgControl);
+      if (this.ngControl) {
+        this.ngControl.valueAccessor = this;
+      }
+    } catch (e) {
+      // Ignora se não estiver dentro de um FormControl
+    }
   }
 
+  hasError(): boolean {
+    return (
+      !!this.ngControl?.control?.invalid && !!this.ngControl?.control?.touched
+    );
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!this.elementRef.nativeElement.contains(target)) {
+      this.showOptions = false;
+    }
+  }
   // get errorMessage(): string {
   //   // Mensagem de erro padrão ou personalizada
   //   return 'Campo obrigatório';
@@ -101,11 +129,24 @@ export class SelectAleComponent implements ControlValueAccessor {
       this.showOptionsClose = true;
     }
 
- if (event.key === 'Delete') {
-    this.selectedValue = '';
-    this.onChange(this.selectedValue);
-    this.filteredOptions = this.niveis;  // opcional: reseta as opções
+    if (event.key === 'Delete') {
+      this.selectedValue = '';
+      this.onChange(this.selectedValue);
+      this.filteredOptions = this.niveis; // opcional: reseta as opções
+    }
   }
+
+  setDisabledState?(isDisabled: boolean): void {
+    // se quiser lidar com campo desabilitado
+    this.disabled = isDisabled;
+  }
+
+  onBlur() {
+    setTimeout(() => {
+      if (!this.isFocused) {
+        this.showOptions = false;
+      }
+    }, 150); // tempo suficiente para permitir o clique no item
   }
 }
 

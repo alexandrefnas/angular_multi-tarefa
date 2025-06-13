@@ -33,7 +33,7 @@ export class MenusComponent implements OnInit {
 
   controle = [
     { label: 'Usuários', rota: '/cadastro', somenteAdmin:true },
-    { label: 'Clientes' },
+    { label: 'Clientes', rota: '/clientepj'},
     { label: 'Atividades' },
     { label: 'Receitas' },
     { label: 'Despesas' },

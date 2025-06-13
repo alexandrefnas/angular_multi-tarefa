@@ -1,18 +1,53 @@
 <div class="form-field" [class.focused]="isFocused || value">
-  <label class="form-label">{{ label }}</label>
-  <input
-    class="form-input"
-    [type]="numerico ? 'text' : type"
-    [placeholder]="placeholder"
-    [value]="value"
-    (input)="onInput($event)"
-    (keydown)="onKeyDown($event)"
-    (focus)="isFocused = true"
-    (blur)="isFocused = false"
-    [attr.inputmode]="numerico ? 'decimal' : null"
-    [attr.pattern]="numerico ? '[0-9]*' : null"
-  />
+
+  <div style="position: relative;">
+    <label class="form-label">{{ label }}</label>
+    <input
+      class="form-input"
+      [type]="numerico ? 'text' : type"
+      [placeholder]="placeholder"
+      [value]="value"
+      (input)="onInput($event)"
+      (keydown)="onKeyDown($event)"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false"
+      [attr.inputmode]="numerico ? 'decimal' : null"
+      [attr.pattern]="numerico ? '[0-9]*' : null"
+      [disabled]="disabled"
+    />
+
+    <!-- Só aparece quando desabilitado -->
+    <div
+      *ngIf="disabled"
+      (click)="copiarValor()"
+      style="position: absolute; inset: 0; cursor: pointer; background: transparent;"
+      title="Clique para copiar"
+    ></div>
+  </div>
+
   <div class="form-error" *ngIf="hasError() && !isFocused">
     {{ errorMessage }}
   </div>
 </div>
+
+
+<!-- <div class="form-field" [class.focused]="isFocused || value" >
+  <label class="form-label">{{ label }}</label>
+    <input
+      class="form-input"
+      [type]="numerico ? 'text' : type"
+      [placeholder]="placeholder"
+      [value]="value"
+      (input)="onInput($event)"
+      (keydown)="onKeyDown($event)"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false"
+      [attr.inputmode]="numerico ? 'decimal' : null"
+      [attr.pattern]="numerico ? '[0-9]*' : null"
+      [disabled]="disabled"
+      /> -->
+      <!-- (click)="copiarValor()" -->
+  <!-- <div class="form-error" *ngIf="hasError() && !isFocused">
+    {{ errorMessage }}
+  </div>
+</div> -->

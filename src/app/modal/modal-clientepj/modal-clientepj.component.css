@@ -17,18 +17,20 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
+  overflow: auto;
 }
 
 .container__cadastro-form {
-  display: block;
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 70vw;
 
-  min-width: 500px;
-  max-width: 600px;
-  height: 400px;
-  gap: 20px;
+  min-width: 600px;
+  max-width: 800px;
+  /* height: 400px; */
+  gap: 5px;
+  box-sizing: border-box;
 
   /* padrão do windows */
   border: 3px solid #ccc;
@@ -39,8 +41,8 @@
 
 .title_container {
   display: flex;
+  width: 100%;
   flex-direction: row;
-  padding: 15px;
   background: linear-gradient(to bottom, #2d89ef, #1b4f9c);
   padding: 6px 10px;
   border-bottom: 1px solid #666;
@@ -78,64 +80,118 @@
   transform: scale(1.4);
 }
 
-.form__container-linha1,
-.form__container-linha2,
-.form__container-linha3,
-.form__container-linha4,
-.form__container-linha5 {
+.cadastro-form__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  /* border: solid 1px red; */
+  flex-grow: 1;
+  padding: 6px 10px;
+}
+
+form {
+  height: 100%;
+}
+
+.linha1,
+.linha2,
+.linha3,
+.linha4,
+.linha5,
+.linha6 {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  height: 50px;
-  gap: 5px;
-  margin-bottom: 25px;
-  padding: 15px;
   justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 58px;
+  /* border: solid 1px red; */
 }
 
-.form__container-data {
-  width: 25%;
+.linha6{
+  align-items: center;
+
+}
+/* Início Estilização dos inputs e Button*/
+/* 1° Linha */
+#razaoSocial {
+  flex: 1;
 }
 
-.form__container-input {
-  width: 50%;
+#nomeFantasia {
+  flex: 1;
 }
 
-.form__container-select {
-  width: 20%;
+/* 2° Linha */
+#cnpj {
+  width: 155px;
 }
 
+#inscricaoEstadual {
+  width: 125px;
+}
+
+#naturezaJuridica {
+  width: 190px;
+}
+
+#atividade {
+  flex: 1;
+}
+
+/* 3° linha */
+#tributacao {
+  width: 155px;
+}
+
+#inicioAtividade {
+  width: 125px;
+}
+
+#clienteDesde {
+  width: 125px;
+}
+
+#nomeResponsavel {
+  flex: 1;
+}
+
+/* 4° Linha */
+#cpf {
+  width: 130px;
+}
+
+#fone {
+  width: 115px;
+}
+
+#email {
+  /* width: 200px; */
+  flex: 1;
+}
+
+#senhaGov {
+  width: 115px;
+}
+
+/* 5° Linha */
+#usuarioSiare {
+  width: 130px;
+}
+
+#senhaSiare {
+  width: 115px;
+}
+
+#caminhoPasta {
+  flex: 1;
+}
+
+/* 6° Linha */
 .form__button {
   width: 100px;
   height: 25px;
 }
 
-#servico {
-  width: 20%;
-}
-
-#cliente {
-  width: 35%;
-}
-
-#atividades {
-  width: 100%;
-}
-
-#obs {
-  width: 65%;
-}
-
-#quem {
-  width: 35%;
-}
-
-#status {
-  width: 20%;
-}
-#financeiro {
-  width: 20%;
-}
-#valor {
-  width: 25%;
-}
+/* Fim Estilização dos inputs */

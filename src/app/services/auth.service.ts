@@ -39,15 +39,43 @@ export class AuthService {
 
   // Login padrão + carregamento do perfil do Firestore
   async login(email: string, senha: string) {
-    const userCredential = await signInWithEmailAndPassword(
-      this.auth,
-      email,
-      senha
-    );
-    const uid = userCredential.user.uid;
-    await this.carregarPerfil(uid); // Garante que o perfil esteja carregado
-    return userCredential;
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        senha
+      );
+      await this.carregarPerfil(userCredential.user.uid);
+      return userCredential;
+    } catch (error: any) {
+      if (error.code === 'auth/visibility-check-was-unavailable') {
+        console.warn(
+          '⚠️ Erro de visibilidade detectado. Tentando novamente...'
+        );
+        // Retry uma única vez
+        const userCredential = await signInWithEmailAndPassword(
+          this.auth,
+          email,
+          senha
+        );
+        await this.carregarPerfil(userCredential.user.uid);
+        return userCredential;
+      } else {
+        console.error('❌ Erro ao fazer login:', error);
+        throw error;
+      }
+    }
   }
+  // async login(email: string, senha: string) {
+  //   const userCredential = await signInWithEmailAndPassword(
+  //     this.auth,
+  //     email,
+  //     senha
+  //   );
+  //   const uid = userCredential.user.uid;
+  //   await this.carregarPerfil(uid); // Garante que o perfil esteja carregado
+  //   return userCredential;
+  // }
 
   // Método privado que busca o perfil do Firestore
   private async carregarPerfil(uid: string) {

@@ -27,6 +27,10 @@ th {
   color: white;
 }
 
+td{
+cursor: default;
+}
+
 .table thead th {
   position: sticky;
   top: 0;

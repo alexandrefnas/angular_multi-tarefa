@@ -230,16 +230,7 @@ export class ControleTarefasComponent {
       } else {
         this.dadosProdutos = tarefasMapeadas.filter((tarefa) => {
           const dataConclusaoVazia = !tarefa.dataConclusao;
-          // const financeiroVazio =
-          //   !tarefa.financeiroSelecionada ||
-          //   tarefa.financeiroSelecionada === '';
-          // const valorMaiorQueZero = tarefa.valorNumerico > 0;
-          // // console.log(tarefa.valorNumerico);
-          // if (dataConclusaoVazia) {
-          //   return valorMaiorQueZero ? financeiroVazio : true;
-          // } else {
-          //   return valorMaiorQueZero ? financeiroVazio : false;
-          // }
+          
           return dataConclusaoVazia;
         });
         // console.log('Exibindo tarefas com todos os filtros aplicados.');
@@ -299,30 +290,12 @@ export class ControleTarefasComponent {
     });
   }
 
-  //     data: 'Data',
-  //     servico: 'Serviço',
-  //     prioridadeSelecionada: 'Prioridade',
-  //     cliente: 'Cliente',
-  //     atividade: 'Atividade',
-  //     obs: 'Observações',
-  //     quem: 'Responsável',
-  //     dataConclusao: 'Conclusão',
-  //     statusSelecionada: 'Status',
-  //     financeiroSelecionada: 'Financeiro',
-  //     // valor: 'Valor',
-  //     valorNumerico: 'Valor',
 
   private formatarDataString(data: Date): string {
     const ano = data.getFullYear();
     const mes = String(data.getMonth() + 1).padStart(2, '0');
     const dia = String(data.getDate()).padStart(2, '0');
     return `${ano}-${mes}-${dia}`;
-  }
-
-  abrirModal(): void {
-    this.mostrarModal = true;
-    this.mostrarModalEditar = true;
-    this.tarefaEmEdicao = null;
   }
 
   // Método chamado quando o modal é fechado
@@ -353,9 +326,9 @@ export class ControleTarefasComponent {
     }
   }
 
-  gerarId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
+  // gerarId(): string {
+  //   return Math.random().toString(36).substr(2, 9);
+  // }
 
   handleModalClose(result: any) {
     console.log('Resultado da modal:', result);
@@ -394,3 +367,21 @@ export class ControleTarefasComponent {
     }
   }
 }
+    //     data: 'Data',
+    //     servico: 'Serviço',
+    //     prioridadeSelecionada: 'Prioridade',
+    //     cliente: 'Cliente',
+    //     atividade: 'Atividade',
+    //     obs: 'Observações',
+    //     quem: 'Responsável',
+    //     dataConclusao: 'Conclusão',
+    //     statusSelecionada: 'Status',
+    //     financeiroSelecionada: 'Financeiro',
+    //     // valor: 'Valor',
+    //     valorNumerico: 'Valor',
+
+    // abrirModal(): void {
+    //   this.mostrarModal = true;
+    //   this.mostrarModalEditar = true;
+    //   this.tarefaEmEdicao = null;
+    // }

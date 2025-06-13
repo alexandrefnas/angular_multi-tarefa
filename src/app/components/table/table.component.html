@@ -17,8 +17,9 @@
         'linha-destacada1': destacarLinha1(item),
         'linha-destacada2': destacarLinha2(item)
       }"
+
     >
-      <td *ngFor="let coluna of colunas">
+      <td *ngFor="let coluna of colunas" (click)="abrirVisualizacao(item)">
         <div [ngStyle]="{ width: tamanhosColunas[coluna] || 'auto' }">
           <ng-container *ngIf="isLink(item[coluna]); else textoNormal">
             <a
@@ -55,10 +56,10 @@
           <div class="mostrar-acoes__button" *ngIf="mostrarExcluir">
             <ale-button
               class="button-cancelar"
-              *ngIf="ehAdmin"
               label="Excluir"
               (click)="onExcluir(item)"
             ></ale-button>
+            <!-- *ngIf="ehAdmin" -->
           </div>
         </div>
       </td>

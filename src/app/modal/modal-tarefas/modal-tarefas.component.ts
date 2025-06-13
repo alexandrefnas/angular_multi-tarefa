@@ -42,9 +42,7 @@ export class ModalTarefasComponent {
   @Input() closeOnBackdrop: boolean = true;
   @Input() visible: boolean = false;
 
-  servicos = [
-    { value: 'Mensal', label: 'Mensal' },
-  ];
+  servicos = [{ value: 'Mensal', label: 'Mensal' }];
 
   @Input() lista1 = [
     { value: 'Alta', label: 'Alta' },
@@ -80,19 +78,28 @@ export class ModalTarefasComponent {
     { value: 'EMITIR NFSE', label: 'EMITIR NFSE' },
     { value: 'EMITIR NFSE MEI', label: 'EMITIR NFSE MEI' },
     { value: 'EMITIR FGTS', label: 'EMITIR FGTS' },
-    { value: 'EMITIR BOLETO SEGURO VIDA', label: 'EMITIR BOLETO SEGURO VIDA'},
+    { value: 'EMITIR BOLETO SEGURO VIDA', label: 'EMITIR BOLETO SEGURO VIDA' },
     { value: 'ENVIAR GUIAS INSS', label: 'ENVIAR GUIAS INSS' },
     { value: 'FAZER CARNE LEÃO', label: 'FAZER CARNE LEÃO' },
-    { value: 'IMPORTAR XML DE COMPRA OLIVER', label: 'IMPORTAR XML DE COMPRA OLIVER' },
-    { value: 'IMPOSTO DE RENDA', label: 'IMPOSTO DE RENDA'},
-    { value: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL', label: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL' },
+    {
+      value: 'IMPORTAR XML DE COMPRA OLIVER',
+      label: 'IMPORTAR XML DE COMPRA OLIVER',
+    },
+    { value: 'IMPOSTO DE RENDA', label: 'IMPOSTO DE RENDA' },
+    {
+      value: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
+      label: 'IMPRESSÃO DA DOCUMENTAÇÃO MENSAL',
+    },
     { value: 'PARCELAMENTO MEI', label: 'PARCELAMENTO MEI' },
     { value: 'PREECHER CARNE LEÃO', label: 'PREECHER CARNE LEÃO' },
-    { value: 'REGISTRO DE FUNCIONARIO', label: 'REGISTRO DE FUNCIONÁRIO'},
+    { value: 'REGISTRO DE FUNCIONARIO', label: 'REGISTRO DE FUNCIONÁRIO' },
     { value: 'REQUERIMENTO AUXÍLIO INSS', label: 'REQUERIMENTO AUXÍLIO INSS' },
-    { value: 'REQUIREMENTO DE CERTIFICADO DIGITAL', label: 'REQUIREMENTO DE CERTIFICADO DIGITAL'},
-    { value: 'SALVA CHAVE NF COMPRAS', label: 'SALVA CHAVE NF COMPRAS'},
-    { value: 'SEGURO DESEMPREGO', label: 'SEGURO DESEMPREGO'},
+    {
+      value: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
+      label: 'REQUIREMENTO DE CERTIFICADO DIGITAL',
+    },
+    { value: 'SALVA CHAVE NF COMPRAS', label: 'SALVA CHAVE NF COMPRAS' },
+    { value: 'SEGURO DESEMPREGO', label: 'SEGURO DESEMPREGO' },
   ];
 
   @Output() onClose = new EventEmitter<boolean>();
@@ -122,25 +129,12 @@ export class ModalTarefasComponent {
   }
 
   // Getter para facilitar o acesso com cast para FormControl
-  get servicoControl(): FormControl {
-    return this.cadastroTarefas.get('servico') as FormControl;
-  }
-
-  get prioridadeControl(): FormControl {
-    return this.cadastroTarefas.get('prioridadeSelecionada') as FormControl;
-  }
-
-  get atividadeControl(): FormControl {
-    return this.cadastroTarefas.get('atividade') as FormControl;
-  }
-  get quemContol(): FormControl {
-    return this.cadastroTarefas.get('quem') as FormControl;
-  }
-  get statusSelecionadaControl(): FormControl {
-    return this.cadastroTarefas.get('statusSelecionada') as FormControl;
-  }
-  get financeiroSelecionadaControl(): FormControl {
-    return this.cadastroTarefas.get('financeiroSelecionada') as FormControl;
+  getControl(controlName: string): FormControl {
+    const control = this.cadastroTarefas.get(controlName);
+    if (!control) {
+      throw new Error(`FormControl '${controlName}' não existe no FormGroup`);
+    }
+    return control as FormControl;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

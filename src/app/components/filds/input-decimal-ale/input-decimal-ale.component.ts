@@ -3,12 +3,13 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  Injector,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'ale-input-decimal-ale',
@@ -34,6 +35,8 @@ export class InputDecimalAleComponent implements OnChanges {
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>(); // Valor Formato
   @Output() rawValueChange = new EventEmitter<number>(); // Valor Limpo (ex: 1234.56)
+  @Input() maxLength: number = 20; // ou o valor que quiser
+  @Input() disabled: boolean = false;
 
   @Input() isFocused: boolean = false;
   formattedValue: string = '';
@@ -45,6 +48,19 @@ export class InputDecimalAleComponent implements OnChanges {
     if (changes['value']) {
       this.formattedValue = this.applyMask(this.value || '');
     }
+  }
+
+  copiarValor(): void {
+    if (!this.value) return;
+
+    navigator.clipboard.writeText(this.value).then(
+      () => {
+        alert('Copiado para a área de transferência!');
+      },
+      (err) => {
+        console.error('Erro ao copiar:', err);
+      }
+    );
   }
 
   writeValue(value: string): void {
@@ -62,6 +78,7 @@ export class InputDecimalAleComponent implements OnChanges {
 
   setDisabledState?(isDisabled: boolean): void {
     // Implementar se quiser suportar desabilitado
+    this.disabled = isDisabled;
   }
 
   onInput(event: Event): void {
@@ -109,21 +126,21 @@ export class InputDecimalAleComponent implements OnChanges {
     }
   }
 
-  hasError(): boolean {
-    return this.required && !this.value;
-  }
-
   applyMask(value: string): string {
     switch (this.maskType) {
       case 'money':
         return this.applyMoneyMask(value);
       case 'cpf':
+        this.maxLength = 14;
         return this.applyCpfMask(value);
       case 'cnpj':
+        this.maxLength = 18;
         return this.applyCnpjMask(value);
       case 'cep':
+        this.maxLength = 10;
         return this.applyCepMask(value);
       case 'phone':
+        this.maxLength = 15;
         return this.applyPhoneMask(value);
       default:
         return value;
@@ -175,5 +192,26 @@ export class InputDecimalAleComponent implements OnChanges {
     return value
       .replace(/^(\d{2})(\d)/, '($1) $2')
       .replace(/(\d{5})(\d)/, '$1-$2');
+  }
+
+  ngControl: NgControl | null = null;
+
+  constructor(private injector: Injector) {}
+
+  ngOnInit(): void {
+    try {
+      this.ngControl = this.injector.get(NgControl);
+      if (this.ngControl) {
+        this.ngControl.valueAccessor = this;
+      }
+    } catch (e) {
+      // Ignora se não estiver dentro de um FormControl
+    }
+  }
+
+  hasError(): boolean {
+    return (
+      !!this.ngControl?.control?.invalid && !!this.ngControl?.control?.touched
+    );
   }
 }

@@ -2,11 +2,16 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  Injector,
   Input,
   Output,
 } from '@angular/core';
 import { FildsModule } from '../filds.module';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+} from '@angular/forms';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -31,11 +36,53 @@ export class InputAleComponent implements ControlValueAccessor {
   @Input() numerico: boolean = false;
   @Input() value: any;
   @Input() isFocused: boolean = false;
+  @Input() disabled: boolean = false;
+  @Input() copiaConteudo: boolean = false;
 
   @Output() valueChange = new EventEmitter<string>();
 
   onChange = (_: any) => {};
   onTouched = () => {};
+
+  ngControl: NgControl | null = null;
+
+  constructor(private injector: Injector) {}
+
+  ngOnInit(): void {
+    try {
+      this.ngControl = this.injector.get(NgControl);
+      if (this.ngControl) {
+        this.ngControl.valueAccessor = this;
+      }
+    } catch (e) {
+      // Ignora se não estiver dentro de um FormControl
+    }
+  }
+
+  handleClick(): void {
+    if (this.disabled) {
+      this.copiarValor();
+    }
+  }
+
+  copiarValor(): void {
+    if (!this.value) return;
+
+    navigator.clipboard.writeText(this.value).then(
+      () => {
+        alert('Copiado para a área de transferência!');
+      },
+      (err) => {
+        console.error('Erro ao copiar:', err);
+      }
+    );
+  }
+
+  hasError(): boolean {
+    return (
+      !!this.ngControl?.control?.invalid && !!this.ngControl?.control?.touched
+    );
+  }
 
   writeValue(value: any): void {
     this.value = value;
@@ -51,6 +98,7 @@ export class InputAleComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     // se quiser lidar com campo desabilitado
+    this.disabled = isDisabled;
   }
 
   onInput(event: Event): void {
@@ -73,7 +121,13 @@ export class InputAleComponent implements ControlValueAccessor {
 
   onKeyDown(event: KeyboardEvent): void {
     if (this.numerico) {
-      const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+      const allowedKeys = [
+        'Backspace',
+        'Tab',
+        'ArrowLeft',
+        'ArrowRight',
+        'Delete',
+      ];
       const isNumber = /^[0-9]$/.test(event.key);
       const isComma = event.key === ',';
       const isAllowedKey = allowedKeys.includes(event.key);
@@ -83,9 +137,5 @@ export class InputAleComponent implements ControlValueAccessor {
         event.preventDefault();
       }
     }
-  }
-
-  hasError(): boolean {
-    return this.required && !this.value;
   }
 }
